@@ -10,8 +10,14 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        lime: "#90F08C",
+      },
+      fontFamily: {
+        dm: ["var(--font-dm)"],
+        inter: ["var(--font-inter)"],
+        aeonik: ["Aeonik", "sans-serif"],
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 };
