@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { ToastAction } from "../global/Toast";
 import { useToast } from "../global/Use-Toast";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 
 const reviews = [
   {
@@ -29,13 +29,13 @@ const reviews = [
   },
 ];
 
-export default function SignUp() {
+export default function SignIn() {
   const [currentReview, setCurrentReview] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     business_name: "",
     password: "",
-    emails: [""],
+    email: "",
   });
 
   const { toast } = useToast();
@@ -48,69 +48,53 @@ export default function SignUp() {
     return () => clearInterval(timer);
   }, []);
 
-  const handleEmailChange = (index, value) => {
-    const newEmails = [...formData.emails];
-    newEmails[index] = value;
-    setFormData({ ...formData, emails: newEmails });
-  };
-
-  const addEmailField = () => {
-    setFormData({ ...formData, emails: [...formData.emails, ""] });
-  };
-
-  const removeEmailField = (index) => {
-    if (formData.emails.length > 1) {
-      const newEmails = formData.emails.filter((_, i) => i !== index);
-      setFormData({ ...formData, emails: newEmails });
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/create_user/", {
+      const response = await fetch("http://127.0.0.1:8000/api/sign_in/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          business_name: formData.business_name,
-          password: formData.password,
-          emails: formData.emails.filter((email) => email.trim() !== ""),
-        }),
+        body: JSON.stringify(formData),
       });
 
       const data = await response.json();
-
-      // Wait for 1.5 seconds before showing success and redirecting
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       if (data.success) {
+        localStorage.setItem("user_id", data.user);
+
         window.location.href = "/dashboard/";
       } else if (data.warning) {
         toast({
-          title: `Business Name already taken`,
-          description:
-            "Please choose a different name (Don't worry if it's not exact, it won't be what your users see)",
+          title: `Invalid Credentials`,
+          description: "Please check your details and try again",
         });
       } else {
-        console.log(data.message || "Something went wrong");
+        toast({
+          title: "Error",
+          description: data.message || "Something went wrong",
+        });
       }
     } catch (err) {
-      console.log("Failed to connect to the server");
+      toast({
+        title: "Error",
+        description: "Failed to connect to the server",
+      });
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen h-fit flex flex-row w-full overflow-y-auto">
-      {/* Left Side - Sign Up Form */}
-      <div className="w-1/2 min-h-screen h-fit flex flex-col justify-center py-12">
+    <div className="min-h-screen flex w-full">
+      {/* Left Side - Sign In Form */}
+      <div className="w-1/2 p-12 flex flex-col justify-center">
         <div className="max-w-md mx-auto w-full">
-          <div className="flex items-center gap-3 pb-8 pt-12">
+          <div className="flex items-center gap-3 mb-8">
             <Image
               src="/LimeblockLogo.png"
               alt="Limeblock"
@@ -121,13 +105,13 @@ export default function SignUp() {
           </div>
 
           <h1 className="text-3xl font-aeonik font-medium mb-2">
-            Keep your business advanced
+            Welcome back
           </h1>
           <p className="text-gray-600 dark:text-gray-400 font-inter mb-8">
-            Sign up to start your journey with Limeblock
+            Sign in to your account
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="block text-sm font-inter mb-2">
                 Business Name
@@ -143,60 +127,17 @@ export default function SignUp() {
               />
             </div>
 
-            <div className="space-y-3">
-              <label className="block text-sm font-inter mb-2">
-                Team Member Email Addresses
-              </label>
-              {formData.emails.map((email, index) => (
-                <div key={index} className="flex gap-2">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => handleEmailChange(index, e.target.value)}
-                    className="flex-1 p-3 border border-gray-200 rounded-lg font-inter text-sm focus:ring-2 focus:ring-lime-500 focus:border-transparent transition-all"
-                    required
-                  />
-                  {formData.emails.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => removeEmailField(index)}
-                      className="p-3 text-gray-500 hover:text-red-500 transition-colors"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
-                  )}
-                </div>
-              ))}
-              <button
-                type="button"
-                onClick={addEmailField}
-                className="text-sm text-lime-600 hover:text-lime-700 font-inter flex items-center gap-1"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                Add another email
-              </button>
+            <div>
+              <label className="block text-sm font-inter mb-2">Email</label>
+              <input
+                type="email"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+                className="w-full p-3 border border-gray-200 rounded-lg font-inter text-sm focus:ring-2 focus:ring-lime-500 focus:border-transparent transition-all"
+                required
+              />
             </div>
 
             <div>
@@ -212,7 +153,7 @@ export default function SignUp() {
               />
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-4">
               <button
                 type="submit"
                 disabled={isLoading}
@@ -240,28 +181,28 @@ export default function SignUp() {
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       />
                     </svg>
-                    Creating Account...
+                    Signing In...
                   </>
                 ) : (
-                  "Create Account"
+                  "Sign In"
                 )}
               </button>
 
               <p className="text-sm text-gray-600 dark:text-gray-400 text-left font-inter">
-                Already have an account?{" "}
-                <a
-                  href="/sign_in/"
+                Don't have an account?{" "}
+                <Link
+                  href="/sign_up/"
                   className="text-black dark:text-white hover:text-lime-600 dark:hover:text-lime-400 transition-colors"
                 >
-                  Sign In
-                </a>
+                  Sign Up
+                </Link>
               </p>
             </div>
           </form>
         </div>
       </div>
 
-      {/* Right Side - Animated Background with Reviews */}
+      {/* Right Side - Same animated background as SignUp */}
       <div className="w-1/2 relative overflow-hidden">
         {/* Gradient Swirl Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-lime/90 via-lime/60 to-lime/40">
