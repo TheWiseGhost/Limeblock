@@ -57,7 +57,7 @@ export default function Dashboard() {
       {/* Grid Layout */}
       <div className="grid grid-cols-5 gap-6">
         {/* Widget Configuration Card - 2 columns */}
-        <div className="col-span-2 border rounded-xl p-6">
+        <div className="col-span-2 border border-gray-300 rounded-md p-6">
           <h2 className="text-2xl font-aeonik mb-8">My Widget</h2>
           <div className="flex gap-4 w-full mb-6">
             <div className="w-1/2 h-44 flex">
@@ -147,12 +147,12 @@ export default function Dashboard() {
         </div>
 
         {/* Analytics Card - 3 columns */}
-        <div className="col-span-3 border rounded-xl p-6">
+        <div className="col-span-3 border border-gray-300 rounded-md p-6">
           <h2 className="text-2xl font-aeonik mb-6">Analytics</h2>
         </div>
 
         {/* Logs Card - 3 columns */}
-        <div className="col-span-3 border rounded-xl p-6">
+        <div className="col-span-3 border border-gray-300 rounded-md p-6">
           <h2 className="text-2xl font-aeonik mb-4">Logs</h2>
           <div className="h-48"></div>
           <button className="px-6 border border-gray-400 rounded-lg py-2 text-sm font-inter hover:bg-gray-50 transition-colors">
@@ -161,7 +161,7 @@ export default function Dashboard() {
         </div>
 
         {/* Expected Cost Card - 2 columns */}
-        <div className="col-span-2 border rounded-xl p-6">
+        <div className="col-span-2 border border-gray-300 rounded-md p-6">
           <h2 className="text-2xl font-aeonik mb-4">Expected Cost</h2>
           <div className="h-48"></div>
         </div>

@@ -14,7 +14,7 @@ const EditContextParams = () => {
   };
 
   return (
-    <div className="border rounded-lg p-6 h-fit">
+    <div className="border border-gray-300 rounded-md p-6 h-fit">
       <div className="flex items-center justify-between mb-6">
         <div className="flex flex-row space-x-6">
           <h2 className="font-aeonik text-2xl">Context Params</h2>

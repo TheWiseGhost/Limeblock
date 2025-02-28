@@ -1,7 +1,7 @@
 import { IconFolderPlus, IconFolderX } from "@tabler/icons-react";
 import React from "react";
 
-const PageEndpointTree = () => {
+const ApiEndpointTree = () => {
   // Function to handle saving (placeholder for now)
   const handleSave = () => {
     alert("Save functionality will be implemented in the future");
@@ -11,7 +11,7 @@ const PageEndpointTree = () => {
     <div className="border border-gray-300 rounded-md p-6 h-full w-full">
       <div className="flex items-center justify-between mb-6">
         <div className="flex flex-row space-x-6">
-          <h2 className="font-aeonik text-2xl">Page Endpoint Tree</h2>
+          <h2 className="font-aeonik text-2xl">API Endpoint Tree</h2>
           <div className="space-x-4 flex flex-row font-inter items-center">
             <div className="size-8 px-[6px] flex items-center justify-center border border-gray-400 rounded hover:bg-gray-50 hover:cursor-pointer">
               <IconFolderPlus />
@@ -38,4 +38,4 @@ const PageEndpointTree = () => {
   );
 };
 
-export default PageEndpointTree;
+export default ApiEndpointTree;

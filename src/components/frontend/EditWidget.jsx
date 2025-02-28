@@ -50,7 +50,7 @@ export default function InteractiveWidget() {
   };
 
   return (
-    <div className="border rounded-xl p-6">
+    <div className="border border-gray-300 rounded-md p-6">
       <div className="flex flex-row mb-8 justify-between">
         <h2 className="text-2xl font-aeonik ">My Widget</h2>
         <div className="flex flex-row h-fit space-x-5">
