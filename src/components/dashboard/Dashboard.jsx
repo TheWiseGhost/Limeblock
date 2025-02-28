@@ -1,21 +1,55 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function Dashboard() {
   const [showApiKey, setShowApiKey] = useState(false);
+  const [user, setUser] = useState(null);
   const apiKey = "sk-0192837465-abcdef"; // This will be fetched from backend later
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const userId = localStorage.getItem("user_id");
+        if (!userId) {
+          window.location.href = "/sign_in/";
+        }
+
+        const response = await fetch(
+          "http://127.0.0.1:8000/api/user_details/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ user_id: userId }),
+          }
+        );
+
+        const data = await response.json();
+        if (data.success) {
+          setUser(data.user);
+        }
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      }
+    };
+
+    fetchUserDetails();
+  }, []);
 
   const handleCopyApiKey = () => {
     navigator.clipboard.writeText(apiKey);
   };
 
   return (
-    <div className="p-8">
+    <div className="bg-white w-full overflow-y-auto pb-12 pt-8 pr-12 pl-10 border-l border-gray-300 rounded-tl-[12px]">
       {/* Header */}
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-aeonik">Limeblock - Dashboard</h1>
-        <button className="bg-black text-white px-4 py-2 rounded-lg text-sm font-inter hover:bg-gray-900 transition-colors">
+        <h1 className="text-3xl font-dm font-medium">
+          {user?.business_name} - Dashboard
+        </h1>
+        <button className="bg-white hover:bg-gray-50 border border-gray-600 font-aeonik px-6 py-2 rounded-lg text-base transition-colors">
           Upgrade
         </button>
       </div>
@@ -24,7 +58,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-5 gap-6">
         {/* Widget Configuration Card - 2 columns */}
         <div className="col-span-2 border rounded-xl p-6">
-          <h2 className="text-2xl font-aeonik mb-6">My Widget</h2>
+          <h2 className="text-2xl font-aeonik mb-8">My Widget</h2>
           <div className="flex gap-4 w-full mb-6">
             <div className="w-1/2 h-44 flex">
               <div className="size-44 bg-lime rounded-xl flex justify-evenly pt-10 px-4">
@@ -53,7 +87,7 @@ export default function Dashboard() {
           </div>
           <div className="pt-2">
             <div className="flex items-center gap-2">
-              <span className="text-base font-inter text-gray-700">
+              <span className="text-base font-inter text-gray-800">
                 API Key:
               </span>
               <input
@@ -114,63 +148,21 @@ export default function Dashboard() {
 
         {/* Analytics Card - 3 columns */}
         <div className="col-span-3 border rounded-xl p-6">
-          <h2 className="text-lg font-inter mb-6">Analytics</h2>
-          <div className="grid grid-cols-4 gap-4 mb-8">
-            <div>
-              <div className="text-2xl font-aeonik">92%</div>
-              <div className="text-sm text-gray-600">Message Success Rate</div>
-            </div>
-            <div>
-              <div className="text-2xl font-aeonik">5,631</div>
-              <div className="text-sm text-gray-600">Messages</div>
-            </div>
-            <div>
-              <div className="text-2xl font-aeonik">1,436</div>
-              <div className="text-sm text-gray-600">Unique Messengers</div>
-            </div>
-            <div>
-              <div className="text-2xl font-aeonik">3,786</div>
-              <div className="text-sm text-gray-600">Endpoint Hits</div>
-            </div>
-          </div>
-          <div className="space-y-4">
-            <div>
-              <div className="text-sm font-medium mb-1">
-                Most Hit Backend Endpoint
-              </div>
-              <div className="flex justify-between items-center">
-                <div className="text-gray-600 font-mono text-sm">
-                  /api/update_display/
-                </div>
-                <div className="text-xl font-aeonik">1,462</div>
-              </div>
-            </div>
-            <div>
-              <div className="text-sm font-medium mb-1">
-                Most Hit Frontend Endpoint
-              </div>
-              <div className="flex justify-between items-center">
-                <div className="text-gray-600 font-mono text-sm">
-                  /docs/how_to_dark_mode
-                </div>
-                <div className="text-xl font-aeonik">786</div>
-              </div>
-            </div>
-          </div>
+          <h2 className="text-2xl font-aeonik mb-6">Analytics</h2>
         </div>
 
         {/* Logs Card - 3 columns */}
         <div className="col-span-3 border rounded-xl p-6">
-          <h2 className="text-lg font-inter mb-4">Logs</h2>
+          <h2 className="text-2xl font-aeonik mb-4">Logs</h2>
           <div className="h-48"></div>
-          <button className="w-full border rounded-lg py-2 text-sm font-inter hover:bg-gray-50 transition-colors">
+          <button className="px-6 border border-gray-400 rounded-lg py-2 text-sm font-inter hover:bg-gray-50 transition-colors">
             View All Logs
           </button>
         </div>
 
         {/* Expected Cost Card - 2 columns */}
         <div className="col-span-2 border rounded-xl p-6">
-          <h2 className="text-lg font-inter mb-4">Expected Cost</h2>
+          <h2 className="text-2xl font-aeonik mb-4">Expected Cost</h2>
           <div className="h-48"></div>
         </div>
       </div>

@@ -88,6 +88,7 @@ export default function SignUp() {
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       if (data.success) {
+        localStorage.setItem("user_id", data.user);
         window.location.href = "/dashboard/";
       } else if (data.warning) {
         toast({
