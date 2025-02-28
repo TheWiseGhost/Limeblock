@@ -16,7 +16,7 @@ import {
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import Dashboard from "@/components/dashboard/Dashboard";
+import Frontend from "@/components/frontend/Frontend";
 
 export default function SidebarDemo({ params }) {
   const links = [
@@ -75,7 +75,7 @@ export default function SidebarDemo({ params }) {
             </div>
           </SidebarBody>
         </Sidebar>
-        <Dashboard />
+        <Frontend />
       </div>
       <div className="flex flex-col md:hidden bg-gray-100 min-h-screen items-center justify-center text-center">
         <img src="LimeblockLogo.png" className="w-1/3" />

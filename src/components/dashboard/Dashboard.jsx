@@ -46,7 +46,7 @@ export default function Dashboard() {
     <div className="bg-white w-full overflow-y-auto pb-12 pt-8 pr-12 pl-10 border-l border-gray-300 rounded-tl-[12px]">
       {/* Header */}
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-dm font-medium">
+        <h1 className="text-2xl font-aeonik font-medium">
           {user?.business_name} - Dashboard
         </h1>
         <button className="bg-white hover:bg-gray-50 border border-gray-600 font-aeonik px-6 py-2 rounded-lg text-base transition-colors">
