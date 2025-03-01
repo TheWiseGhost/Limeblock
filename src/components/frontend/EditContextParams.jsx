@@ -1,4 +1,4 @@
-import { IconMinus, IconPlus, IconX } from "@tabler/icons-react";
+import { IconPlus, IconX } from "@tabler/icons-react";
 import React from "react";
 
 const EditContextParams = () => {
@@ -19,10 +19,10 @@ const EditContextParams = () => {
         <div className="flex flex-row space-x-6">
           <h2 className="font-aeonik text-2xl">Context Params</h2>
           <div className="space-x-4 flex flex-row font-inter items-center">
-            <div className="size-8 px-[8px] flex items-center justify-center border border-gray-400 rounded hover:bg-gray-50 hover:cursor-pointer">
+            <div className="size-7 px-[6px] flex items-center justify-center border border-gray-400 rounded hover:bg-gray-50 hover:cursor-pointer">
               <IconPlus />
             </div>
-            <div className="size-8 px-[8px] flex items-center justify-center border border-gray-400 rounded hover:bg-gray-50 hover:cursor-pointer">
+            <div className="size-7 px-[6px] flex items-center justify-center border border-gray-400 rounded hover:bg-gray-50 hover:cursor-pointer">
               <IconX />
             </div>
           </div>

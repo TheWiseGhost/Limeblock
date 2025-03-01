@@ -11,8 +11,6 @@ const EditUrl = ({ url, user_id }) => {
     if (url) setNewUrl(url);
   }, [url]);
 
-  // Function to handle saving (placeholder for now)
-  // Function to handle saving to backend - fixed parameter handling
   const handleSave = async () => {
     try {
       setLoading(true);
@@ -38,7 +36,7 @@ const EditUrl = ({ url, user_id }) => {
           },
           body: JSON.stringify({
             user_id: user_id,
-            url: url,
+            url: newUrl,
           }),
         }
       );
@@ -47,7 +45,7 @@ const EditUrl = ({ url, user_id }) => {
 
       if (data.success) {
         toast({
-          title: `Widget Saved!`,
+          title: `Url Saved!`,
           description: "Your changes have been saved successfully",
         });
       } else {
@@ -57,7 +55,7 @@ const EditUrl = ({ url, user_id }) => {
         });
       }
     } catch (error) {
-      console.error("Error saving widget settings:", error);
+      console.error("Error saving url:", error);
       toast({
         title: `Error`,
         description: "Network error, please try again",

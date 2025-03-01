@@ -146,6 +146,7 @@ const Frontend = () => {
           <div className="w-7/12">
             <PageEndpointTree
               folders={frontend?.folders || []}
+              url={frontend?.url}
               user_id={user?.id}
             />
           </div>
