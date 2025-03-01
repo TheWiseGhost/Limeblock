@@ -5,17 +5,23 @@ import React, { useState, useEffect } from "react";
 export default function Dashboard() {
   const [showApiKey, setShowApiKey] = useState(false);
   const [user, setUser] = useState(null);
+  const [frontend, setFrontend] = useState(null);
+  const [loading, setLoading] = useState(false);
   const apiKey = "sk-0192837465-abcdef"; // This will be fetched from backend later
 
   useEffect(() => {
-    const fetchUserDetails = async () => {
+    const fetchData = async () => {
       try {
+        setLoading(true);
         const userId = localStorage.getItem("user_id");
+
         if (!userId) {
           window.location.href = "/sign_in/";
+          return;
         }
 
-        const response = await fetch(
+        // Fetch user details
+        const userResponse = await fetch(
           "http://127.0.0.1:8000/api/user_details/",
           {
             method: "POST",
@@ -26,21 +32,77 @@ export default function Dashboard() {
           }
         );
 
-        const data = await response.json();
-        if (data.success) {
-          setUser(data.user);
+        const userData = await userResponse.json();
+
+        if (userData.success) {
+          setUser(userData.user);
+
+          // Fetch frontend details using the same user_id
+          const frontendResponse = await fetch(
+            "http://127.0.0.1:8000/api/frontend_details/",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ user_id: userId }),
+            }
+          );
+
+          const frontendData = await frontendResponse.json();
+
+          if (frontendData.success) {
+            setFrontend(frontendData.frontend);
+          } else {
+            setError("Failed to load frontend settings");
+          }
+        } else {
+          setError("Failed to load user information");
         }
       } catch (error) {
-        console.error("Error fetching user details:", error);
+        console.error("Error fetching data:", error);
+        setError("Network error, please try again");
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchUserDetails();
+    fetchData();
   }, []);
 
   const handleCopyApiKey = () => {
     navigator.clipboard.writeText(apiKey);
   };
+
+  if (loading) {
+    return (
+      <div className="bg-white w-full flex items-center justify-center h-screen">
+        <div className="text-center">
+          <svg
+            className="animate-spin h-10 w-10 mx-auto text-gray-600"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            ></circle>
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+          <p className="mt-3 font-inter">Loading your stuff...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white w-full overflow-y-auto pb-12 pt-8 pr-12 pl-10 border-l border-gray-300 rounded-tl-[12px]">
@@ -61,22 +123,42 @@ export default function Dashboard() {
           <h2 className="text-2xl font-aeonik mb-8">My Widget</h2>
           <div className="flex gap-4 w-full mb-6">
             <div className="w-1/2 h-44 flex">
-              <div className="size-44 bg-lime rounded-xl flex justify-evenly pt-10 px-4">
-                <div className="size-9 bg-white rounded-lg"></div>
-                <div className="size-9 bg-white rounded-lg"></div>
+              <div
+                style={{ backgroundColor: frontend?.body }}
+                className="size-44 rounded-xl flex justify-evenly pt-10 px-4"
+              >
+                <div
+                  style={{ backgroundColor: frontend?.eyes }}
+                  className="size-9 rounded-lg"
+                ></div>
+                <div
+                  style={{ backgroundColor: frontend?.eyes }}
+                  className="size-9 rounded-lg"
+                ></div>
               </div>
             </div>
 
             <div className="flex flex-col w-1/2 px-4 space-y-6">
               <div className="flex justify-between">
-                <div className="size-12 border border-gray-300 bg-lime rounded-md"></div>
-                <div className="size-12 border border-gray-300 rounded-md"></div>
+                <div
+                  style={{ backgroundColor: frontend?.body }}
+                  className="size-12 border border-gray-300 rounded-md"
+                ></div>
+                <div
+                  style={{ backgroundColor: frontend?.eyes }}
+                  className="size-12 border border-gray-300 rounded-md"
+                ></div>
                 <div className="size-12 border border-gray-300 font-aeonik rounded-md flex items-center justify-center text-gray-800">
-                  12
+                  {frontend?.size}
                 </div>
               </div>
               <div className="space-y-5 flex flex-col">
-                <button className="w-full border border-gray-400 rounded-lg py-2 text-sm font-inter hover:bg-gray-50 transition-colors">
+                <button
+                  onClick={() => {
+                    window.location.href = "/frontend/";
+                  }}
+                  className="w-full border border-gray-400 rounded-lg py-2 text-sm font-inter hover:bg-gray-50 transition-colors"
+                >
                   Style Widget
                 </button>
                 <button className="w-full border border-gray-400 rounded-lg py-2 text-sm font-inter hover:bg-gray-50 transition-colors">
