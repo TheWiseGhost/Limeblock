@@ -98,7 +98,6 @@ export default function EditWidget({ body, eyes, size, user_id }) {
         toast({
           title: `Error`,
           description: data.message || data.warning || "Failed to save changes",
-          variant: "destructive",
         });
       }
     } catch (error) {
@@ -106,7 +105,6 @@ export default function EditWidget({ body, eyes, size, user_id }) {
       toast({
         title: `Error`,
         description: "Network error, please try again",
-        variant: "destructive",
       });
     } finally {
       setLoading(false);

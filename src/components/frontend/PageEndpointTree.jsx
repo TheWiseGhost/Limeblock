@@ -1,7 +1,7 @@
 import { IconFolderPlus, IconFolderX } from "@tabler/icons-react";
 import React from "react";
 
-const PageEndpointTree = () => {
+const PageEndpointTree = ({ folders, user_id }) => {
   // Function to handle saving (placeholder for now)
   const handleSave = () => {
     alert("Save functionality will be implemented in the future");
