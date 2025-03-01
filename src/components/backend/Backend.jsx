@@ -124,9 +124,13 @@ const Backend = () => {
       <div className="flex flex-col space-y-6">
         <div className="flex flex-row space-x-6">
           <EditUrl url={backend?.url} user_id={user?.id} />
-          <ContextParams />
+          <ContextParams user_id={user?.id} />
         </div>
-        <ApiEndpointTree />
+        <ApiEndpointTree
+          folders={backend?.folders}
+          url={backend?.url}
+          user_id={user?.id}
+        />
       </div>
     </div>
   );

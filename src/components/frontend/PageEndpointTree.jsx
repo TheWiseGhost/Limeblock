@@ -329,49 +329,65 @@ const PageEndpointTree = ({ folders, url, user_id }) => {
                 {/* Add Endpoint Form */}
                 {showAddEndpoint[folder.id] && (
                   <div className="p-3 border-t border-gray-200 text-sm font-inter">
-                    <h4 className="text-sm font-medium mb-2">
+                    <h4 className="text-sm font-medium mb-3">
                       Add New Endpoint
                     </h4>
-                    <div className="space-y-2">
-                      <input
-                        type="text"
-                        placeholder="Name"
-                        className="border border-gray-300 rounded-md p-2 w-full text-sm"
-                        value={newEndpoint.name}
-                        onChange={(e) =>
-                          setNewEndpoint({
-                            ...newEndpoint,
-                            name: e.target.value,
-                          })
-                        }
-                      />
-                      <input
-                        type="text"
-                        placeholder="URL"
-                        className="border border-gray-300 rounded-md p-2 w-full text-sm"
-                        value={newEndpoint.url}
-                        onChange={(e) =>
-                          setNewEndpoint({
-                            ...newEndpoint,
-                            url: e.target.value,
-                          })
-                        }
-                      />
-                      <textarea
-                        placeholder="Description"
-                        className="border border-gray-300 rounded-md p-2 w-full text-sm"
-                        value={newEndpoint.description}
-                        onChange={(e) =>
-                          setNewEndpoint({
-                            ...newEndpoint,
-                            description: e.target.value,
-                          })
-                        }
-                        rows={2}
-                      />
+                    <div className="space-y-4">
+                      {/* Name Input */}
+                      <div className="flex flex-col space-y-1">
+                        <label className="text-xs">Name:</label>
+                        <input
+                          type="text"
+                          placeholder="Enter endpoint name"
+                          className="border border-gray-300 rounded-md p-2 w-full text-sm"
+                          value={newEndpoint.name}
+                          onChange={(e) =>
+                            setNewEndpoint({
+                              ...newEndpoint,
+                              name: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
+
+                      {/* URL Input */}
+                      <div className="flex flex-col space-y-1">
+                        <label className="text-xs">URL:</label>
+                        <input
+                          type="text"
+                          placeholder="Enter endpoint URL"
+                          className="border border-gray-300 rounded-md p-2 w-full text-sm"
+                          value={newEndpoint.url}
+                          onChange={(e) =>
+                            setNewEndpoint({
+                              ...newEndpoint,
+                              url: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
+
+                      {/* Description Input */}
+                      <div className="flex flex-col space-y-1">
+                        <label className="text-xs">Description:</label>
+                        <textarea
+                          placeholder="Enter description"
+                          className="border border-gray-300 rounded-md p-2 w-full text-sm"
+                          value={newEndpoint.description}
+                          onChange={(e) =>
+                            setNewEndpoint({
+                              ...newEndpoint,
+                              description: e.target.value,
+                            })
+                          }
+                          rows={2}
+                        />
+                      </div>
+
+                      {/* Buttons */}
                       <div className="flex justify-end space-x-2">
                         <button
-                          className="border border-gray-300 rounded-md px-3 py-1 text-sm"
+                          className="border border-gray-300 rounded-md px-3 py-1 text-sm hover:bg-gray-50"
                           onClick={() => toggleAddEndpoint(folder.id)}
                         >
                           Cancel
@@ -399,7 +415,7 @@ const PageEndpointTree = ({ folders, url, user_id }) => {
                         {folder.endpoints.map((endpoint) => (
                           <div
                             key={endpoint.id}
-                            className="flex items-center justify-between p-2 bg-white border border-gray-200 rounded-md"
+                            className="flex justify-between p-2 bg-white border border-gray-200 rounded-md"
                           >
                             <div className="flex-1">
                               <div className="font-medium text-sm">
@@ -415,7 +431,7 @@ const PageEndpointTree = ({ folders, url, user_id }) => {
                               )}
                             </div>
                             <button
-                              className="size-6 flex items-center justify-center hover:bg-gray-200 rounded"
+                              className="size-6 flex items-center justify-center hover:bg-red-200 rounded"
                               onClick={() =>
                                 deleteEndpoint(folder.id, endpoint.id)
                               }
