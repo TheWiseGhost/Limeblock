@@ -139,7 +139,7 @@ const Frontend = () => {
               user_id={user?.id}
             />
             <EditContextParams
-              context_params={frontend?.context_params || []}
+              params={frontend?.context_params || []}
               user_id={user?.id}
             />
           </div>
