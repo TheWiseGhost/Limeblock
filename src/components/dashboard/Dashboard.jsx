@@ -7,7 +7,6 @@ export default function Dashboard() {
   const [user, setUser] = useState(null);
   const [frontend, setFrontend] = useState(null);
   const [loading, setLoading] = useState(false);
-  const apiKey = "sk-0192837465-abcdef"; // This will be fetched from backend later
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,7 +70,7 @@ export default function Dashboard() {
   }, []);
 
   const handleCopyApiKey = () => {
-    navigator.clipboard.writeText(apiKey);
+    navigator.clipboard.writeText(user?.api_key);
   };
 
   if (loading) {
@@ -174,9 +173,9 @@ export default function Dashboard() {
               </span>
               <input
                 type={showApiKey ? "text" : "password"}
-                value={apiKey}
+                value={user?.api_key}
                 readOnly
-                className="flex-1 bg-gray-50 rounded px-2 py-1 text-sm font-mono"
+                className="flex-1 bg-gray-50 rounded px-2 py-1 text-xs font-mono"
               />
               <button
                 onClick={() => setShowApiKey(!showApiKey)}

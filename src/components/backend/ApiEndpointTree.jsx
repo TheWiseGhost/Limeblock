@@ -317,10 +317,16 @@ const ApiEndpointTree = ({ folders, url, user_id }) => {
                     <div className="space-y-4">
                       {/* Name Input */}
                       <div className="flex flex-col space-y-1">
-                        <label className="text-xs">Name:</label>
+                        <label className="text-xs">
+                          Name + Clear Description:{" "}
+                          <span className="text-gray-700">
+                            (Ex. Update Document - Update an existing document
+                            for the user):
+                          </span>
+                        </label>
                         <input
                           type="text"
-                          placeholder="Enter endpoint name"
+                          placeholder="Enter endpoint name + description"
                           className="border border-gray-300 rounded-md p-2 w-full text-sm"
                           value={newEndpoint.name}
                           onChange={(e) =>
