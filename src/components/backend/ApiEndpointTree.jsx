@@ -5,11 +5,12 @@ import {
   IconX,
   IconChevronDown,
   IconChevronRight,
+  IconPlayerPlay,
 } from "@tabler/icons-react";
 import React, { useState, useEffect } from "react";
 import { useToast } from "../global/Use-Toast";
 
-const ApiEndpointTree = ({ folders, url, user_id }) => {
+const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
   const [newFolders, setNewFolders] = useState(folders || []);
   const [showAddFolder, setShowAddFolder] = useState(false);
   const [newFolderName, setNewFolderName] = useState("");
@@ -22,6 +23,7 @@ const ApiEndpointTree = ({ folders, url, user_id }) => {
   });
   const [deleteFolderMode, setDeleteFolderMode] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [testingEndpoint, setTestingEndpoint] = useState(null);
 
   const { toast } = useToast();
 
@@ -35,11 +37,10 @@ const ApiEndpointTree = ({ folders, url, user_id }) => {
 
       if (!user_id) {
         toast({
-          title: Error,
+          title: "Error",
           description: "User ID is missing",
-          variant: "destructive",
         });
-        return;
+        window.location.href = "/sign-in/";
       }
 
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -79,6 +80,48 @@ const ApiEndpointTree = ({ folders, url, user_id }) => {
       });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const testEndpoint = async (endpoint) => {
+    try {
+      setTestingEndpoint(endpoint.id);
+
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/process_prompt/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            prompt: `please test out the endpoint at ${endpoint.url}`,
+            api_key: api_key,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast({
+          title: "Endpoint Test Successful",
+          description: "The endpoint is working correctly",
+        });
+      } else {
+        toast({
+          title: "Endpoint Test Failed",
+          description: data.message || "Failed to test endpoint",
+        });
+      }
+    } catch (error) {
+      console.error("Error testing endpoint:", error);
+      toast({
+        title: "Test Error",
+        description: "Network error while testing the endpoint",
+      });
+    } finally {
+      setTestingEndpoint(null);
     }
   };
 
@@ -439,14 +482,48 @@ const ApiEndpointTree = ({ folders, url, user_id }) => {
                                 </div>
                               )}
                             </div>
-                            <button
-                              className="size-6 flex items-center justify-center hover:bg-red-200 rounded"
-                              onClick={() =>
-                                deleteEndpoint(folder.id, endpoint.id)
-                              }
-                            >
-                              <IconX size={14} />
-                            </button>
+                            <div className="flex">
+                              <button
+                                className="size-6 flex items-center justify-center hover:bg-green-100 text-blue-600 rounded mr-1"
+                                onClick={() => testEndpoint(endpoint)}
+                                disabled={testingEndpoint === endpoint.id}
+                                title="Test Endpoint"
+                              >
+                                {testingEndpoint === endpoint.id ? (
+                                  <svg
+                                    className="animate-spin size-4 text-green-600"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <circle
+                                      className="opacity-25"
+                                      cx="12"
+                                      cy="12"
+                                      r="10"
+                                      stroke="currentColor"
+                                      strokeWidth="4"
+                                    />
+                                    <path
+                                      className="opacity-75"
+                                      fill="currentColor"
+                                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                    />
+                                  </svg>
+                                ) : (
+                                  <IconPlayerPlay size={14} />
+                                )}
+                              </button>
+                              <button
+                                className="size-6 flex items-center justify-center hover:bg-red-200 text-red-600 rounded"
+                                onClick={() =>
+                                  deleteEndpoint(folder.id, endpoint.id)
+                                }
+                                title="Delete Endpoint"
+                              >
+                                <IconX size={14} />
+                              </button>
+                            </div>
                           </div>
                         ))}
                       </div>

@@ -130,6 +130,7 @@ const Backend = () => {
           folders={backend?.folders}
           url={backend?.url}
           user_id={user?.id}
+          api_key={user?.api_key}
         />
       </div>
     </div>
