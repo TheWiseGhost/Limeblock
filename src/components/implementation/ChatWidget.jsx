@@ -58,22 +58,82 @@ const ChatWidget = ({ apiKey }) => {
     setIsOpen(!isOpen);
   };
 
-  const handleSendMessage = (e) => {
+  const handleSendMessage = async (e) => {
     e.preventDefault();
     if (inputMessage.trim()) {
+      // Add user message to chat
       setMessages([...messages, { text: inputMessage, sender: "user" }]);
-      // You would typically send this message to your backend here
-      // and then receive a response
-      setTimeout(() => {
+
+      // Show loading indicator
+      setLoading(true);
+
+      try {
+        // Send message to Django backend
+        const response = await fetch(
+          "http://127.0.0.1:8000/api/process_prompt/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              prompt: inputMessage,
+              api_key: apiKey,
+            }),
+          }
+        );
+
+        const data = await response.json();
+
+        // Add bot response to chat
+        if (response.ok) {
+          // If the request was successful
+          let responseText;
+
+          if (data.response && data.endpoint_used) {
+            // Format successful response from endpoint
+            responseText = `Request processed using endpoint: ${data.endpoint_used}\n\n`;
+
+            if (typeof data.response === "object") {
+              responseText += JSON.stringify(data.response, null, 2);
+            } else {
+              responseText += data.response;
+            }
+          } else {
+            // Generic success message if response structure is different
+            responseText =
+              typeof data === "object" ? JSON.stringify(data, null, 2) : data;
+          }
+
+          setMessages((prev) => [
+            ...prev,
+            { text: responseText, sender: "bot" },
+          ]);
+        } else {
+          // Handle error response
+          const errorMessage =
+            data.error || data.message || "Something went wrong";
+          setMessages((prev) => [
+            ...prev,
+            {
+              text: `Error: ${errorMessage}`,
+              sender: "bot",
+            },
+          ]);
+        }
+      } catch (error) {
+        console.error("Error sending message:", error);
         setMessages((prev) => [
           ...prev,
           {
-            text: "This is a sample response. Connect to your backend for real responses.",
+            text: "Sorry, there was a network error. Please try again later.",
             sender: "bot",
           },
         ]);
-      }, 500); // Slight delay to simulate processing
-      setInputMessage("");
+      } finally {
+        setLoading(false);
+        setInputMessage("");
+      }
     }
   };
 
@@ -277,7 +337,7 @@ const ChatWidget = ({ apiKey }) => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              {loading ? (
+              {loading && messages.length === 0 ? (
                 <div className="flex justify-center items-center h-full">
                   <motion.div
                     animate={{
@@ -330,6 +390,10 @@ const ChatWidget = ({ apiKey }) => {
                                 : "bg-gray-100 text-gray-800"
                             }`}
                             whileHover={{ scale: 1.02 }}
+                            style={{
+                              whiteSpace: "pre-wrap",
+                              textAlign: "left",
+                            }}
                           >
                             {msg.text}
                           </motion.div>
@@ -359,15 +423,31 @@ const ChatWidget = ({ apiKey }) => {
                   whileFocus={{
                     boxShadow: "0 0 0 2px rgba(66, 153, 225, 0.5)",
                   }}
+                  disabled={loading}
                 />
                 <motion.button
                   type="submit"
-                  className="w-10 place-items-center py-1 my-3 ml-2 rounded-lg text-white"
+                  className="w-10 place-items-center py-1 my-3 ml-2 rounded-lg text-white flex justify-center items-center"
                   style={{ backgroundColor: frontend?.body || "#4F46E5" }}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  disabled={loading}
                 >
-                  <IconSend className="size-6" />
+                  {loading ? (
+                    <motion.div
+                      animate={{
+                        rotate: 360,
+                        transition: {
+                          repeat: Infinity,
+                          duration: 1,
+                          ease: "linear",
+                        },
+                      }}
+                      className="w-4 h-4 border-2 border-white border-t-transparent rounded-full"
+                    ></motion.div>
+                  ) : (
+                    <IconSend className="size-6" />
+                  )}
                 </motion.button>
               </div>
             </motion.form>

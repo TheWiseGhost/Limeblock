@@ -95,7 +95,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            prompt: `please test out the endpoint at ${endpoint.url}`,
+            prompt: `please test out the endpoint at ${endpoint.url} thats called ${endpoint.name}`,
             api_key: api_key,
           }),
         }
