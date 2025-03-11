@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // ChatWidget component that can be imported by other components
-const ChatWidget = ({ apiKey }) => {
+const ChatWidget = ({ apiKey, contextParams }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
