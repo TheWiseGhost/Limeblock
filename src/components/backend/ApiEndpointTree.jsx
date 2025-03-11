@@ -6,6 +6,8 @@ import {
   IconChevronDown,
   IconChevronRight,
   IconPlayerPlay,
+  IconEdit,
+  IconCheck,
 } from "@tabler/icons-react";
 import React, { useState, useEffect } from "react";
 import { useToast } from "../global/Use-Toast";
@@ -16,11 +18,13 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
   const [newFolderName, setNewFolderName] = useState("");
   const [expandedFolders, setExpandedFolders] = useState({});
   const [showAddEndpoint, setShowAddEndpoint] = useState({});
+  const [editingEndpoint, setEditingEndpoint] = useState(null);
   const [newEndpoint, setNewEndpoint] = useState({
     name: "",
     url: url,
     schema: "",
   });
+  const [schemaErrors, setSchemaErrors] = useState({});
   const [deleteFolderMode, setDeleteFolderMode] = useState(false);
   const [loading, setLoading] = useState(false);
   const [testingEndpoint, setTestingEndpoint] = useState(null);
@@ -30,6 +34,23 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
   useEffect(() => {
     if (folders) setNewFolders(folders);
   }, [folders]);
+
+  const validateSchema = (schema, endpointId = "new") => {
+    if (!schema.trim()) {
+      setSchemaErrors((prev) => ({ ...prev, [endpointId]: "" }));
+      return true; // Empty schema is valid
+    }
+
+    try {
+      JSON.parse(schema);
+      setSchemaErrors((prev) => ({ ...prev, [endpointId]: "" }));
+      return true;
+    } catch (error) {
+      const errorMsg = `Invalid JSON: ${error.message}`;
+      setSchemaErrors((prev) => ({ ...prev, [endpointId]: errorMsg }));
+      return false;
+    }
+  };
 
   const handleSave = async () => {
     try {
@@ -41,6 +62,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
           description: "User ID is missing",
         });
         window.location.href = "/sign-in/";
+        return false;
       }
 
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -66,11 +88,13 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
           title: "Endpoint Tree Saved!",
           description: "Your changes have been saved successfully",
         });
+        return true;
       } else {
         toast({
           title: "Error",
           description: data.message || data.warning || "Failed to save changes",
         });
+        return false;
       }
     } catch (error) {
       console.error("Error saving API endpoint tree:", error);
@@ -78,6 +102,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
         title: "Error",
         description: "Network error, please try again",
       });
+      return false;
     } finally {
       setLoading(false);
     }
@@ -85,7 +110,14 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
 
   const testEndpoint = async (endpoint) => {
     try {
+      // Save before testing
       setTestingEndpoint(endpoint.id);
+      const saveSuccess = await handleSave();
+
+      if (!saveSuccess) {
+        setTestingEndpoint(null);
+        return;
+      }
 
       const response = await fetch(
         "http://127.0.0.1:8000/api/process_prompt/",
@@ -157,6 +189,9 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
   };
 
   const toggleAddEndpoint = (folderId) => {
+    // Close any open edit forms when adding a new endpoint
+    setEditingEndpoint(null);
+
     setShowAddEndpoint((prev) => ({
       ...prev,
       [folderId]: !prev[folderId],
@@ -169,8 +204,102 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
     });
   };
 
+  const toggleEditEndpoint = (folderId, endpoint) => {
+    // If we're already editing this endpoint, cancel the edit
+    if (
+      editingEndpoint &&
+      editingEndpoint.folderId === folderId &&
+      editingEndpoint.endpointId === endpoint.id
+    ) {
+      setEditingEndpoint(null);
+      return;
+    }
+
+    // Otherwise, start editing this endpoint
+    setEditingEndpoint({
+      folderId,
+      endpointId: endpoint.id,
+      data: { ...endpoint },
+    });
+
+    // Make sure the schema error state exists for this endpoint
+    if (endpoint.schema) {
+      validateSchema(endpoint.schema, endpoint.id);
+    }
+  };
+
+  const updateEditingEndpoint = (field, value, endpointId) => {
+    setEditingEndpoint((prev) => ({
+      ...prev,
+      data: {
+        ...prev.data,
+        [field]: value,
+      },
+    }));
+
+    // Validate schema if that's what changed
+    if (field === "schema") {
+      validateSchema(value, endpointId);
+    }
+  };
+
+  const saveEditedEndpoint = (folderId, endpointId) => {
+    const editedData = editingEndpoint.data;
+
+    if (!editedData.name.trim() || !editedData.url.trim()) {
+      toast({
+        title: "Validation Error",
+        description: "Name and URL are required fields",
+      });
+      return;
+    }
+
+    if (
+      editedData.schema.trim() &&
+      !validateSchema(editedData.schema, endpointId)
+    ) {
+      toast({
+        title: "Schema Error",
+        description: schemaErrors[endpointId] || "Invalid JSON schema format",
+      });
+      return;
+    }
+
+    const updatedFolders = newFolders.map((folder) => {
+      if (folder.id === folderId) {
+        return {
+          ...folder,
+          endpoints: folder.endpoints.map((ep) =>
+            ep.id === endpointId ? { ...editedData, id: ep.id } : ep
+          ),
+        };
+      }
+      return folder;
+    });
+
+    setNewFolders(updatedFolders);
+    setEditingEndpoint(null);
+  };
+
   const addEndpoint = (folderId) => {
-    if (!newEndpoint.name.trim() || !newEndpoint.url.trim()) return;
+    if (!newEndpoint.name.trim() || !newEndpoint.url.trim()) {
+      toast({
+        title: "Validation Error",
+        description: "Name and URL are required fields",
+      });
+      return;
+    }
+
+    if (
+      newEndpoint.schema.trim() &&
+      !validateSchema(newEndpoint.schema, "new")
+    ) {
+      toast({
+        title: "Schema Error",
+        description: schemaErrors["new"] || "Invalid JSON schema format",
+      });
+      return;
+    }
 
     const endpoint = {
       id: `endpoint_${Date.now()}`,
@@ -192,6 +321,15 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
   };
 
   const deleteEndpoint = (folderId, endpointId) => {
+    // Clear any editing state if we're deleting the endpoint being edited
+    if (
+      editingEndpoint &&
+      editingEndpoint.folderId === folderId &&
+      editingEndpoint.endpointId === endpointId
+    ) {
+      setEditingEndpoint(null);
+    }
+
     const updatedFolders = newFolders.map((folder) => {
       if (folder.id === folderId) {
         return {
@@ -207,6 +345,42 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
 
   const toggleDeleteFolderMode = () => {
     setDeleteFolderMode(!deleteFolderMode);
+  };
+
+  const formatSchema = (schema, endpointId) => {
+    try {
+      if (!schema.trim()) return schema;
+
+      const parsedSchema = JSON.parse(schema);
+      const formattedSchema = JSON.stringify(parsedSchema, null, 2);
+
+      setSchemaErrors((prev) => ({ ...prev, [endpointId]: "" }));
+      return formattedSchema;
+    } catch (error) {
+      setSchemaErrors((prev) => ({
+        ...prev,
+        [endpointId]: `Cannot format: ${error.message}`,
+      }));
+      return schema;
+    }
+  };
+
+  const handleNewEndpointSchemaFormat = () => {
+    const formattedSchema = formatSchema(newEndpoint.schema, "new");
+    setNewEndpoint({
+      ...newEndpoint,
+      schema: formattedSchema,
+    });
+  };
+
+  const handleEditEndpointSchemaFormat = (endpointId) => {
+    if (!editingEndpoint) return;
+
+    const formattedSchema = formatSchema(
+      editingEndpoint.data.schema,
+      endpointId
+    );
+    updateEditingEndpoint("schema", formattedSchema, endpointId);
   };
 
   return (
@@ -237,6 +411,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
         <button
           onClick={handleSave}
           className="border border-gray-400 rounded-lg py-2 px-4 font-inter text-sm hover:bg-gray-50 transition-colors"
+          disabled={loading}
         >
           {loading ? (
             <>
@@ -400,19 +575,40 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
 
                       {/* Schema Input */}
                       <div className="flex flex-col space-y-1">
-                        <label className="text-xs">Schema (JSON format):</label>
+                        <div className="flex justify-between items-center">
+                          <label className="text-xs">
+                            Schema (JSON format):
+                          </label>
+                          <button
+                            onClick={handleNewEndpointSchemaFormat}
+                            className="text-xs text-gray-600 hover:text-gray-800"
+                            title="Format JSON"
+                          >
+                            Format JSON
+                          </button>
+                        </div>
                         <textarea
                           placeholder="Enter schema in JSON format"
-                          className="border border-gray-300 rounded-md p-2 w-full text-sm"
+                          className={`border ${
+                            schemaErrors["new"]
+                              ? "border-red-400"
+                              : "border-gray-300"
+                          } rounded-md p-2 w-full text-sm font-mono`}
                           value={newEndpoint.schema}
-                          onChange={(e) =>
+                          onChange={(e) => {
                             setNewEndpoint({
                               ...newEndpoint,
                               schema: e.target.value,
-                            })
-                          }
+                            });
+                            validateSchema(e.target.value, "new");
+                          }}
                           rows={4}
                         />
+                        {schemaErrors["new"] && (
+                          <div className="text-red-500 text-xs mt-1">
+                            {schemaErrors["new"]}
+                          </div>
+                        )}
                       </div>
 
                       {/* Buttons */}
@@ -443,88 +639,210 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                     ) : (
                       <div className="space-y-2">
                         {folder.endpoints.map((endpoint) => (
-                          <div
-                            key={endpoint.id}
-                            className="flex justify-between p-2 bg-white border border-gray-200 rounded-md"
-                          >
-                            <div className="flex-1">
-                              <div className="font-medium text-sm">
-                                {endpoint.name}
+                          <React.Fragment key={endpoint.id}>
+                            <div className="flex justify-between p-2 bg-white border border-gray-200 rounded-md">
+                              <div className="flex-1">
+                                <div className="font-medium text-sm">
+                                  {endpoint.name}
+                                </div>
+                                <div className="text-gray-500 text-xs">
+                                  {endpoint.url}
+                                </div>
+                                {endpoint.schema &&
+                                  !editingEndpoint?.endpointId ===
+                                    endpoint.id && (
+                                    <div className="text-gray-600 text-[0.6rem] mt-1">
+                                      <pre className="bg-gray-50 p-2 rounded-md">
+                                        {(() => {
+                                          try {
+                                            // Attempt to parse the schema
+                                            const parsedSchema = JSON.parse(
+                                              endpoint.schema
+                                            );
+                                            // If successful, display the formatted JSON
+                                            return JSON.stringify(
+                                              parsedSchema,
+                                              null,
+                                              2
+                                            );
+                                          } catch (error) {
+                                            // If parsing fails, display an error message in red
+                                            return (
+                                              <span className="text-red-500">
+                                                Wrong JSON format schema. Must
+                                                fix.
+                                              </span>
+                                            );
+                                          }
+                                        })()}
+                                      </pre>
+                                    </div>
+                                  )}
                               </div>
-                              <div className="text-gray-500 text-xs">
-                                {endpoint.url}
+                              <div className="flex">
+                                <button
+                                  className="size-6 flex items-center justify-center hover:bg-gray-100 text-gray-600 rounded mr-1"
+                                  onClick={() =>
+                                    toggleEditEndpoint(folder.id, endpoint)
+                                  }
+                                  title="Edit Endpoint"
+                                >
+                                  <IconEdit size={14} />
+                                </button>
+                                <button
+                                  className="size-6 flex items-center justify-center hover:bg-green-100 text-green-600 rounded mr-1"
+                                  onClick={() => testEndpoint(endpoint)}
+                                  disabled={testingEndpoint === endpoint.id}
+                                  title="Test Endpoint"
+                                >
+                                  {testingEndpoint === endpoint.id ? (
+                                    <svg
+                                      className="animate-spin size-4 text-green-600"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <circle
+                                        className="opacity-25"
+                                        cx="12"
+                                        cy="12"
+                                        r="10"
+                                        stroke="currentColor"
+                                        strokeWidth="4"
+                                      />
+                                      <path
+                                        className="opacity-75"
+                                        fill="currentColor"
+                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                      />
+                                    </svg>
+                                  ) : (
+                                    <IconPlayerPlay size={14} />
+                                  )}
+                                </button>
+                                <button
+                                  className="size-6 flex items-center justify-center hover:bg-red-200 text-red-600 rounded"
+                                  onClick={() =>
+                                    deleteEndpoint(folder.id, endpoint.id)
+                                  }
+                                  title="Delete Endpoint"
+                                >
+                                  <IconX size={14} />
+                                </button>
                               </div>
-                              {endpoint.schema && (
-                                <div className="text-gray-600 text-[0.6rem] mt-1">
-                                  <pre className="bg-gray-50 p-2 rounded-md">
-                                    {(() => {
-                                      try {
-                                        // Attempt to parse the schema
-                                        const parsedSchema = JSON.parse(
-                                          endpoint.schema
-                                        );
-                                        // If successful, display the formatted JSON
-                                        return JSON.stringify(
-                                          parsedSchema,
-                                          null,
-                                          2
-                                        );
-                                      } catch (error) {
-                                        // If parsing fails, display an error message in red
-                                        return (
-                                          <span className="text-red-500">
-                                            Wrong JSON format schema. Must fix.
-                                          </span>
-                                        );
-                                      }
-                                    })()}
-                                  </pre>
+                            </div>
+
+                            {/* Inline edit form for this specific endpoint */}
+                            {editingEndpoint &&
+                              editingEndpoint.folderId === folder.id &&
+                              editingEndpoint.endpointId === endpoint.id && (
+                                <div className="p-3 border border-gray-200 bg-white rounded-md mt-1 mb-2 text-sm">
+                                  <div className="text-sm font-medium mb-3 text-black">
+                                    Edit Endpoint
+                                  </div>
+                                  <div className="space-y-4">
+                                    {/* Name Input */}
+                                    <div className="flex flex-col space-y-1">
+                                      <label className="text-xs">
+                                        Name + Clear Description:
+                                      </label>
+                                      <input
+                                        type="text"
+                                        className="border border-gray-300 rounded-md p-2 w-full text-sm"
+                                        value={editingEndpoint.data.name}
+                                        onChange={(e) =>
+                                          updateEditingEndpoint(
+                                            "name",
+                                            e.target.value,
+                                            endpoint.id
+                                          )
+                                        }
+                                      />
+                                    </div>
+
+                                    {/* URL Input */}
+                                    <div className="flex flex-col space-y-1">
+                                      <label className="text-xs">URL:</label>
+                                      <input
+                                        type="text"
+                                        className="border border-gray-300 rounded-md p-2 w-full text-sm"
+                                        value={editingEndpoint.data.url}
+                                        onChange={(e) =>
+                                          updateEditingEndpoint(
+                                            "url",
+                                            e.target.value,
+                                            endpoint.id
+                                          )
+                                        }
+                                      />
+                                    </div>
+
+                                    {/* Schema Input */}
+                                    <div className="flex flex-col space-y-1">
+                                      <div className="flex justify-between items-center">
+                                        <label className="text-xs">
+                                          Schema (JSON format):
+                                        </label>
+                                        <button
+                                          onClick={() =>
+                                            handleEditEndpointSchemaFormat(
+                                              endpoint.id
+                                            )
+                                          }
+                                          className="text-xs text-gray-600 hover:text-gray-800"
+                                          title="Format JSON"
+                                        >
+                                          Format JSON
+                                        </button>
+                                      </div>
+                                      <textarea
+                                        className={`border ${
+                                          schemaErrors[endpoint.id]
+                                            ? "border-red-400"
+                                            : "border-gray-300"
+                                        } rounded-md p-2 w-full text-sm font-mono`}
+                                        value={editingEndpoint.data.schema}
+                                        onChange={(e) =>
+                                          updateEditingEndpoint(
+                                            "schema",
+                                            e.target.value,
+                                            endpoint.id
+                                          )
+                                        }
+                                        rows={4}
+                                      />
+                                      {schemaErrors[endpoint.id] && (
+                                        <div className="text-red-500 text-xs mt-1">
+                                          {schemaErrors[endpoint.id]}
+                                        </div>
+                                      )}
+                                    </div>
+
+                                    {/* Action Buttons */}
+                                    <div className="flex justify-end space-x-2">
+                                      <button
+                                        className="border border-gray-300 rounded-md px-3 py-1 text-sm hover:bg-gray-50"
+                                        onClick={() => setEditingEndpoint(null)}
+                                      >
+                                        Cancel
+                                      </button>
+                                      <button
+                                        className="bg-gray-50 text-gray-900 border border-gray-300 hover:bg-gray-200 rounded-md px-3 py-1 text-sm flex items-center"
+                                        onClick={() =>
+                                          saveEditedEndpoint(
+                                            folder.id,
+                                            endpoint.id
+                                          )
+                                        }
+                                      >
+                                        <IconCheck size={14} className="mr-1" />
+                                        Edit
+                                      </button>
+                                    </div>
+                                  </div>
                                 </div>
                               )}
-                            </div>
-                            <div className="flex">
-                              <button
-                                className="size-6 flex items-center justify-center hover:bg-green-100 text-blue-600 rounded mr-1"
-                                onClick={() => testEndpoint(endpoint)}
-                                disabled={testingEndpoint === endpoint.id}
-                                title="Test Endpoint"
-                              >
-                                {testingEndpoint === endpoint.id ? (
-                                  <svg
-                                    className="animate-spin size-4 text-green-600"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <circle
-                                      className="opacity-25"
-                                      cx="12"
-                                      cy="12"
-                                      r="10"
-                                      stroke="currentColor"
-                                      strokeWidth="4"
-                                    />
-                                    <path
-                                      className="opacity-75"
-                                      fill="currentColor"
-                                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                    />
-                                  </svg>
-                                ) : (
-                                  <IconPlayerPlay size={14} />
-                                )}
-                              </button>
-                              <button
-                                className="size-6 flex items-center justify-center hover:bg-red-200 text-red-600 rounded"
-                                onClick={() =>
-                                  deleteEndpoint(folder.id, endpoint.id)
-                                }
-                                title="Delete Endpoint"
-                              >
-                                <IconX size={14} />
-                              </button>
-                            </div>
-                          </div>
+                          </React.Fragment>
                         ))}
                       </div>
                     )}

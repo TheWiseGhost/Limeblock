@@ -6,6 +6,7 @@ import {
   IconChevronDown,
   IconChevronRight,
   IconDots,
+  IconEdit,
 } from "@tabler/icons-react";
 import React, { useState, useEffect } from "react";
 import { useToast } from "../global/Use-Toast";
@@ -24,6 +25,15 @@ const PageEndpointTree = ({ folders, url, user_id }) => {
   // New state to track if folder deletion mode is active
   const [deleteFolderMode, setDeleteFolderMode] = useState(false);
   const [loading, setLoading] = useState(false);
+  // New state to track which endpoints are being edited
+  const [editingEndpoints, setEditingEndpoints] = useState({});
+  // New state to hold current endpoint being edited
+  const [editEndpoint, setEditEndpoint] = useState({
+    id: null,
+    name: "",
+    url: "",
+    description: "",
+  });
 
   const { toast } = useToast();
 
@@ -178,6 +188,77 @@ const PageEndpointTree = ({ folders, url, user_id }) => {
   // Toggle delete folder mode
   const toggleDeleteFolderMode = () => {
     setDeleteFolderMode(!deleteFolderMode);
+  };
+
+  // Toggle endpoint edit mode
+  const toggleEditEndpoint = (folderId, endpoint) => {
+    const endpointKey = `${folderId}-${endpoint.id}`;
+
+    // If we're already editing this endpoint, cancel editing
+    if (editingEndpoints[endpointKey]) {
+      setEditingEndpoints((prev) => ({
+        ...prev,
+        [endpointKey]: false,
+      }));
+      return;
+    }
+
+    // Set the current endpoint data to edit form
+    setEditEndpoint({
+      id: endpoint.id,
+      name: endpoint.name,
+      url: endpoint.url,
+      description: endpoint.description || "",
+    });
+
+    // Mark this endpoint as being edited
+    setEditingEndpoints((prev) => ({
+      ...prev,
+      [endpointKey]: true,
+    }));
+  };
+
+  // Save endpoint edits
+  const saveEndpointEdit = (folderId, endpointId) => {
+    if (!editEndpoint.name.trim() || !editEndpoint.url.trim()) return;
+
+    const endpointKey = `${folderId}-${endpointId}`;
+
+    const updatedFolders = newFolders.map((folder) => {
+      if (folder.id === folderId) {
+        return {
+          ...folder,
+          endpoints: folder.endpoints.map((ep) =>
+            ep.id === endpointId
+              ? {
+                  ...ep,
+                  name: editEndpoint.name,
+                  url: editEndpoint.url,
+                  description: editEndpoint.description,
+                }
+              : ep
+          ),
+        };
+      }
+      return folder;
+    });
+
+    setNewFolders(updatedFolders);
+
+    // Reset editing state
+    setEditingEndpoints((prev) => ({
+      ...prev,
+      [endpointKey]: false,
+    }));
+  };
+
+  // Cancel endpoint edit
+  const cancelEndpointEdit = (folderId, endpointId) => {
+    const endpointKey = `${folderId}-${endpointId}`;
+    setEditingEndpoints((prev) => ({
+      ...prev,
+      [endpointKey]: false,
+    }));
   };
 
   return (
@@ -415,29 +496,129 @@ const PageEndpointTree = ({ folders, url, user_id }) => {
                         {folder.endpoints.map((endpoint) => (
                           <div
                             key={endpoint.id}
-                            className="flex justify-between p-2 bg-white border border-gray-200 rounded-md"
+                            className="border border-gray-200 rounded-md"
                           >
-                            <div className="flex-1">
-                              <div className="font-medium text-sm">
-                                {endpoint.name}
-                              </div>
-                              <div className="text-gray-500 text-xs">
-                                {endpoint.url}
-                              </div>
-                              {endpoint.description && (
-                                <div className="text-gray-600 text-xs mt-1">
-                                  {endpoint.description}
+                            <div className="flex justify-between p-2 bg-white rounded-md">
+                              <div className="flex-1">
+                                <div className="font-medium text-sm">
+                                  {endpoint.name}
                                 </div>
-                              )}
+                                <div className="text-gray-500 text-xs">
+                                  {endpoint.url}
+                                </div>
+                                {endpoint.description && (
+                                  <div className="text-gray-600 text-xs mt-1">
+                                    {endpoint.description}
+                                  </div>
+                                )}
+                              </div>
+                              <div className="flex items-center space-x-1">
+                                <button
+                                  className="size-6 flex items-center justify-center hover:bg-blue-100 rounded"
+                                  onClick={() =>
+                                    toggleEditEndpoint(folder.id, endpoint)
+                                  }
+                                >
+                                  <IconEdit size={14} />
+                                </button>
+                                <button
+                                  className="size-6 flex items-center justify-center hover:bg-red-200 rounded"
+                                  onClick={() =>
+                                    deleteEndpoint(folder.id, endpoint.id)
+                                  }
+                                >
+                                  <IconX size={14} />
+                                </button>
+                              </div>
                             </div>
-                            <button
-                              className="size-6 flex items-center justify-center hover:bg-red-200 rounded"
-                              onClick={() =>
-                                deleteEndpoint(folder.id, endpoint.id)
-                              }
-                            >
-                              <IconX size={14} />
-                            </button>
+
+                            {/* Edit Endpoint Form - Shown directly below the endpoint */}
+                            {editingEndpoints[
+                              `${folder.id}-${endpoint.id}`
+                            ] && (
+                              <div className="p-3 border-t border-gray-200 text-sm bg-gray-50">
+                                <h4 className="text-sm font-medium mb-3">
+                                  Edit Endpoint
+                                </h4>
+                                <div className="space-y-4">
+                                  {/* Name Input */}
+                                  <div className="flex flex-col space-y-1">
+                                    <label className="text-xs">Name:</label>
+                                    <input
+                                      type="text"
+                                      placeholder="Enter endpoint name"
+                                      className="border border-gray-300 rounded-md p-2 w-full text-sm"
+                                      value={editEndpoint.name}
+                                      onChange={(e) =>
+                                        setEditEndpoint({
+                                          ...editEndpoint,
+                                          name: e.target.value,
+                                        })
+                                      }
+                                    />
+                                  </div>
+
+                                  {/* URL Input */}
+                                  <div className="flex flex-col space-y-1">
+                                    <label className="text-xs">URL:</label>
+                                    <input
+                                      type="text"
+                                      placeholder="Enter endpoint URL"
+                                      className="border border-gray-300 rounded-md p-2 w-full text-sm"
+                                      value={editEndpoint.url}
+                                      onChange={(e) =>
+                                        setEditEndpoint({
+                                          ...editEndpoint,
+                                          url: e.target.value,
+                                        })
+                                      }
+                                    />
+                                  </div>
+
+                                  {/* Description Input */}
+                                  <div className="flex flex-col space-y-1">
+                                    <label className="text-xs">
+                                      Description:
+                                    </label>
+                                    <textarea
+                                      placeholder="Enter description"
+                                      className="border border-gray-300 rounded-md p-2 w-full text-sm"
+                                      value={editEndpoint.description}
+                                      onChange={(e) =>
+                                        setEditEndpoint({
+                                          ...editEndpoint,
+                                          description: e.target.value,
+                                        })
+                                      }
+                                      rows={2}
+                                    />
+                                  </div>
+
+                                  {/* Buttons */}
+                                  <div className="flex justify-end space-x-2">
+                                    <button
+                                      className="border border-gray-300 rounded-md px-3 py-1 text-sm hover:bg-gray-50"
+                                      onClick={() =>
+                                        cancelEndpointEdit(
+                                          folder.id,
+                                          endpoint.id
+                                        )
+                                      }
+                                    >
+                                      Cancel
+                                    </button>
+                                    <button
+                                      className="text-gray-900 bg-white border border-gray-400 hover:bg-gray-50 rounded-md px-3 py-1 text-sm"
+                                      onClick={() =>
+                                        saveEndpointEdit(folder.id, endpoint.id)
+                                      }
+                                    >
+                                      Edit
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
                           </div>
                         ))}
                       </div>
