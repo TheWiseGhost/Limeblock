@@ -21,6 +21,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
   const [editingEndpoint, setEditingEndpoint] = useState(null);
   const [newEndpoint, setNewEndpoint] = useState({
     name: "",
+    description: "",
     url: url,
     schema: "",
   });
@@ -52,9 +53,11 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
     }
   };
 
-  const handleSave = async () => {
+  const handleSave = async (show) => {
     try {
-      setLoading(true);
+      if (show) {
+        setLoading(true);
+      }
 
       if (!user_id) {
         toast({
@@ -84,10 +87,12 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
       const data = await response.json();
 
       if (data.success) {
-        toast({
-          title: "Endpoint Tree Saved!",
-          description: "Your changes have been saved successfully",
-        });
+        if (show) {
+          toast({
+            title: "Endpoint Tree Saved!",
+            description: "Your changes have been saved successfully",
+          });
+        }
         return true;
       } else {
         toast({
@@ -205,7 +210,6 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
   };
 
   const toggleEditEndpoint = (folderId, endpoint) => {
-    // If we're already editing this endpoint, cancel the edit
     if (
       editingEndpoint &&
       editingEndpoint.folderId === folderId &&
@@ -215,14 +219,12 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
       return;
     }
 
-    // Otherwise, start editing this endpoint
     setEditingEndpoint({
       folderId,
       endpointId: endpoint.id,
       data: { ...endpoint },
     });
 
-    // Make sure the schema error state exists for this endpoint
     if (endpoint.schema) {
       validateSchema(endpoint.schema, endpoint.id);
     }
@@ -237,7 +239,6 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
       },
     }));
 
-    // Validate schema if that's what changed
     if (field === "schema") {
       validateSchema(value, endpointId);
     }
@@ -409,7 +410,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
         </div>
 
         <button
-          onClick={handleSave}
+          onClick={() => handleSave(true)}
           className="border border-gray-400 rounded-lg py-2 px-4 font-inter text-sm hover:bg-gray-50 transition-colors"
           disabled={loading}
         >
@@ -535,22 +536,33 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                     <div className="space-y-4">
                       {/* Name Input */}
                       <div className="flex flex-col space-y-1">
-                        <label className="text-xs">
-                          Name + Clear Description:{" "}
-                          <span className="text-gray-700">
-                            (Ex. Update Document - Update an existing document
-                            for the user):
-                          </span>
-                        </label>
+                        <label className="text-xs">Name:</label>
                         <input
                           type="text"
-                          placeholder="Enter endpoint name + description"
+                          placeholder="Enter endpoint name"
                           className="border border-gray-300 rounded-md p-2 w-full text-sm"
                           value={newEndpoint.name}
                           onChange={(e) =>
                             setNewEndpoint({
                               ...newEndpoint,
                               name: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
+
+                      {/* Description Input */}
+                      <div className="flex flex-col space-y-1">
+                        <label className="text-xs">Description:</label>
+                        <input
+                          type="text"
+                          placeholder="Enter endpoint description"
+                          className="border border-gray-300 rounded-md p-2 w-full text-sm"
+                          value={newEndpoint.description}
+                          onChange={(e) =>
+                            setNewEndpoint({
+                              ...newEndpoint,
+                              description: e.target.value,
                             })
                           }
                         />
@@ -646,6 +658,9 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                                   {endpoint.name}
                                 </div>
                                 <div className="text-gray-500 text-xs">
+                                  {endpoint.description}
+                                </div>
+                                <div className="text-gray-500 text-xs">
                                   {endpoint.url}
                                 </div>
                                 {endpoint.schema &&
@@ -655,18 +670,15 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                                       <pre className="bg-gray-50 p-2 rounded-md">
                                         {(() => {
                                           try {
-                                            // Attempt to parse the schema
                                             const parsedSchema = JSON.parse(
                                               endpoint.schema
                                             );
-                                            // If successful, display the formatted JSON
                                             return JSON.stringify(
                                               parsedSchema,
                                               null,
                                               2
                                             );
                                           } catch (error) {
-                                            // If parsing fails, display an error message in red
                                             return (
                                               <span className="text-red-500">
                                                 Wrong JSON format schema. Must
@@ -743,9 +755,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                                   <div className="space-y-4">
                                     {/* Name Input */}
                                     <div className="flex flex-col space-y-1">
-                                      <label className="text-xs">
-                                        Name + Clear Description:
-                                      </label>
+                                      <label className="text-xs">Name:</label>
                                       <input
                                         type="text"
                                         className="border border-gray-300 rounded-md p-2 w-full text-sm"
@@ -753,6 +763,25 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                                         onChange={(e) =>
                                           updateEditingEndpoint(
                                             "name",
+                                            e.target.value,
+                                            endpoint.id
+                                          )
+                                        }
+                                      />
+                                    </div>
+
+                                    {/* Description Input */}
+                                    <div className="flex flex-col space-y-1">
+                                      <label className="text-xs">
+                                        Description:
+                                      </label>
+                                      <input
+                                        type="text"
+                                        className="border border-gray-300 rounded-md p-2 w-full text-sm"
+                                        value={editingEndpoint.data.description}
+                                        onChange={(e) =>
+                                          updateEditingEndpoint(
+                                            "description",
                                             e.target.value,
                                             endpoint.id
                                           )
