@@ -589,7 +589,8 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                       <div className="flex flex-col space-y-1">
                         <div className="flex justify-between items-center">
                           <label className="text-xs">
-                            Schema (JSON format):
+                            Schema (JSON format) - Put context params like "id":{" "}
+                            "{"{"}user_id{"}"}":
                           </label>
                           <button
                             onClick={handleNewEndpointSchemaFormat}
@@ -810,7 +811,8 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                                     <div className="flex flex-col space-y-1">
                                       <div className="flex justify-between items-center">
                                         <label className="text-xs">
-                                          Schema (JSON format):
+                                          Schema (JSON format) - Put context
+                                          params like "id": "{"{"}user_id{"}"}":
                                         </label>
                                         <button
                                           onClick={() =>

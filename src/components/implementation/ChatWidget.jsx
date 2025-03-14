@@ -79,6 +79,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
             body: JSON.stringify({
               prompt: inputMessage,
               api_key: apiKey,
+              context: contextParams,
             }),
           }
         );
