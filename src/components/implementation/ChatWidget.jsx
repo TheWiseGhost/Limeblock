@@ -1,18 +1,68 @@
 "use client";
 
-import { IconSend } from "@tabler/icons-react";
-import React, { useState, useEffect } from "react";
+import { IconSend, IconUser } from "@tabler/icons-react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
+// Reusable BlockFace component
+const BlockFace = ({ body, eyes, size, isThinking = false }) => {
+  const getBodySize = () => size;
+  const getEyeSize = () => Math.round(size / 4.5);
+
+  return (
+    <motion.div
+      className="relative rounded-lg flex justify-center items-center"
+      style={{
+        backgroundColor: body,
+        width: getBodySize(),
+        height: getBodySize(),
+      }}
+      animate={isThinking ? { scale: [1, 0.9, 1] } : {}}
+      transition={isThinking ? { repeat: Infinity, duration: 1 } : {}}
+    >
+      {/* Eyes */}
+      <div className="absolute top-1/4 flex justify-between w-3/5">
+        <div
+          className="rounded-sm"
+          style={{
+            width: getEyeSize(),
+            height: getEyeSize(),
+            backgroundColor: eyes,
+          }}
+        ></div>
+        <div
+          className="bg-white rounded-sm"
+          style={{
+            width: getEyeSize(),
+            height: getEyeSize(),
+            backgroundColor: eyes,
+          }}
+        ></div>
+      </div>
+    </motion.div>
+  );
+};
 
 // ChatWidget component that can be imported by other components
 const ChatWidget = ({ apiKey, contextParams }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loadingStep, setLoadingStep] = useState(0);
   const [error, setError] = useState(null);
   const [frontend, setFrontend] = useState(null);
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
   const [isWinking, setIsWinking] = useState(false);
+  const textAreaRef = useRef(null);
+
+  // Loading states for animation
+  const loadingStates = [
+    "Analyzing prompt...",
+    "Finding best endpoint to hit...",
+    "Preparing to send data...",
+    "Sending data...",
+    "Successfully sent...",
+  ];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,6 +104,30 @@ const ChatWidget = ({ apiKey, contextParams }) => {
     fetchData();
   }, [apiKey]);
 
+  // Set up the loading animation cycle
+  useEffect(() => {
+    let interval;
+    if (loading) {
+      interval = setInterval(() => {
+        setLoadingStep((prev) => (prev + 1) % loadingStates.length);
+      }, 5000);
+    }
+    return () => clearInterval(interval);
+  }, [loading]);
+
+  // Auto-resize text area based on content
+  useEffect(() => {
+    if (textAreaRef.current) {
+      const textarea = textAreaRef.current;
+      // Reset height to auto to get the correct scrollHeight
+      textarea.style.height = "auto";
+      // Set new height based on scrollHeight, but cap at 50% of chat container
+      const maxHeight = 500 * 0.5; // 50% of the 500px chat container height
+      const newHeight = Math.min(textarea.scrollHeight, maxHeight);
+      textarea.style.height = `${newHeight}px`;
+    }
+  }, [inputMessage]);
+
   const toggleChat = () => {
     setIsOpen(!isOpen);
   };
@@ -64,8 +138,14 @@ const ChatWidget = ({ apiKey, contextParams }) => {
       // Add user message to chat
       setMessages([...messages, { text: inputMessage, sender: "user" }]);
 
+      // Reset textarea height
+      if (textAreaRef.current) {
+        textAreaRef.current.style.height = "auto";
+      }
+
       // Show loading indicator
       setLoading(true);
+      setLoadingStep(0);
 
       try {
         // Send message to Django backend
@@ -333,7 +413,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
 
             {/* Chat Messages */}
             <motion.div
-              className="flex-grow p-4 overflow-y-auto bg-gray-50"
+              className="flex-grow p-4 overflow-y-auto bg-white pb-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
@@ -376,19 +456,28 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                       {messages.map((msg, index) => (
                         <motion.div
                           key={index}
-                          className={`mb-4 ${
-                            msg.sender === "user" ? "text-right" : "text-left"
+                          className={`mb-4 flex gap-3 ${
+                            msg.sender === "user"
+                              ? "flex-row-reverse"
+                              : "flex-row"
                           }`}
                           variants={messageVariants}
                           initial="initial"
                           animate="animate"
                           transition={{ delay: index * 0.05 }}
                         >
+                          {msg.sender === "user" ? (
+                            <div className="size-7 rounded-full bg-gray-100 flex items-center justify-center mt-2">
+                              <IconUser className="size-5 text-gray-600" />
+                            </div>
+                          ) : (
+                            <></>
+                          )}
                           <motion.div
-                            className={`inline-block rounded-lg px-4 py-2 max-w-xs ${
+                            className={`inline-block rounded-lg px-4 py-2 pb-8 max-w-xs relative group ${
                               msg.sender === "user"
-                                ? "bg-neutral-200 text-black"
-                                : "bg-gray-100 text-gray-800"
+                                ? "bg-white text-black pr-1"
+                                : "bg-white text-gray-800 border border-gray-200"
                             }`}
                             whileHover={{ scale: 1.02 }}
                             style={{
@@ -397,6 +486,123 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                             }}
                           >
                             {msg.text}
+
+                            {/* Action buttons - always taking space but only visible on hover */}
+                            <div
+                              className={`absolute bg-white bottom-1 flex items-center gap-1 w-full ${
+                                msg.sender === "user"
+                                  ? "justify-end right-2"
+                                  : "justify-start left-2"
+                              }`}
+                            >
+                              {msg.sender === "user" ? (
+                                /* Edit button for user messages */
+                                <motion.button
+                                  onClick={() => {
+                                    setInputMessage(msg.text);
+                                    if (textAreaRef.current) {
+                                      textAreaRef.current.focus();
+                                    }
+                                  }}
+                                  className="bg-transparent hover:bg-gray-200 rounded-full p-1 transition-colors opacity-0 group-hover:opacity-100"
+                                  whileHover={{ scale: 1.1 }}
+                                  whileTap={{ scale: 0.95 }}
+                                  title="Edit message"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="14"
+                                    height="14"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  >
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                  </svg>
+                                </motion.button>
+                              ) : (
+                                /* Copy, Like, Dislike buttons for bot messages */
+                                <>
+                                  <motion.button
+                                    onClick={() => {
+                                      navigator.clipboard.writeText(msg.text);
+                                    }}
+                                    className="bg-transparent hover:bg-gray-200 rounded-full p-1 transition-colors opacity-0 group-hover:opacity-100"
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    title="Copy to clipboard"
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="14"
+                                      height="14"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    >
+                                      <rect
+                                        x="9"
+                                        y="9"
+                                        width="13"
+                                        height="13"
+                                        rx="2"
+                                        ry="2"
+                                      ></rect>
+                                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                  </motion.button>
+
+                                  <motion.button
+                                    className="bg-transparent hover:bg-gray-200 rounded-full p-1 transition-colors opacity-0 group-hover:opacity-100"
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    title="Like"
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="14"
+                                      height="14"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    >
+                                      <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                                    </svg>
+                                  </motion.button>
+
+                                  <motion.button
+                                    className="bg-transparent hover:bg-gray-200 rounded-full p-1 transition-colors opacity-0 group-hover:opacity-100"
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    title="Dislike"
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="14"
+                                      height="14"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    >
+                                      <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path>
+                                    </svg>
+                                  </motion.button>
+                                </>
+                              )}
+                            </div>
                           </motion.div>
                         </motion.div>
                       ))}
@@ -404,31 +610,64 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                   )}
                 </>
               )}
+
+              {/* AI Thinking/Loading Indicator */}
+              {loading && messages.length > 0 && (
+                <motion.div
+                  className="flex items-center mb-4"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  <BlockFace
+                    body={frontend?.body}
+                    eyes={frontend?.eyes}
+                    size={36}
+                    isThinking={true}
+                  />
+                  <motion.div
+                    className="bg-gray-100 text-gray-700 rounded-lg px-4 py-2 text-sm ml-2"
+                    key={loadingStep}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    {loadingStates[loadingStep]}
+                  </motion.div>
+                </motion.div>
+              )}
             </motion.div>
 
             {/* Chat Input */}
             <motion.form
               onSubmit={handleSendMessage}
-              className="border-t border-gray-200 p-4"
+              className="px-4 pt-2"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              <div className="flex">
+              <div className="flex border border-gray-300 px-2">
                 <motion.textarea
-                  type="text"
+                  ref={textAreaRef}
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   placeholder="Type a message..."
-                  className="flex-grow text-sm p-3 border border-gray-300 focus:outline-none"
-                  whileFocus={{
-                    boxShadow: "0 0 0 2px rgba(66, 153, 225, 0.5)",
+                  className="resize-none flex-grow text-sm pr-5 pt-3 pb-4 outline-none ring-0 focus:ring-0 focus:outline-none active:ring-0 active:outline-none"
+                  style={{
+                    minHeight: "40px",
+                    maxHeight: "250px", // 50% of the 500px container
+                    overflow: "auto",
                   }}
                   disabled={loading}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      handleSendMessage(e);
+                    }
+                  }}
                 />
                 <motion.button
                   type="submit"
-                  className="w-10 place-items-center py-1 my-3 ml-2 rounded-lg text-white flex justify-center items-center"
+                  className="size-10 mt-auto place-items-bottom mb-2 rounded-lg text-white flex justify-center items-center"
                   style={{ backgroundColor: frontend?.body || "#4F46E5" }}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -452,7 +691,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                 </motion.button>
               </div>
             </motion.form>
-            <div className="flex flex-row items-center justify-center text-center pb-2">
+            <div className="flex flex-row items-center justify-center text-center pb-2 pt-1">
               <a
                 href="#"
                 className="font-inter text-gray-500 hover:underline transition duration-200"
