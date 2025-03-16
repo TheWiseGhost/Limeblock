@@ -58,7 +58,7 @@ const Pricing = () => {
           </div>
           <button
             onClick={() => window.open("/dashboard")}
-            className="w-full text-black border-2 font-semibold border-black rounded-full py-2 px-4 hover:bg-opacity-20 mx-auto hover:bg-white transition-colors"
+            className="w-full text-black border-2 font-semibold border-black rounded-full py-2 px-4 hover:bg-opacity-30 mx-auto hover:bg-white transition-colors"
           >
             Get Started
           </button>
@@ -81,7 +81,7 @@ const Pricing = () => {
           </div>
           <button
             onClick={() => createCheckout("prod_RvtLgN1zOEG6iD")}
-            className="w-full text-black border-2 font-semibold border-black rounded-full py-2 px-4 hover:bg-opacity-20 mx-auto hover:bg-white transition-colors"
+            className="w-full text-black border-2 font-semibold border-black rounded-full py-2 px-4 hover:bg-opacity-30 mx-auto hover:bg-white transition-colors"
           >
             Get Started
           </button>
@@ -103,7 +103,7 @@ const Pricing = () => {
           </div>
           <button
             onClick={() => createCheckout("prod_RvtL5HMB98eLLm")}
-            className="w-full text-black border-2 font-semibold border-black rounded-full py-2 px-4 hover:bg-opacity-50 hover:bg-gray-200 mx-auto transition-colors"
+            className="w-full text-black border-2 font-semibold border-black rounded-full py-2 px-4 hover:bg-opacity-70 hover:bg-gray-200 mx-auto transition-colors"
           >
             Get Started
           </button>
