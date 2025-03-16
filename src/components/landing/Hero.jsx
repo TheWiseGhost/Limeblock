@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 const NavButton = ({ text, href }) => (
   <a
     href={href}
-    className="cursor-pointer font-inter text-sm relative group px-4 py-2"
+    className="cursor-pointer font-inter text-[0.925rem] relative group px-4 py-2"
   >
     <span className="relative">
       {text}
@@ -103,9 +103,10 @@ export default function Hero() {
         </div>
 
         <div className="hidden md:flex gap-8">
-          <NavButton text="Process" href="#process" />
-          <NavButton text="Pricing" href="/checkout" />
+          <NavButton text="Docs" href="#process" />
           <NavButton text="Features" href="#features" />
+          <NavButton text="Solutions" href="#solutions" />
+          <NavButton text="Pricing" href="/checkout" />
           <NavButton text="Privacy" href="/privacy" />
           <NavButton text="Terms" href="/terms" />
         </div>
@@ -122,7 +123,7 @@ export default function Hero() {
       </motion.nav>
 
       {/* Side Feature Elements */}
-      <div className="absolute left-8 top-[140px] w-52">
+      <div className="absolute left-8 top-[160px] w-52">
         <FeatureCard
           icon="⚡️"
           title="Lightning Fast"
@@ -131,7 +132,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="absolute right-6 top-[160px] w-52">
+      <div className="absolute right-6 top-[180px] w-52">
         <FeatureCard
           icon="🔍"
           title="Intuitive Search"
@@ -140,7 +141,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="absolute left-20 bottom-[120px] mt-8 w-52">
+      <div className="absolute left-20 bottom-[100px] mt-8 w-52">
         <FeatureCard
           icon="🛠️"
           title="Easy Integration"
@@ -149,7 +150,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="absolute right-28 bottom-[100px] w-52">
+      <div className="absolute right-28 bottom-[80px] w-52">
         <FeatureCard
           icon="🕒"
           title="Better UX"
@@ -163,8 +164,14 @@ export default function Hero() {
         variants={container}
         initial="hidden"
         animate={isLoaded ? "show" : "hidden"}
-        className="flex flex-col justify-center px-4 text-center font-inter pt-12 z-0 relative"
+        className="flex flex-col justify-center px-4 text-center font-inter pt-10 z-0 relative"
       >
+        <motion.p
+          variants={item}
+          className="text-base font-semibold text-gray-500 mb-2 font-dm uppercase"
+        >
+          More than just a Chatbot
+        </motion.p>
         <motion.h1
           variants={item}
           className="text-7xl font-aeonik tracking-tight mb-8"
