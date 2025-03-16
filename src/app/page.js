@@ -2,6 +2,7 @@ import ChatWidget from "@/components/implementation/ChatWidget";
 import Demo from "@/components/landing/Demo";
 import Hero from "@/components/landing/Hero";
 import InAppActions from "@/components/landing/InAppActions";
+import Pricing from "@/components/landing/Pricing";
 
 export default function Home() {
   const contextParams = {
@@ -13,6 +14,8 @@ export default function Home() {
       <Hero />
       <Demo />
       <InAppActions />
+      <Pricing />
+
       <ChatWidget
         apiKey={"lime_2JDnwGpM7OOfEcfj3kJ9bwVrGULxh1sL"}
         contextParams={contextParams}

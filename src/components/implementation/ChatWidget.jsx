@@ -327,7 +327,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
           >
             <motion.div
               style={{
-                backgroundColor: frontend?.body || "#4F46E5",
+                backgroundColor: frontend?.body || "#90F08C",
                 width: `${getBodySize()}px`,
                 height: `${getBodySize()}px`,
               }}
@@ -387,7 +387,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
             {/* Chat Header */}
             <motion.div
               className="p-4 flex justify-between items-center"
-              style={{ backgroundColor: frontend?.body || "#4F46E5" }}
+              style={{ backgroundColor: frontend?.body || "#90F08C" }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.1 }}
@@ -489,7 +489,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
 
                             {/* Action buttons - always taking space but only visible on hover */}
                             <div
-                              className={`absolute bg-white bottom-1 flex items-center gap-1 w-full ${
+                              className={`absolute bg-none bottom-1 flex items-center gap-1 w-full ${
                                 msg.sender === "user"
                                   ? "justify-end right-2"
                                   : "justify-start left-2"
@@ -668,7 +668,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                 <motion.button
                   type="submit"
                   className="size-10 mt-auto place-items-bottom mb-2 rounded-lg text-white flex justify-center items-center"
-                  style={{ backgroundColor: frontend?.body || "#4F46E5" }}
+                  style={{ backgroundColor: frontend?.body || "#90F08C" }}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   disabled={loading}
