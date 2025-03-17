@@ -171,20 +171,21 @@ const ChatWidget = ({ apiKey, contextParams }) => {
           // If the request was successful
           let responseText;
 
-          if (data.response && data.endpoint_used) {
-            // Format successful response from endpoint
-            responseText = `Request processed using endpoint: ${data.endpoint_used}\n\n`;
+          // if (data.response && data.endpoint_used) {
+          //   // Format successful response from endpoint
+          //   responseText = `Request processed using endpoint: ${data.endpoint_used}\n\n`;
 
-            if (typeof data.response === "object") {
-              responseText += JSON.stringify(data.response, null, 2);
-            } else {
-              responseText += data.response;
-            }
-          } else {
-            // Generic success message if response structure is different
-            responseText =
-              typeof data === "object" ? JSON.stringify(data, null, 2) : data;
-          }
+          //   if (typeof data.response === "object") {
+          //     responseText += JSON.stringify(data.response, null, 2);
+          //   } else {
+          //     responseText += data.response;
+          //   }
+          // } else {
+          //   // Generic success message if response structure is different
+          //   responseText =
+          //     typeof data === "object" ? JSON.stringify(data, null, 2) : data;
+          // }
+          responseText = data.formatted_response;
 
           setMessages((prev) => [
             ...prev,
@@ -458,7 +459,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                           key={index}
                           className={`mb-4 flex gap-3 ${
                             msg.sender === "user"
-                              ? "flex-row-reverse"
+                              ? "flex-row w-11/12 ml-auto"
                               : "flex-row"
                           }`}
                           variants={messageVariants}
@@ -466,18 +467,12 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                           animate="animate"
                           transition={{ delay: index * 0.05 }}
                         >
-                          {msg.sender === "user" ? (
-                            <div className="size-7 rounded-full bg-gray-100 flex items-center justify-center mt-2">
-                              <IconUser className="size-5 text-gray-600" />
-                            </div>
-                          ) : (
-                            <></>
-                          )}
+                          {msg.sender === "user" ? <></> : <></>}
                           <motion.div
-                            className={`inline-block rounded-lg px-4 py-2 pb-8 max-w-xs relative group ${
+                            className={`inline-block rounded-lg w-full px-4 py-2 pb-8 max-w-xs relative group ${
                               msg.sender === "user"
-                                ? "bg-white text-black pr-1"
-                                : "bg-white text-gray-800 border border-gray-200"
+                                ? "bg-white text-black pl-3 border border-gray-200"
+                                : "bg-white text-gray-800 border border-gray-400"
                             }`}
                             whileHover={{ scale: 1.02 }}
                             style={{
