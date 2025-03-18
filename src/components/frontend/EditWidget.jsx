@@ -156,30 +156,30 @@ export default function EditWidget({ body, eyes, size, user_id }) {
         </div>
       </div>
 
-      <div className="flex flex-row gap-10 w-full">
+      <div className="flex flex-row gap-6 w-full">
         {/* Widget display area */}
-        <div className="w-1/2 h-44 flex">
+        <div className="w-1/2 h-[9rem] flex">
           <div
             style={{ backgroundColor: bodyColor }}
-            className="size-44 rounded-xl flex justify-evenly pt-10 px-4"
+            className="size-[9rem] rounded-lg flex justify-between pt-[2.2rem] px-[2rem]"
           >
             <div
               style={{ backgroundColor: eyeColor }}
-              className="size-9 rounded-lg"
+              className="size-[1.8rem] rounded-md"
             ></div>
             <div
               style={{ backgroundColor: eyeColor }}
-              className="size-9 rounded-lg"
+              className="size-[1.8rem] rounded-md"
             ></div>
           </div>
         </div>
 
         {/* Controls area */}
-        <div className="flex flex-col w-1/2 space-y-4 font-inter">
+        <div className="flex flex-col w-1/2 space-y-4 font-inter text-sm">
           {/* Body Color Selector */}
-          <div className="flex items-center mb-2">
+          <div className="flex items-center">
             <div
-              className="size-10 border border-gray-300 rounded-md mr-3"
+              className="size-8 border border-gray-300 rounded-md mr-3"
               style={{ backgroundColor: bodyColor }}
             ></div>
             <input
@@ -193,9 +193,9 @@ export default function EditWidget({ body, eyes, size, user_id }) {
           </div>
 
           {/* Eye Color Selector */}
-          <div className="flex items-center mb-2">
+          <div className="flex items-center">
             <div
-              className="size-10 border border-gray-300 rounded-md mr-3"
+              className="size-8 border border-gray-300 rounded-md mr-3"
               style={{ backgroundColor: eyeColor }}
             ></div>
             <input
@@ -209,8 +209,8 @@ export default function EditWidget({ body, eyes, size, user_id }) {
           </div>
 
           {/* Block Size Selector */}
-          <div className="flex items-center mb-2">
-            <div className="size-10 border border-gray-300 rounded-md mr-3 flex items-center justify-center">
+          <div className="flex items-center">
+            <div className="size-8 border border-gray-300 rounded-md mr-3 flex items-center justify-center">
               <IconAspectRatio />
             </div>
             <div className="flex gap-2 items-center">

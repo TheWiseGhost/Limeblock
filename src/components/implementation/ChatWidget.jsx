@@ -1,6 +1,6 @@
 "use client";
 
-import { IconSend, IconUser } from "@tabler/icons-react";
+import { IconSend } from "@tabler/icons-react";
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -388,7 +388,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
             {/* Chat Header */}
             <motion.div
               className="p-4 flex justify-between items-center"
-              style={{ backgroundColor: frontend?.body || "#90F08C" }}
+              style={{ backgroundColor: frontend?.banner || "#90F08C" }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.1 }}
@@ -399,7 +399,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2, type: "spring" }}
               >
-                Chat Assistant
+                {frontend?.pageTitle || "Chat Assistant"}
               </motion.span>
 
               <motion.button
@@ -450,7 +450,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.3 }}
                     >
-                      Start a conversation!
+                      {frontend?.startText || "How can I help you today?"}
                     </motion.div>
                   ) : (
                     <AnimatePresence>

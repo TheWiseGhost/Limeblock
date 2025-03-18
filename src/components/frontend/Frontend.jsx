@@ -3,6 +3,7 @@ import EditUrl from "./EditUrl";
 import EditWidget from "./EditWidget";
 import EditContextParams from "./EditContextParams";
 import PageEndpointTree from "./PageEndpointTree";
+import EditChatUI from "./EditChatUI";
 
 const Frontend = () => {
   const [user, setUser] = useState(null);
@@ -135,7 +136,7 @@ const Frontend = () => {
 
       {user && frontend ? (
         <div className="flex flex-row gap-8">
-          <div className="space-y-6 w-5/12">
+          <div className="space-y-3 w-5/12">
             <EditUrl url={frontend?.url} user_id={user?.id} />
             <EditWidget
               body={frontend?.body || "#90F08C"}
@@ -143,8 +144,17 @@ const Frontend = () => {
               size={frontend?.size || 12}
               user_id={user?.id}
             />
-            <EditContextParams
-              params={frontend?.context_params || []}
+            <EditChatUI
+              aiText={frontend?.aiText || "#000000"}
+              userText={frontend?.userText || "#000000"}
+              pageBackground={frontend?.pageBackground || "#FFFFFF"}
+              aiMessageBackground={frontend?.aiMessageBackground || "#F3F4F6"}
+              userMessageBackground={
+                frontend?.userMessageBackground || "#E5E7EB"
+              }
+              banner={frontend?.banner || "#90F08C"}
+              pageTitle={frontend?.pageTitle || "Chat Assistant"}
+              startText={frontend?.startText || "How can I help you today?"}
               user_id={user?.id}
             />
           </div>

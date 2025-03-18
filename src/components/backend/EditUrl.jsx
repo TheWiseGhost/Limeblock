@@ -66,7 +66,7 @@ const EditUrl = ({ url, user_id }) => {
   };
 
   return (
-    <div className="border border-gray-300 flex flex-row space-x-4 items-center rounded-md p-4 w-5/12">
+    <div className="border border-gray-300 flex flex-row space-x-4 items-center rounded-md p-4 w-1/2">
       <label className="block text-xl font-aeonik">URL:</label>
       <input
         type="text"

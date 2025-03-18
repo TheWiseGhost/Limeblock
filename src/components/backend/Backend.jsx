@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import EditUrl from "./EditUrl";
 import ContextParams from "./ContextParams";
 import ApiEndpointTree from "./ApiEndpointTree";
+import Access from "./Access";
 
 const Backend = () => {
   const [user, setUser] = useState(null);
@@ -129,7 +130,7 @@ const Backend = () => {
       <div className="flex flex-col space-y-6">
         <div className="flex flex-row space-x-6">
           <EditUrl url={backend?.url} user_id={user?.id} />
-          <ContextParams user_id={user?.id} />
+          <Access />
         </div>
         <ApiEndpointTree
           folders={backend?.folders}
