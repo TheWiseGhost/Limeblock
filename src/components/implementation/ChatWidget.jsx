@@ -186,11 +186,17 @@ const ChatWidget = ({ apiKey, contextParams }) => {
           //     typeof data === "object" ? JSON.stringify(data, null, 2) : data;
           // }
           responseText = data.formatted_response;
-
-          setMessages((prev) => [
-            ...prev,
-            { text: responseText, sender: "bot" },
-          ]);
+          if (data.endpoint_type == "frontend") {
+            setMessages((prev) => [
+              ...prev,
+              { text: responseText, sender: "bot", link: data.url },
+            ]);
+          } else {
+            setMessages((prev) => [
+              ...prev,
+              { text: responseText, sender: "bot" },
+            ]);
+          }
         } else {
           // Handle error response
           const errorMessage =
@@ -481,6 +487,19 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                             }}
                           >
                             {msg.text}
+                            <br />
+                            {msg.link ? (
+                              <button
+                                className="bg-gray-900 px-3 py-2 mt-2 text-white font-inter text-xs rounded-md"
+                                onClick={() => {
+                                  window.open(msg.link);
+                                }}
+                              >
+                                Visit Page
+                              </button>
+                            ) : (
+                              <></>
+                            )}
 
                             {/* Action buttons - always taking space but only visible on hover */}
                             <div
