@@ -1,6 +1,6 @@
 "use client";
 
-import { IconSend } from "@tabler/icons-react";
+import { IconSend, IconX } from "@tabler/icons-react";
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -381,46 +381,67 @@ const ChatWidget = ({ apiKey, contextParams }) => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="bg-white rounded-lg shadow-2xl flex flex-col overflow-hidden font-inter"
+            className="rounded-xl shadow-2xl flex flex-col overflow-hidden font-inter"
             style={{
               ...interactiveStyle,
-              width: "350px",
+              width: "390px",
               height: "500px",
               position: "absolute",
               bottom: "0",
               right: "0",
+              backgroundColor: frontend?.pageBackground || "#FFFFFF",
             }}
           >
             {/* Chat Header */}
             <motion.div
-              className="p-4 flex justify-between items-center"
+              className="px-4 py-4 flex justify-between items-center"
               style={{ backgroundColor: frontend?.banner || "#90F08C" }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.1 }}
             >
-              <motion.span
-                className="ml-2 text-lg text-white font-normal"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2, type: "spring" }}
-              >
-                {frontend?.pageTitle || "Chat Assistant"}
-              </motion.span>
+              <div className="flex flex-row space-x-3 items-center">
+                <div
+                  style={{ borderColor: frontend?.eyes || "" }}
+                  className="border rounded-lg"
+                >
+                  <BlockFace
+                    body={frontend?.body}
+                    eyes={frontend?.eyes}
+                    size={36}
+                    isThinking={false}
+                  />
+                </div>
+
+                <motion.span
+                  className="ml-2 text-base text-black font-inter font-normal"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2, type: "spring" }}
+                >
+                  {frontend?.pageTitle || "Chat Assistant"}
+                </motion.span>
+              </div>
 
               <motion.button
                 onClick={toggleChat}
-                className="text-white hover:text-gray-200"
-                whileHover={{ scale: 1.2 }}
+                className="text-gray-800 hover:text-black mr-2"
+                whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                ✕
+                <IconX className="size-5" />
               </motion.button>
             </motion.div>
+            <div
+              className="w-5/6 mx-auto h-[1px]"
+              style={{
+                backgroundColor: frontend?.banner == "#FFFFFF" ? "#E5E7EB" : "",
+              }}
+            ></div>
 
             {/* Chat Messages */}
             <motion.div
-              className="flex-grow p-4 overflow-y-auto bg-white pb-4"
+              className="flex-grow overflow-y-auto scroll-pe-0 bg-white pb-4 px-4 py-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
@@ -473,17 +494,36 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                           animate="animate"
                           transition={{ delay: index * 0.05 }}
                         >
-                          {msg.sender === "user" ? <></> : <></>}
+                          {msg.sender === "user" ? (
+                            <></>
+                          ) : (
+                            <div className="flex mt-auto">
+                              <BlockFace
+                                body={frontend?.body}
+                                eyes={frontend?.eyes}
+                                size={36}
+                                isThinking={false}
+                              />
+                            </div>
+                          )}
                           <motion.div
-                            className={`inline-block rounded-lg w-full px-4 py-2 pb-8 max-w-xs relative group ${
+                            className={`inline-block rounded-lg text-center px-4 py-4 relative group ${
                               msg.sender === "user"
-                                ? "bg-white text-black pl-3 border border-gray-200"
-                                : "bg-white text-gray-800 border border-gray-400"
+                                ? "ml-auto text-[0.9rem] w-fit"
+                                : "text-[0.9rem] w-11/12"
                             }`}
                             whileHover={{ scale: 1.02 }}
                             style={{
+                              backgroundColor:
+                                msg.sender == "user"
+                                  ? frontend?.userMessageBackground || "#E5E7EB"
+                                  : frontend?.aiMessageBackground || "#F3F4F6",
                               whiteSpace: "pre-wrap",
                               textAlign: "left",
+                              color:
+                                msg.sender == "user"
+                                  ? frontend?.userText || "#000000"
+                                  : frontend?.aiText || "#111111",
                             }}
                           >
                             {msg.text}
@@ -502,7 +542,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                             )}
 
                             {/* Action buttons - always taking space but only visible on hover */}
-                            <div
+                            {/* <div
                               className={`absolute bg-none bottom-1 flex items-center gap-1 w-full ${
                                 msg.sender === "user"
                                   ? "justify-end right-2"
@@ -510,7 +550,6 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                               }`}
                             >
                               {msg.sender === "user" ? (
-                                /* Edit button for user messages */
                                 <motion.button
                                   onClick={() => {
                                     setInputMessage(msg.text);
@@ -539,7 +578,6 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                                   </svg>
                                 </motion.button>
                               ) : (
-                                /* Copy, Like, Dislike buttons for bot messages */
                                 <>
                                   <motion.button
                                     onClick={() => {
@@ -616,7 +654,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                                   </motion.button>
                                 </>
                               )}
-                            </div>
+                            </div> */}
                           </motion.div>
                         </motion.div>
                       ))}
