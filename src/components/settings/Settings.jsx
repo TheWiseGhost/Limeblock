@@ -224,16 +224,28 @@ export default function Settings() {
                     : "Free Plan"}
                 </h3>
                 <p className="text-gray-500 text-sm mt-1">
-                  {user?.plan_description || "Basic features included"}
+                  {user?.plan === "enterprise"
+                    ? "Full access for enterprises"
+                    : user?.plan === "startup"
+                    ? "Advanced features for growing businesses"
+                    : "Basic features included"}
                 </p>
               </div>
               <div className="text-right">
                 <p className="font-medium text-gray-900">
-                  ${user?.plan_price || "0"}/month
+                  $
+                  {user?.plan === "enterprise"
+                    ? "99"
+                    : user?.plan === "startup"
+                    ? "19"
+                    : "0"}
+                  /month
                 </p>
                 <p className="text-gray-500 text-sm mt-1">
                   Billed{" "}
-                  {new Date(user?.last_paid).toLocaleDateString() || "Recently"}
+                  {user?.last_paid
+                    ? new Date(user.last_paid).toLocaleDateString()
+                    : "Never"}
                 </p>
               </div>
             </div>
