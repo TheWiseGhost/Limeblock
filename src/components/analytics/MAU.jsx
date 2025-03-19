@@ -12,6 +12,7 @@ import {
   Legend,
 } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import { motion } from "framer-motion";
 
 ChartJS.register(
   CategoryScale,
@@ -118,38 +119,83 @@ export default function MAU({ mauStats }) {
     },
   };
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+      },
+    },
+  };
+
   return (
-    <div className="border border-gray-300 rounded-lg p-6 font-inter">
-      <h2 className="text-2xl font-aeonik mb-6">MAU Stats</h2>
+    <motion.div
+      className="bg-white rounded-lg border border-gray-300 p-6 font-inter"
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+    >
+      <motion.h2
+        className="text-2xl font-aeonik mb-6 text-black"
+        variants={itemVariants}
+      >
+        MAU Stats
+      </motion.h2>
 
-      <div className="grid grid-cols-2 gap-8">
+      <div className="grid grid-cols-5 gap-12">
         {/* Left Column - Chart */}
-        <div className="h-[280px] pt-4 pr-4">
-          <Bar data={chartData} options={chartOptions} />
-        </div>
+        <motion.div className="col-span-3 h-fit pt-3" variants={itemVariants}>
+          <Bar data={chartData} options={chartOptions} height={250} />
+        </motion.div>
 
-        {/* Right Column - Stats */}
-        <div className="space-y-6">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h4 className="text-sm text-gray-700">Current Month MAU</h4>
-              <p className="text-2xl font-aeonik mt-1">{currentMonthValue}</p>
-            </div>
+        {/* Right Column - Stats and Upgrade */}
+        <div className="lg:col-span-2">
+          <motion.div
+            className="grid grid-cols-2 gap-4 mb-6"
+            variants={containerVariants}
+          >
+            <motion.div
+              className="bg-gray-50 p-4 rounded-lg"
+              variants={itemVariants}
+            >
+              <p className="text-sm text-gray-700 mb-1">Current Month MAUs</p>
+              <p className="text-2xl font-aeonik">{currentMonthValue}</p>
+            </motion.div>
 
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h4 className="text-sm text-gray-700">Total Users</h4>
-              <p className="text-2xl font-aeonik mt-1">{totalUsers}</p>
-            </div>
+            <motion.div
+              className="bg-gray-50 p-4 rounded-lg"
+              variants={itemVariants}
+            >
+              <p className="text-sm text-gray-700 mb-1">Total Users</p>
+              <p className="text-xl font-medium font-aeonik">{totalUsers}</p>
+            </motion.div>
 
-            <div className="bg-gray-50 p-4 rounded-lg col-span-2">
-              <h4 className="text-sm text-gray-700">Monthly Growth</h4>
-              <div className="flex items-center mt-1">
-                <p className="text-2xl font-aeonik">
+            <motion.div
+              className="bg-gray-50 p-4 rounded-lg"
+              variants={itemVariants}
+            >
+              <p className="text-sm text-gray-700 mb-1">Monthly Growth</p>
+              <div className="flex items-center">
+                <p className="text-2xl font-aeonik mr-2">
                   {mauIncrease > 0 ? "+" : ""}
                   {mauIncrease}
                 </p>
                 <span
-                  className={`ml-2 text-sm ${
+                  className={`text-sm ${
                     mauIncrease >= 0 ? "text-green-600" : "text-red-600"
                   }`}
                 >
@@ -157,28 +203,53 @@ export default function MAU({ mauStats }) {
                   {mauIncreasePercentage}%)
                 </span>
               </div>
-            </div>
-          </div>
+            </motion.div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h4 className="text-sm text-gray-700">Average MAU</h4>
-              <p className="text-2xl font-aeonik mt-1">{averageMau}</p>
-            </div>
+            <motion.div
+              className="bg-gray-50 p-4 rounded-lg"
+              variants={itemVariants}
+            >
+              <p className="text-sm text-gray-700 mb-1">Average MAUs</p>
+              <p className="text-2xl font-aeonik">{averageMau}</p>
+            </motion.div>
 
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h4 className="text-sm text-gray-700">Peak Month</h4>
-              <p className="text-2xl font-aeonik mt-1">
+            <motion.div
+              className="bg-gray-50 p-4 rounded-lg"
+              variants={itemVariants}
+            >
+              <p className="text-sm text-gray-700 mb-1">Peak Month</p>
+              <p className="text-2xl font-aeonik">
                 {formatMonthKey(
                   Object.entries(sortedStats).reduce((a, b) =>
                     a[1] > b[1] ? a : b
                   )[0]
                 )}
               </p>
-            </div>
-          </div>
+            </motion.div>
+
+            {/* Upgrade Prompt Box */}
+            <motion.div
+              className="bg-white pl-3 pt-3 rounded-lg"
+              variants={itemVariants}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <h3 className="text-sm font-inter text-black mb-2">
+                Want more MAUs?
+              </h3>
+
+              <button
+                onClick={() => {
+                  window.location.href = "/checkout/";
+                }}
+                className="bg-gray-700 hover:bg-gray-800 text-white px-4 py-2 rounded font-inter text-xs transition-colors"
+              >
+                View Plans
+              </button>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

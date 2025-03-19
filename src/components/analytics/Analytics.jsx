@@ -2,9 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import MAU from "./MAU";
+import EndpointStats from "./EndpointStats";
 
 const Analytics = () => {
   const [user, setUser] = useState(null);
+  const [frontend, setFrontend] = useState(null);
+  const [backend, setBackend] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -37,6 +40,47 @@ const Analytics = () => {
 
         if (userData.success) {
           setUser(userData.user);
+
+          // Fetch frontend details using the same user_id
+          const frontendResponse = await fetch(
+            "http://127.0.0.1:8000/api/frontend_details/",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ user_id: userId }),
+            }
+          );
+
+          const frontendData = await frontendResponse.json();
+
+          if (frontendData.success) {
+            setFrontend(frontendData.frontend);
+          } else {
+            setError("Failed to load frontend settings");
+          }
+
+          // Fetch backend details using the same user_id
+          const backendResponse = await fetch(
+            "http://127.0.0.1:8000/api/backend_details/",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ user_id: userId }),
+            }
+          );
+
+          const backendData = await backendResponse.json();
+
+          if (backendData.success) {
+            setBackend(backendData.backend);
+          } else {
+            setError("Failed to load backend settings");
+          }
+
           // Fetch MAU stats
           const mauResponse = await fetch(
             "http://127.0.0.1:8000/api/get_mau_stats/",
@@ -118,6 +162,10 @@ const Analytics = () => {
 
       <div className="flex flex-col space-y-8">
         <MAU mauStats={mauStats} />
+        <EndpointStats
+          frontend_folders={frontend?.folders}
+          backend_folders={backend?.folders}
+        />
       </div>
     </div>
   );

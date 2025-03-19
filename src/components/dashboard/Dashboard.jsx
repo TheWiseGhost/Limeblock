@@ -374,6 +374,15 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
+
+          <button
+            onClick={() => {
+              window.location.href = "/analytics/";
+            }}
+            className="px-6 mt-16 border border-gray-400 rounded-lg py-2 text-sm font-inter hover:bg-gray-50 transition-colors"
+          >
+            View All Analytics
+          </button>
         </div>
 
         {/* Logs Card - 3 columns */}
