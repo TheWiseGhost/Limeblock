@@ -31,7 +31,7 @@ const BlockFace = ({ body, eyes, size, isThinking = false }) => {
           }}
         ></div>
         <div
-          className="bg-white rounded-sm"
+          className="rounded-sm"
           style={{
             width: getEyeSize(),
             height: getEyeSize(),
@@ -677,11 +677,15 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                     isThinking={true}
                   />
                   <motion.div
-                    className="bg-gray-100 text-gray-700 rounded-lg px-4 py-2 text-sm ml-2"
+                    className="text-gray-700 rounded-lg px-4 py-2 text-sm ml-2"
                     key={loadingStep}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
+                    style={{
+                      backgroundColor:
+                        frontend?.aiMessageBackground || "#F3F4F6",
+                    }}
                   >
                     {loadingStates[loadingStep]}
                   </motion.div>
@@ -708,6 +712,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                     minHeight: "40px",
                     maxHeight: "250px", // 50% of the 500px container
                     overflow: "auto",
+                    backgroundColor: frontend?.pageBackground || "#FFFFFF",
                   }}
                   disabled={loading}
                   onKeyDown={(e) => {
