@@ -716,7 +716,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                     isThinking={true}
                   />
                   <motion.div
-                    className="text-gray-700 rounded-lg px-4 py-2 text-sm ml-2"
+                    className="rounded-lg px-4 py-2 text-sm ml-2"
                     key={loadingStep}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -724,6 +724,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                     style={{
                       backgroundColor:
                         frontend?.aiMessageBackground || "#F3F4F6",
+                      color: frontend?.aiText || "#111111",
                     }}
                   >
                     {loadingStates[loadingStep]}
