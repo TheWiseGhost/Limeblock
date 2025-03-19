@@ -132,6 +132,32 @@ const ChatWidget = ({ apiKey, contextParams }) => {
     setIsOpen(!isOpen);
   };
 
+  // Function to generate a unique fingerprint
+  function generateFingerprint() {
+    // Combine various browser properties to create a unique identifier
+    const components = [
+      navigator.userAgent,
+      navigator.language,
+      `${window.screen.width}x${window.screen.height}`,
+      new Date().getTimezoneOffset(),
+      !!window.sessionStorage,
+      !!window.localStorage,
+      !!window.indexedDB,
+      navigator.hardwareConcurrency || "",
+      navigator.deviceMemory || "",
+    ];
+
+    // Simple hash function
+    return components
+      .join("|")
+      .split("")
+      .reduce((a, b) => {
+        a = (a << 5) - a + b.charCodeAt(0);
+        return a & a;
+      }, 0)
+      .toString(36);
+  }
+
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (inputMessage.trim()) {
@@ -160,6 +186,19 @@ const ChatWidget = ({ apiKey, contextParams }) => {
               prompt: inputMessage,
               api_key: apiKey,
               context: contextParams,
+              client_info: {
+                // Add unique identifier for the client
+                fingerprint: generateFingerprint(),
+                referrer: document.referrer || null,
+                hostname: window.location.hostname,
+                pathname: window.location.pathname,
+                user_agent: navigator.userAgent,
+                language: navigator.language,
+                screen_resolution: `${window.screen.width}x${window.screen.height}`,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                business_id:
+                  contextParams.business_id || contextParams.board_id, // Use the business identifier
+              },
             }),
           }
         );
