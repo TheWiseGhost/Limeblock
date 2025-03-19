@@ -7,6 +7,8 @@ export default function Dashboard() {
   const [user, setUser] = useState(null);
   const [frontend, setFrontend] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [mauStats, setMauStats] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,6 +57,26 @@ export default function Dashboard() {
           } else {
             setError("Failed to load frontend settings");
           }
+
+          // Fetch MAU stats
+          const mauResponse = await fetch(
+            "http://127.0.0.1:8000/api/get_mau_stats/",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ user_id: userId, months: 6 }),
+            }
+          );
+
+          const mauData = await mauResponse.json();
+
+          if (!mauData.error) {
+            setMauStats(mauData.mau_stats);
+          } else {
+            console.error("MAU stats error:", mauData.error);
+          }
         } else {
           setError("Failed to load user information");
         }
@@ -73,9 +95,54 @@ export default function Dashboard() {
     navigator.clipboard.writeText(user?.api_key);
   };
 
+  // Helper function to format month keys for display
+  const formatMonthKey = (monthKey) => {
+    const [year, month] = monthKey.split("-");
+    const date = new Date(parseInt(year), parseInt(month) - 1);
+    return date.toLocaleString("default", { month: "short" });
+  };
+
+  // Get max MAU value for chart scaling
+  const maxMauValue =
+    Object.values(mauStats).length > 0
+      ? Math.max(...Object.values(mauStats))
+      : 0;
+
+  // Calculate total users by summing all MAUs
+  const totalUsers = Object.values(mauStats).reduce(
+    (sum, count) => sum + count,
+    0
+  );
+
+  // Calculate MAU increase from previous month to current month
+  const calculateMauIncrease = () => {
+    if (Object.keys(mauStats).length < 2) return 0;
+
+    const sortedMonths = Object.keys(mauStats).sort();
+    const currentMonth = sortedMonths[sortedMonths.length - 1];
+    const previousMonth = sortedMonths[sortedMonths.length - 2];
+
+    const currentMau = mauStats[currentMonth] || 0;
+    const previousMau = mauStats[previousMonth] || 0;
+
+    return currentMau - previousMau;
+  };
+
+  const mauIncrease = calculateMauIncrease();
+  const mauIncreasePercentage = (() => {
+    if (Object.keys(mauStats).length < 2) return 100;
+
+    const sortedMonths = Object.keys(mauStats).sort();
+    const previousMonth = sortedMonths[sortedMonths.length - 2];
+    const previousMau = mauStats[previousMonth];
+
+    if (!previousMau) return 100;
+    return Math.round((mauIncrease / previousMau) * 100);
+  })();
+
   if (loading) {
     return (
-      <div className="bg-white w-full flex items-center justify-center h-screen">
+      <div className="bg-white w-full flex items-center justify-center h-screen font-inter">
         <div className="text-center">
           <svg
             className="animate-spin h-10 w-10 mx-auto text-gray-600"
@@ -235,6 +302,78 @@ export default function Dashboard() {
         {/* Analytics Card - 3 columns */}
         <div className="col-span-3 border border-gray-300 rounded-md p-6">
           <h2 className="text-2xl font-aeonik mb-6">Analytics</h2>
+
+          {/* Summary stats */}
+          <div className="grid grid-cols-3 gap-4 mt-6 font-inter">
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <h4 className="text-sm text-gray-700 font-inter">
+                Current Month MAU
+              </h4>
+              <p className="text-2xl font-aeonik mt-1">
+                {Object.entries(mauStats).length > 0
+                  ? mauStats[Object.keys(mauStats).sort().reverse()[0]] || 0
+                  : 0}
+              </p>
+            </div>
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <h4 className="text-sm text-gray-700 font-inter">Total Users</h4>
+              <p className="text-2xl font-aeonik mt-1">{totalUsers}</p>
+            </div>
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <h4 className="text-sm text-gray-700 font-inter">
+                Monthly Growth
+              </h4>
+              <div className="flex items-center mt-1">
+                <p className="text-2xl font-aeonik">
+                  {mauIncrease > 0 ? "+" : ""}
+                  {mauIncrease}
+                </p>
+                <span
+                  className={`ml-2 text-sm font-inter ${
+                    mauIncrease >= 0 ? "text-green-600" : "text-red-600"
+                  }`}
+                >
+                  ({mauIncrease >= 0 ? "+" : ""}
+                  {mauIncreasePercentage}%)
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Additional stats */}
+          <div className="mt-6">
+            <div className="flex justify-between text-sm font-inter text-gray-700">
+              <div>
+                <p>
+                  Average MAU:{" "}
+                  <span className="font-medium text-black">
+                    {Object.values(mauStats).length > 0
+                      ? Math.round(
+                          Object.values(mauStats).reduce((a, b) => a + b, 0) /
+                            Object.values(mauStats).length
+                        )
+                      : 0}
+                  </span>
+                </p>
+              </div>
+              <div>
+                <p>
+                  Peak Month:{" "}
+                  <span className="font-medium text-black">
+                    {Object.entries(mauStats).length > 0
+                      ? formatMonthKey(
+                          Object.entries(mauStats).reduce(
+                            (max, [month, count]) =>
+                              count > mauStats[max] ? month : max,
+                            Object.keys(mauStats)[0]
+                          )
+                        )
+                      : "N/A"}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Logs Card - 3 columns */}
