@@ -9,9 +9,10 @@ import {
 import {
   IconBrandTabler,
   IconSettings,
-  IconReportAnalytics,
   IconBinaryTree2,
   IconUserScreen,
+  IconClipboardText,
+  IconChartBubble,
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -42,10 +43,17 @@ export default function SidebarDemo({ params }) {
       ),
     },
     {
+      label: "Analytics",
+      href: "/analytics",
+      icon: (
+        <IconChartBubble className="text-neutral-800 size-5 flex-shrink-0" />
+      ),
+    },
+    {
       label: "Logs",
       href: "/logs",
       icon: (
-        <IconReportAnalytics className="text-neutral-800 size-5 flex-shrink-0" />
+        <IconClipboardText className="text-neutral-800 size-5 flex-shrink-0" />
       ),
     },
     {
