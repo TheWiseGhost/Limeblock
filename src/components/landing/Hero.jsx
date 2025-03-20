@@ -63,9 +63,11 @@ const FeatureCard = ({ icon, title, description, delay }) => {
 
 export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     setIsLoaded(true);
+    setUserId(localStorage.getItem("user_id"));
   }, []);
 
   const container = {
@@ -112,7 +114,7 @@ export default function Hero() {
         </div>
 
         <a
-          href="/dashboard"
+          href="/auth_prompt/"
           className="relative inline-flex h-12 overflow-hidden rounded-2xl p-[3px] font-aeonik"
         >
           <span className="absolute inset-[-100%] animate-[spin_1s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#90F08C_0%,#edeceb_50%,#90F08C_100%)]" />
@@ -168,7 +170,7 @@ export default function Hero() {
       >
         <motion.p
           variants={item}
-          className="text-base font-semibold text-gray-500 mb-2 font-dm uppercase"
+          className="text-base font-semibold text-gray-500 mb-1 font-dm uppercase"
         >
           More than just a Chatbot
         </motion.p>
@@ -215,7 +217,7 @@ export default function Hero() {
           className="flex gap-2 justify-center font-inter"
         >
           <motion.a
-            href="/signup"
+            href="/auth_prompt/"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="px-6 py-3 font-aeonik text-black bg-lime rounded-lg hover:bg-primary-600 transition-colors"
