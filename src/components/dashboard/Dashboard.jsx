@@ -388,10 +388,12 @@ export default function Dashboard() {
         {/* Logs Card - 3 columns */}
         <div className="col-span-3 border border-gray-300 rounded-md p-6">
           <h2 className="text-2xl font-aeonik mb-4">Logs</h2>
-          <div className="h-48"></div>
-          <button className="px-6 border border-gray-400 rounded-lg py-2 text-sm font-inter hover:bg-gray-50 transition-colors">
-            View All Logs
-          </button>
+          <div className="flex flex-col items-center pt-8 space-y-4 h-full justify-top">
+            <img src="/LimeblockLogo.png" className="size-12 grayscale" />
+            <p className="font-inter text-sm text-gray-900 text-center">
+              Logs are currently under development
+            </p>
+          </div>
         </div>
 
         {/* Expected Cost Card - 2 columns */}
