@@ -49,9 +49,8 @@ export default function EditWidget({ body, eyes, size, user_id }) {
     }
   };
 
-  // Function to handle exporting (placeholder for now)
   const handleExport = () => {
-    alert("Export functionality will be implemented in the future");
+    window.open("/docs/how_to_export");
   };
 
   // Function to handle saving to backend - fixed parameter handling

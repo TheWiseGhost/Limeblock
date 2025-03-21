@@ -232,7 +232,12 @@ export default function Dashboard() {
                 >
                   Style Widget
                 </button>
-                <button className="w-full border border-gray-400 rounded-lg py-2 text-sm font-inter hover:bg-gray-50 transition-colors">
+                <button
+                  onClick={() => {
+                    window.open("/docs/how_to_export");
+                  }}
+                  className="w-full border border-gray-400 rounded-lg py-2 text-sm font-inter hover:bg-gray-50 transition-colors"
+                >
                   Export Widget
                 </button>
               </div>
