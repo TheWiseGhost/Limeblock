@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
+import { IconBook, IconCube } from "@tabler/icons-react";
 
-const Sidebar = ({ className = "" }) => {
+const Sidebar = ({ active, className = "" }) => {
   const [expandedSections, setExpandedSections] = useState({
     tutorials: true,
     features: true,
@@ -18,15 +18,18 @@ const Sidebar = ({ className = "" }) => {
 
   return (
     <div
-      className={`w-72 pr-6 bg-white font-inter text-black h-full border-r border-gray-200 p-4 ${className}`}
+      className={`w-[250px] text-sm bg-white font-inter text-black h-full border-r border-gray-200 p-4 ${className}`}
     >
       {/* Get Started */}
       <div className="ml-2 my-4">
-        <div className="flex flex-row space-x-2 items-center mb-6">
-          <img src="/LimeblockLogo.png" className="size-6" />
-          <p className="font-aeonik text-base text-gray-900 text-center">
+        <div className="flex flex-row items-center mb-8">
+          <img src="/LimeblockLogo.png" className="size-7" />
+          <p className="font-aeonik font-medium text-base text-gray-900 text-center ml-2">
             Limeblock
           </p>
+          <div className="bg-gray-50 border text-gray-700 border-gray-600 ml-3 font-inter px-3 text-xs py-0.5 rounded-full">
+            Docs
+          </div>
         </div>
       </div>
 
@@ -34,23 +37,11 @@ const Sidebar = ({ className = "" }) => {
       <div className="mb-4">
         <button
           onClick={() => toggleSection("tutorials")}
-          className="flex items-center justify-between w-full font-dm py-2 px-2 rounded hover:bg-gray-50"
+          className="flex items-center justify-between w-full font-inter py-2 px-2 rounded hover:bg-gray-50"
         >
           <div className="flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4 mr-2"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-            </svg>
-            <span>Tutorials</span>
+            <IconBook className="size-4 mr-2" />
+            <span className="">Tutorials</span>
           </div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -69,66 +60,80 @@ const Sidebar = ({ className = "" }) => {
         </button>
 
         {expandedSections.tutorials && (
-          <div className="ml-6 space-y-1 mt-1 text-sm">
-            <Link
-              href="/tutorials/ship-in-5-minutes"
-              className="flex items-center py-1.5 px-2 rounded hover:bg-gray-50"
+          <div className="ml-6 space-y-1 mt-1 text-[0.8rem]">
+            <a
+              href="/docs/"
+              className={`flex items-center py-1.5 px-2 rounded ${
+                active == "welcome"
+                  ? "text-black bg-gray-100"
+                  : "text-gray-700 hover:bg-gray-50"
+              }`}
             >
               <div className="flex items-center w-full">
-                <span>Ship in 5 minutes</span>
-                <span className="ml-2 text-green-500">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                  </svg>
-                </span>
+                <span>Welcome</span>
+                <span className="ml-2 text-green-500"></span>
               </div>
-            </Link>
-            <Link
-              href="/tutorials/static-page"
-              className="block py-1.5 px-2 rounded hover:bg-gray-50"
+            </a>
+            <a
+              href="/docs/getting_started"
+              className={`flex items-center py-1.5 px-2 rounded ${
+                active == "getting_started"
+                  ? "text-black bg-gray-100"
+                  : "text-gray-700 hover:bg-gray-50"
+              }`}
             >
-              Static page
-            </Link>
-            <Link
-              href="/tutorials/user-authentication"
-              className="block py-1.5 px-2 rounded hover:bg-gray-50 text-gray-500"
+              Getting started
+            </a>
+            <a
+              href="/docs/frontend"
+              className={`flex items-center py-1.5 px-2 rounded ${
+                active == "frontend"
+                  ? "text-black bg-gray-100"
+                  : "text-gray-700 hover:bg-gray-50"
+              }`}
             >
-              User authentication
-            </Link>
-            <Link
-              href="/tutorials/api-call"
-              className="block py-1.5 px-2 rounded hover:bg-gray-50 text-gray-500"
+              Frontend
+            </a>
+            <a
+              href="/docs/backend"
+              className={`flex items-center py-1.5 px-2 rounded ${
+                active == "backend"
+                  ? "text-black bg-gray-100"
+                  : "text-gray-700 hover:bg-gray-50"
+              }`}
             >
-              API call
-            </Link>
-            <Link
-              href="/tutorials/private-page"
-              className="block py-1.5 px-2 rounded hover:bg-gray-50 text-gray-500"
+              Backend
+            </a>
+            <a
+              href="/docs/analytics"
+              className={`flex items-center py-1.5 px-2 rounded ${
+                active == "analytics"
+                  ? "text-black bg-gray-100"
+                  : "text-gray-700 hover:bg-gray-50"
+              }`}
             >
-              Private page
-            </Link>
-            <Link
-              href="/tutorials/stripe-subscriptions"
-              className="block py-1.5 px-2 rounded hover:bg-gray-50 text-gray-500"
+              Analytics
+            </a>
+            <a
+              href="/docs/managing_plans"
+              className={`flex items-center py-1.5 px-2 rounded ${
+                active == "managing_plans"
+                  ? "text-black bg-gray-100"
+                  : "text-gray-700 hover:bg-gray-50"
+              }`}
             >
-              Stripe Subscriptions
-            </Link>
-            <Link
-              href="/tutorials/privacy-policy-gpt"
-              className="block py-1.5 px-2 rounded hover:bg-gray-50 text-gray-500"
+              Managing Plans
+            </a>
+            <a
+              href="/docs/export"
+              className={`flex items-center py-1.5 px-2 rounded ${
+                active == "export"
+                  ? "text-black bg-gray-100"
+                  : "text-gray-700 hover:bg-gray-50"
+              }`}
             >
-              Privacy policy with GPT
-            </Link>
+              Export
+            </a>
           </div>
         )}
       </div>
@@ -137,29 +142,10 @@ const Sidebar = ({ className = "" }) => {
       <div className="mb-4">
         <button
           onClick={() => toggleSection("features")}
-          className="flex items-center justify-between w-full py-2 px-2 font-dm rounded hover:bg-gray-50"
+          className="flex items-center justify-between w-full py-2 px-2 font-inter rounded hover:bg-gray-50"
         >
           <div className="flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4 mr-2"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <line x1="4" y1="21" x2="4" y2="14"></line>
-              <line x1="4" y1="10" x2="4" y2="3"></line>
-              <line x1="12" y1="21" x2="12" y2="12"></line>
-              <line x1="12" y1="8" x2="12" y2="3"></line>
-              <line x1="20" y1="21" x2="20" y2="16"></line>
-              <line x1="20" y1="12" x2="20" y2="3"></line>
-              <line x1="1" y1="14" x2="7" y2="14"></line>
-              <line x1="9" y1="8" x2="15" y2="8"></line>
-              <line x1="17" y1="16" x2="23" y2="16"></line>
-            </svg>
+            <IconCube className="size-4 mr-2" />
             <span>Features</span>
           </div>
           <svg
@@ -179,25 +165,29 @@ const Sidebar = ({ className = "" }) => {
         </button>
 
         {expandedSections.features && (
-          <div className="ml-6 space-y-1 mt-1 text-sm">
-            <Link
-              href="/features/seo"
-              className="block py-1.5 px-2 rounded hover:bg-gray-50 text-gray-500"
+          <div className="ml-6 space-y-1 mt-1 text-[0.8rem]">
+            <a
+              href="/docs/managing_plans"
+              className={`flex items-center py-1.5 px-2 rounded ${
+                active == "managing_plans"
+                  ? "text-black bg-gray-100"
+                  : "text-gray-700 hover:bg-gray-50"
+              }`}
             >
-              SEO
-            </Link>
-            <Link
+              Fill in later
+            </a>
+            <a
               href="/features/database"
-              className="block py-1.5 px-2 rounded hover:bg-gray-50 text-gray-500"
+              className="block py-1.5 px-2 rounded hover:bg-gray-50 text-gray-600"
             >
               Database
-            </Link>
-            <Link
+            </a>
+            <a
               href="/features/export"
-              className="block py-1.5 px-2 rounded hover:bg-gray-50"
+              className="block py-1.5 px-2 rounded hover:bg-gray-50 text-gray-600"
             >
               Export
-            </Link>
+            </a>
           </div>
         )}
       </div>

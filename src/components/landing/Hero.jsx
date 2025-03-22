@@ -105,7 +105,7 @@ export default function Hero() {
         </div>
 
         <div className="hidden md:flex gap-8">
-          <NavButton text="Docs" href="#process" />
+          <NavButton text="Docs" href="/docs/" />
           <NavButton text="Features" href="#features" />
           <NavButton text="Solutions" href="#solutions" />
           <NavButton text="Pricing" href="/checkout" />

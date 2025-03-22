@@ -79,7 +79,7 @@ export default function Layout({ children }) {
   return (
     <div className="flex flex-row min-h-screen">
       {/* Sidebar */}
-      <Sidebar />
+      <Sidebar active={"export"} />
 
       {/* Main Content */}
       <div className="flex-1 overflow-auto">
@@ -291,25 +291,11 @@ export default function Layout({ children }) {
             </p>
             <ul className="list-disc pl-6 mb-6">
               <li>
-                Visit our{" "}
+                Contact our founder at{" "}
                 <a href="#" className="text-blue-600 hover:underline">
-                  documentation
+                  byjuaditya@gmail.com
                 </a>{" "}
-                for detailed guides
-              </li>
-              <li>
-                Join our{" "}
-                <a href="#" className="text-blue-600 hover:underline">
-                  community forum
-                </a>{" "}
-                to connect with other developers
-              </li>
-              <li>
-                Contact{" "}
-                <a href="#" className="text-blue-600 hover:underline">
-                  support@limeblock.ai
-                </a>{" "}
-                for direct assistance
+                for personalized support
               </li>
             </ul>
           </div>

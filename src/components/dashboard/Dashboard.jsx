@@ -234,7 +234,7 @@ export default function Dashboard() {
                 </button>
                 <button
                   onClick={() => {
-                    window.open("/docs/how_to_export");
+                    window.open("/docs/export");
                   }}
                   className="w-full border border-gray-400 rounded-lg py-2 text-sm font-inter hover:bg-gray-50 transition-colors"
                 >
