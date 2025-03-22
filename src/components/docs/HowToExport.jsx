@@ -77,10 +77,7 @@ export default function Layout({ children }) {
 }`;
 
   return (
-    <div className="flex flex-row min-h-screen">
-      {/* Sidebar */}
-      <Sidebar active={"export"} />
-
+    <div className="flex flex-row min-h-screen w-full">
       {/* Main Content */}
       <div className="flex-1 overflow-auto">
         <div className="flex flex-col mx-auto px-4 py-8 max-w-4xl font-inter">

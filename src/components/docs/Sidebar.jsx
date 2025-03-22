@@ -18,7 +18,7 @@ const Sidebar = ({ active, className = "" }) => {
 
   return (
     <div
-      className={`w-[250px] text-sm bg-white font-inter text-black h-full border-r border-gray-200 p-4 ${className}`}
+      className={`min-w-[250px] text-sm bg-white font-inter text-black h-full border-r border-gray-200 p-4 ${className}`}
     >
       {/* Get Started */}
       <div className="ml-2 my-4">
