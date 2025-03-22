@@ -107,7 +107,7 @@ export default function SignIn() {
           <h1 className="text-3xl font-aeonik font-medium mb-2">
             Welcome back
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 font-inter mb-8">
+          <p className="text-gray-600 font-inter mb-8">
             Sign in to your account
           </p>
 
@@ -188,11 +188,11 @@ export default function SignIn() {
                 )}
               </button>
 
-              <p className="text-sm text-gray-600 dark:text-gray-400 text-left font-inter">
+              <p className="text-sm text-gray-600 text-left font-inter">
                 Don't have an account?{" "}
                 <Link
                   href="/sign_up/"
-                  className="text-black dark:text-white hover:text-lime-600 dark:hover:text-lime-400 transition-colors"
+                  className="text-gray-800 underline hover:text-black transition-colors"
                 >
                   Sign Up
                 </Link>

@@ -124,7 +124,7 @@ export default function SignUp() {
           <h1 className="text-3xl font-aeonik font-medium mb-2">
             Keep your business advanced
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 font-inter mb-8">
+          <p className="text-gray-600 font-inter mb-8">
             Sign up to start your journey with Limeblock
           </p>
 
@@ -248,11 +248,11 @@ export default function SignUp() {
                 )}
               </button>
 
-              <p className="text-sm text-gray-600 dark:text-gray-400 text-left font-inter">
+              <p className="text-sm text-gray-600 text-left font-inter">
                 Already have an account?{" "}
                 <a
                   href="/sign_in/"
-                  className="text-black dark:text-white hover:text-lime-600 dark:hover:text-lime-400 transition-colors"
+                  className="text-gray-800 underline hover:text-black transition-colors"
                 >
                   Sign In
                 </a>
