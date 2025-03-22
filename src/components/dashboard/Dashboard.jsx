@@ -403,8 +403,59 @@ export default function Dashboard() {
 
         {/* Expected Cost Card - 2 columns */}
         <div className="col-span-2 border border-gray-300 rounded-md p-6">
-          <h2 className="text-2xl font-aeonik mb-4">Expected Cost</h2>
-          <div className="h-48"></div>
+          <h2 className="text-2xl font-aeonik mb-4">Current Cost</h2>
+          <div className="h-48 font-inter">
+            <div className="bg-gray-50 p-4 rounded-lg mb-4">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h3 className="font-medium text-gray-900">
+                    {user?.plan
+                      ? user.plan.charAt(0).toUpperCase() +
+                        user.plan.slice(1) +
+                        " Plan"
+                      : "Free Plan"}
+                  </h3>
+                  <p className="text-gray-500 text-sm mt-1">
+                    {user?.plan === "enterprise"
+                      ? "Full access for enterprises"
+                      : user?.plan === "startup"
+                      ? "Advanced features for growing businesses"
+                      : "Basic features included"}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="font-medium text-gray-900">
+                    $
+                    {user?.plan === "enterprise"
+                      ? "99"
+                      : user?.plan === "startup"
+                      ? "19"
+                      : "0"}
+                    /month
+                  </p>
+                  <p className="text-gray-500 text-sm mt-1">
+                    Billed{" "}
+                    {user?.last_paid
+                      ? new Date(user.last_paid).toLocaleDateString()
+                      : "Never"}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="border border-green-300 p-4 rounded-lg flex flex-row items-center justify-between">
+              <h4 className="font-medium text-black">
+                Upgrade for more features
+              </h4>
+              <button
+                onClick={() => {
+                  window.location.href = "/checkout/";
+                }}
+                className="bg-lime hover:bg-green-400 text-white px-4 py-2 rounded font-medium text-sm transition-colors"
+              >
+                View Plans
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
