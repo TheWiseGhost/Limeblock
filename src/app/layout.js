@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link rel="icon" type="image/png" href="LimeblockLogo.png" />
+        <link rel="icon" type="image/png" href="/LimeblockLogo.png" />
       </head>
       <body
         className={`${dm.variable} ${inter.variable} bg-white text-black antialiased`}
