@@ -55,6 +55,8 @@ const ChatWidget = ({ apiKey, contextParams }) => {
   const [isWinking, setIsWinking] = useState(false);
   const textAreaRef = useRef(null);
 
+  const [valid, setValid] = useState(true);
+
   // Loading states for animation
   const loadingStates = [
     "Analyzing prompt...",
@@ -86,13 +88,27 @@ const ChatWidget = ({ apiKey, contextParams }) => {
           }
         );
 
+        const checkValid = await fetch(
+          "http://127.0.0.1:8000/api/are_maus_remaining/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ api_key: apiKey }),
+          }
+        );
+
         const frontendData = await frontendResponse.json();
+        const validData = await checkValid.json();
 
         if (frontendData.success) {
           setFrontend(frontendData.frontend);
         } else {
           setError("Failed to load frontend settings");
         }
+
+        setValid(validData.valid);
       } catch (error) {
         console.error("Error fetching data:", error);
         setError("Network error, please try again");
@@ -167,6 +183,14 @@ const ChatWidget = ({ apiKey, contextParams }) => {
       // Reset textarea height
       if (textAreaRef.current) {
         textAreaRef.current.style.height = "auto";
+      }
+
+      if (!valid) {
+        setMessages((prev) => [
+          ...prev,
+          { text: "This company has run out of MAUs", sender: "bot" },
+        ]);
+        return;
       }
 
       // Show loading indicator
@@ -582,7 +606,9 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.3 }}
                     >
-                      {frontend?.startText || "How can I help you today?"}
+                      {valid
+                        ? frontend?.startText || "How can I help you today?"
+                        : "This company has run out of MAUs"}
                     </motion.div>
                   ) : (
                     <AnimatePresence>
