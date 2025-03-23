@@ -40,6 +40,30 @@ const HomeDocs = () => {
           >
             Dashboard
           </button>
+          <h2 className="text-2xl font-aeonik font-medium mt-12 mb-4">
+            Getting Help
+          </h2>
+          <p className="mb-4 text-sm">
+            If you need assistance with your Limeblock implementation:
+          </p>
+          <ul className="list-disc pl-6 mb-6 text-sm">
+            <li>
+              Contact our founder directly at{" "}
+              <a
+                href="mailto:byjuaditya@gmail.com"
+                className="text-blue-600 hover:underline"
+              >
+                byjuaditya@gmail.com
+              </a>{" "}
+              for personalized support
+            </li>
+            <li>
+              Check our comprehensive{" "}
+              <a href="/docs" className="text-blue-600 hover:underline">
+                documentation
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>

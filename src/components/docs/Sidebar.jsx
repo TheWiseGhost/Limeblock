@@ -85,36 +85,6 @@ const Sidebar = ({ active, className = "" }) => {
               Getting started
             </a>
             <a
-              href="/docs/frontend"
-              className={`flex items-center py-1.5 px-2 rounded ${
-                active == "frontend"
-                  ? "text-black bg-gray-100"
-                  : "text-gray-700 hover:bg-gray-50"
-              }`}
-            >
-              Frontend
-            </a>
-            <a
-              href="/docs/backend"
-              className={`flex items-center py-1.5 px-2 rounded ${
-                active == "backend"
-                  ? "text-black bg-gray-100"
-                  : "text-gray-700 hover:bg-gray-50"
-              }`}
-            >
-              Backend
-            </a>
-            <a
-              href="/docs/analytics"
-              className={`flex items-center py-1.5 px-2 rounded ${
-                active == "analytics"
-                  ? "text-black bg-gray-100"
-                  : "text-gray-700 hover:bg-gray-50"
-              }`}
-            >
-              Analytics
-            </a>
-            <a
               href="/docs/managing_plans"
               className={`flex items-center py-1.5 px-2 rounded ${
                 active == "managing_plans"
@@ -167,26 +137,24 @@ const Sidebar = ({ active, className = "" }) => {
         {expandedSections.features && (
           <div className="ml-6 space-y-1 mt-1 text-[0.8rem]">
             <a
-              href="/docs/managing_plans"
+              href="/docs/frontend"
               className={`flex items-center py-1.5 px-2 rounded ${
-                active == "managing_plans"
+                active == "frontend"
                   ? "text-black bg-gray-100"
                   : "text-gray-700 hover:bg-gray-50"
               }`}
             >
-              Fill in later
+              Frontend
             </a>
             <a
-              href="/features/database"
-              className="block py-1.5 px-2 rounded hover:bg-gray-50 text-gray-600"
+              href="/docs/backend"
+              className={`flex items-center py-1.5 px-2 rounded ${
+                active == "backend"
+                  ? "text-black bg-gray-100"
+                  : "text-gray-700 hover:bg-gray-50"
+              }`}
             >
-              Database
-            </a>
-            <a
-              href="/features/export"
-              className="block py-1.5 px-2 rounded hover:bg-gray-50 text-gray-600"
-            >
-              Export
+              Backend
             </a>
           </div>
         )}
