@@ -210,20 +210,6 @@ const ChatWidget = ({ apiKey, contextParams }) => {
           // If the request was successful
           let responseText;
 
-          // if (data.response && data.endpoint_used) {
-          //   // Format successful response from endpoint
-          //   responseText = `Request processed using endpoint: ${data.endpoint_used}\n\n`;
-
-          //   if (typeof data.response === "object") {
-          //     responseText += JSON.stringify(data.response, null, 2);
-          //   } else {
-          //     responseText += data.response;
-          //   }
-          // } else {
-          //   // Generic success message if response structure is different
-          //   responseText =
-          //     typeof data === "object" ? JSON.stringify(data, null, 2) : data;
-          // }
           responseText = data.formatted_response;
           if (data.endpoint_type == "frontend") {
             setMessages((prev) => [
@@ -233,7 +219,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
           } else {
             setMessages((prev) => [
               ...prev,
-              { text: responseText, sender: "bot" },
+              { text: responseText, sender: "bot", confirm_action: data },
             ]);
           }
         } else {
@@ -261,6 +247,86 @@ const ChatWidget = ({ apiKey, contextParams }) => {
         setLoading(false);
         setInputMessage("");
       }
+    }
+  };
+
+  const handleConfirmBackendAction = async (action_data) => {
+    if (textAreaRef.current) {
+      textAreaRef.current.style.height = "auto";
+    }
+
+    // Show loading indicator
+    setLoading(true);
+    setLoadingStep(0);
+
+    try {
+      // Send message to Django backend
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/commit_backend_action/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            prompt: action_data.prompt,
+            api_key: apiKey,
+            endpoint: action_data.endpoint,
+            schema: action_data.schema,
+            url: action_data.url,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      // Add bot response to chat
+      if (response.ok) {
+        // If the request was successful
+        let responseText;
+
+        responseText = data.formatted_response;
+        if (data.endpoint_type == "frontend") {
+          setMessages((prev) => [
+            ...prev,
+            { text: responseText, sender: "bot", link: data.url },
+          ]);
+        } else {
+          if (data.confirm_needed) {
+            setMessages((prev) => [
+              ...prev,
+              { text: responseText, sender: "bot", confirm_action: data },
+            ]);
+          } else {
+            setMessages((prev) => [
+              ...prev,
+              { text: responseText, sender: "bot" },
+            ]);
+          }
+        }
+      } else {
+        // Handle error response
+        const errorMessage =
+          data.error || data.message || "Something went wrong";
+        setMessages((prev) => [
+          ...prev,
+          {
+            text: `Error: ${errorMessage}`,
+            sender: "bot",
+          },
+        ]);
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      setMessages((prev) => [
+        ...prev,
+        {
+          text: "Sorry, there was a network error. Please try again later.",
+          sender: "bot",
+        },
+      ]);
+    } finally {
+      setLoading(false);
+      setInputMessage("");
     }
   };
 
@@ -480,7 +546,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
 
             {/* Chat Messages */}
             <motion.div
-              className="flex-grow overflow-y-auto scroll-pe-0 bg-white pb-4 px-4 py-4"
+              className="flex-grow overflow-y-auto overflow-x-hidden scroll-pe-0 bg-white pb-4 px-4 py-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
@@ -549,7 +615,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                             className={`inline-block rounded-lg text-center px-4 py-4 relative group ${
                               msg.sender === "user"
                                 ? "ml-auto text-[0.9rem] w-fit"
-                                : "text-[0.9rem] w-11/12"
+                                : "text-[0.9rem] max-w-11/12"
                             }`}
                             whileHover={{ scale: 1.02 }}
                             style={{
@@ -575,6 +641,21 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                                 }}
                               >
                                 Visit Page
+                              </button>
+                            ) : (
+                              <></>
+                            )}
+
+                            {msg.confirm_action ? (
+                              <button
+                                className="bg-gray-900 px-3 py-2 mt-2 text-white font-inter text-xs rounded-md"
+                                onClick={() => {
+                                  handleConfirmBackendAction(
+                                    msg.confirm_action
+                                  );
+                                }}
+                              >
+                                Confirm Action
                               </button>
                             ) : (
                               <></>
