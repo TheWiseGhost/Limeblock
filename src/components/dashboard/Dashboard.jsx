@@ -354,8 +354,11 @@ export default function Dashboard() {
                   <span className="font-medium text-black">
                     {Object.values(mauStats).length > 0
                       ? Math.round(
-                          Object.values(mauStats).reduce((a, b) => a + b, 0) /
-                            Object.values(mauStats).length
+                          Object.values(mauStats)
+                            .filter((num) => num !== 0)
+                            .reduce((a, b) => a + b, 0) /
+                            Object.values(mauStats).filter((num) => num !== 0)
+                              .length
                         )
                       : 0}
                   </span>

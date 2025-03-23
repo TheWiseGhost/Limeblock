@@ -52,8 +52,14 @@ export default function MAU({ mauStats }) {
       : 100;
   const totalUsers = chartValues.reduce((sum, count) => sum + count, 0);
   const averageMau =
-    Math.round(chartValues.reduce((a, b) => a + b, 0) / chartValues.length) ||
-    0;
+    Object.values(mauStats).length > 0
+      ? Math.round(
+          Object.values(mauStats)
+            .filter((num) => num !== 0)
+            .reduce((a, b) => a + b, 0) /
+            Object.values(mauStats).filter((num) => num !== 0).length
+        )
+      : 0;
 
   // Chart configuration
   const chartData = {
