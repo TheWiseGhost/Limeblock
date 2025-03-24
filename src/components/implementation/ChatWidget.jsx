@@ -241,10 +241,17 @@ const ChatWidget = ({ apiKey, contextParams }) => {
               { text: responseText, sender: "bot", link: data.url },
             ]);
           } else {
-            setMessages((prev) => [
-              ...prev,
-              { text: responseText, sender: "bot", confirm_action: data },
-            ]);
+            if (data.confirm_needed) {
+              setMessages((prev) => [
+                ...prev,
+                { text: responseText, sender: "bot", confirm_action: data },
+              ]);
+            } else {
+              setMessages((prev) => [
+                ...prev,
+                { text: responseText, sender: "bot" },
+              ]);
+            }
           }
         } else {
           // Handle error response
