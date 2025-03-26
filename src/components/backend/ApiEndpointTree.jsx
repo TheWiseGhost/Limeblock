@@ -553,7 +553,10 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
 
                       {/* Description Input */}
                       <div className="flex flex-col space-y-1">
-                        <label className="text-xs">Description:</label>
+                        <label className="text-xs">
+                          Description - Include key info for AI like "can leave
+                          X field blank":
+                        </label>
                         <input
                           type="text"
                           placeholder="Enter endpoint description"
