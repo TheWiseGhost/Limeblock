@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 const NavButton = ({ text, href }) => (
   <a
     href={href}
-    className="cursor-pointer font-inter text-[0.925rem] relative group px-4 py-2"
+    className="hidden md:flex cursor-pointer font-inter text-[0.925rem] relative group px-4 py-2"
   >
     <span className="relative">
       {text}
@@ -45,7 +45,7 @@ const FeatureCard = ({ icon, title, description, delay }) => {
         opacity: { duration: 0.5, delay },
         y: { duration: 0.5, delay },
       }}
-      className="bg-white rounded-xl shadow-lg"
+      className="hidden md:flex bg-white rounded-xl shadow-lg"
     >
       <div className="p-3 border border-gray-300 border-dashed">
         <div className="flex flex-row space-x-2 justify-start items-center mb-2">
@@ -93,7 +93,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="flex items-center justify-between px-10 py-2 z-10 relative"
+        className="flex items-center justify-between px-6 md:px-10 py-2 z-10 relative"
       >
         <div className="flex items-center gap-2">
           <img
@@ -170,21 +170,20 @@ export default function Hero() {
       >
         <motion.p
           variants={item}
-          className="text-base font-semibold text-gray-500 mb-1 font-dm uppercase"
+          className="text-sm md:text-base font-semibold text-gray-500 mb-1 font-dm uppercase"
         >
           More than just a Chatbot
         </motion.p>
         <motion.h1
           variants={item}
-          className="text-7xl font-aeonik tracking-tight mb-8"
+          className="text-5xl md:text-7xl font-aeonik tracking-tight mb-8"
         >
-          How people interact with
-          <br />
+          How people interact with <br className="hidden md:flex" />
           your app{" "}
           <span className="relative inline-block">
             10x faster
             <svg
-              className="absolute -bottom-7 left-0 w-full"
+              className="absolute -bottom-5 md:-bottom-7 left-0 w-full"
               viewBox="0 0 120 15"
               xmlns="http://www.w3.org/2000/svg"
               preserveAspectRatio="none"
@@ -205,7 +204,7 @@ export default function Hero() {
 
         <motion.p
           variants={item}
-          className="text-lg text-gray-600 w-full max-w-[900px] mx-auto mb-12"
+          className="text-sm md:text-lg text-gray-600 w-full px-4 md:px-0 max-w-[900px] mx-auto mb-12"
         >
           Integrate Limeblock into your app and let people commit in-app actions
           just with a few text prompts, saving time and headaches for all of

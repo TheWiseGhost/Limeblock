@@ -24,9 +24,9 @@ const MyApp = () => {
 
 export default MyApp;`;
   return (
-    <div className="container mx-auto px-8 pt-24 pb-8 font-inter">
+    <div className="container mx-auto px-5 md:px-8 pt-24 pb-8 font-inter">
       <div className="flex flex-row space-x-3 items-center mb-12">
-        <h1 className="font-aeonik font-medium text-7xl">
+        <h1 className="font-aeonik font-medium text-5xl md:text-7xl">
           All in just 3 lines of Code
         </h1>
         <motion.a

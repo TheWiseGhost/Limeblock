@@ -72,7 +72,7 @@ const Features = () => {
 
   return (
     <div className="container mx-auto px-4 pt-16">
-      <h1 className="font-aeonik font-medium text-7xl pb-8">
+      <h1 className="font-aeonik font-medium text-5xl md:text-7xl pb-8">
         Plus every other feature you need
       </h1>
       <div className="grid grid-cols-1 gap-6">

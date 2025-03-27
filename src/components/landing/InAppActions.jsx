@@ -240,7 +240,7 @@ const ChatDemo = () => {
   };
 
   return (
-    <div className="flex flex-col h-[510px] pt-10">
+    <div className="flex flex-col h-[400px] md:h-[510px] pt-10">
       <div className="bg-white rounded-lg border border-gray-200 flex flex-col overflow-hidden font-inter flex-grow">
         {/* Chat Header */}
         <div
@@ -494,13 +494,13 @@ const ChatDemo = () => {
 
 const InAppActions = () => {
   return (
-    <div className="min-h-screen bg-white font-inter flex flex-col px-8 pb-10">
-      <h1 className="font-aeonik font-medium text-7xl pb-2">
+    <div className="min-h-screen bg-white font-inter flex flex-col px-4 md:px-8 pb-10">
+      <h1 className="font-aeonik font-medium text-5xl md:text-7xl pb-2">
         The{" "}
         <span className="relative inline-block">
           Superpower
           <svg
-            className="absolute -bottom-10 left-0 w-full"
+            className="hidden md:flex absolute -bottom-10 left-0 w-full"
             viewBox="0 0 120 15"
             xmlns="http://www.w3.org/2000/svg"
             preserveAspectRatio="none"
@@ -519,10 +519,10 @@ const InAppActions = () => {
         </span>{" "}
         of this block
       </h1>
-      <div className="flex flex-row w-full">
-        <div className="flex flex-col w-1/2 pt-16 pl-4">
+      <div className="flex flex-col md:flex-row w-full">
+        <div className="flex flex-col w-full md:w-1/2 pt-16 pl-4">
           <div className="flex flex-row space-x-4">
-            <div className="pl-4 h-fit w-3/5">
+            <div className="pl-0 md:pl-4 h-fit w-3/5">
               <FeatureCard
                 icon="⚡️"
                 title="Commit In-App Actions"
@@ -557,7 +557,7 @@ const InAppActions = () => {
             </div>
           </div>
 
-          <div className="flex flex-row space-x-10">
+          <div className="hidden md:flex flex-row space-x-10">
             <div className="pt-12 h-fit w-6/12">
               <FeatureCard
                 icon="⚙️" // Gear to represent setup
@@ -575,7 +575,7 @@ const InAppActions = () => {
               />
             </div>
           </div>
-          <div className="flex flex-row space-x-10">
+          <div className="hidden md:flex flex-row space-x-10">
             <div className="-mt-2 h-fit w-5/12">
               <FeatureCard
                 icon="🛡️" // Shield to represent protection and safety
@@ -595,7 +595,7 @@ const InAppActions = () => {
           </div>
         </div>
 
-        <div className="w-1/2 h-full px-6 pt-4">
+        <div className="w-full md:w-1/2 h-full px-6 pt-4">
           <ChatDemo />
         </div>
       </div>
