@@ -92,7 +92,7 @@ export default function SignIn() {
   return (
     <div className="min-h-screen flex w-full">
       {/* Left Side - Sign In Form */}
-      <div className="w-1/2 p-12 flex flex-col justify-center">
+      <div className="w-full md:w-1/2 p-12 flex flex-col justify-center">
         <div className="max-w-md mx-auto w-full">
           <div className="flex items-center gap-3 mb-8">
             <Image
@@ -203,7 +203,7 @@ export default function SignIn() {
       </div>
 
       {/* Right Side - Same animated background as SignUp */}
-      <div className="w-1/2 relative overflow-hidden">
+      <div className="hidden md:block w-1/2 relative overflow-hidden">
         {/* Gradient Swirl Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-lime/90 via-lime/60 to-lime/40">
           <svg

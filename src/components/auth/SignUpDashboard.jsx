@@ -10,10 +10,10 @@ const SignUpDashboard = () => {
       <div className="absolute inset-0">
         <img
           src="/DashboardExample.png"
-          className="h-full w-full object-cover"
+          className="h-full w-full object-left object-cover"
           alt="Dashboard Background"
         />
-        <div className="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 bg-black/30 backdrop-blur-[3px] md:backdrop-blur-sm"></div>
       </div>
 
       {/* Sign-Up Box */}
@@ -21,10 +21,14 @@ const SignUpDashboard = () => {
         initial={{ opacity: 0, y: -2 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.25 }}
-        className="relative z-10 bg-white w-[500px] p-8 rounded-2xl shadow-lg flex flex-col items-center text-center"
+        className="relative z-10 bg-white w-[400px] md:w-[500px] p-6 md:p-8 rounded-2xl shadow-lg flex flex-col items-center text-center"
       >
         {/* Logo */}
-        <img src="/LimeblockLogo.png" alt="Logo" className="w-20 h-20 mb-4" />
+        <img
+          src="/LimeblockLogo.png"
+          alt="Logo"
+          className="size-12 md:size-20 mb-4"
+        />
 
         {/* Title */}
         <h1 className="font-aeonik text-2xl font-bold pb-2">

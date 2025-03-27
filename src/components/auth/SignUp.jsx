@@ -109,7 +109,7 @@ export default function SignUp() {
   return (
     <div className="min-h-screen h-fit flex flex-row w-full overflow-y-auto">
       {/* Left Side - Sign Up Form */}
-      <div className="w-1/2 min-h-screen h-fit flex flex-col justify-center py-12">
+      <div className="w-full md:w-1/2 min-h-screen h-fit flex flex-col justify-center p-12">
         <div className="max-w-md mx-auto w-full">
           <div className="flex items-center gap-3 pb-8 pt-12">
             <Image
@@ -263,7 +263,7 @@ export default function SignUp() {
       </div>
 
       {/* Right Side - Animated Background with Reviews */}
-      <div className="w-1/2 relative overflow-hidden">
+      <div className="hidden md:block w-1/2 relative overflow-hidden">
         {/* Gradient Swirl Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-lime/90 via-lime/60 to-lime/40">
           <svg
