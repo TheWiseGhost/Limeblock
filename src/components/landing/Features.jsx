@@ -9,11 +9,11 @@ const GridSection = ({ title, content, image }) => {
 
   return (
     <motion.div
-      className="bg-white rounded-lg shadow-md p-4 cursor-pointer font-inter"
+      className="bg-white rounded-lg shadow-md p-6 h-fit cursor-pointer font-inter"
       onClick={() => setIsOpen(!isOpen)}
     >
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-aeonik">{title}</h2>
+        <h2 className="text-xl font-medium font-inter">{title}</h2>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
@@ -32,9 +32,9 @@ const GridSection = ({ title, content, image }) => {
             className="overflow-hidden"
           >
             <p className="mt-4 text-gray-600">{content}</p>
-            <div className="mt-4 w-full h-48 bg-gray-200 rounded-lg overflow-hidden">
+            <div className="mt-4 w-full h-screen bg-white rounded-lg overflow-hidden">
               <div
-                className="w-full h-full bg-center bg-cover"
+                className="w-full h-full bg-center bg-contain bg-no-repeat"
                 style={{ backgroundImage: `url(${image})` }}
               />
             </div>
@@ -48,25 +48,28 @@ const GridSection = ({ title, content, image }) => {
 const Features = () => {
   const sections = [
     {
-      title: "Section 1",
+      title: "Full Frontend Nav Handling",
       content:
-        "This is the content for section 1. It can be any length of text you want to display.",
-      image: "https://placeholder.com/400x300",
+        "Handle every single page of your website by simply adding urls and description. Get a customized block too so it look great on your site!",
+      image: "/FrontendImg.png",
     },
     {
-      title: "Section 2",
-      content: "Here's section 2 content with its own unique information.",
-      image: "https://placeholder.com/400x300",
+      title: "API Actions",
+      content:
+        "Allow our AI to send logical AI crafted API requests to your backend so make your app frictionless and so much faster for any user.",
+      image: "/ApiEndpointImg.png",
     },
     {
-      title: "Section 3",
-      content: "Section 3 brings more interesting content to explore.",
-      image: "https://placeholder.com/400x300",
+      title: "Easy Integration",
+      content:
+        "Just drop your new block into your site in 3 lines of code and you're set. Mobile adapative and cleared for any use. See how we use Limeblock in Limeblock.",
+      image: "/UsageExample.png",
     },
     {
-      title: "Section 4",
-      content: "The fourth section contains its own special content.",
-      image: "https://placeholder.com/400x300",
+      title: "Analytics",
+      content:
+        "Analyze what actions your users are committing and understand potential app improvements. Plus it looks pretty cool.",
+      image: "/AnalysisImg.png",
     },
   ];
 
