@@ -13,7 +13,7 @@ const GridSection = ({ title, content, image }) => {
       onClick={() => setIsOpen(!isOpen)}
     >
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-medium font-inter">{title}</h2>
+        <h2 className="text-base md:text-xl font-medium font-inter">{title}</h2>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
@@ -31,10 +31,10 @@ const GridSection = ({ title, content, image }) => {
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <p className="mt-4 text-gray-600">{content}</p>
-            <div className="mt-4 w-full h-screen bg-white rounded-lg overflow-hidden">
+            <p className="text-sm md:text-base mt-4 text-gray-600">{content}</p>
+            <div className="mt-4 w-full h-fit md:h-screen bg-white rounded-lg overflow-hidden">
               <div
-                className="w-full h-full bg-center bg-contain bg-no-repeat"
+                className="w-full h-[200px] md:h-full bg-center bg-contain bg-no-repeat"
                 style={{ backgroundImage: `url(${image})` }}
               />
             </div>
