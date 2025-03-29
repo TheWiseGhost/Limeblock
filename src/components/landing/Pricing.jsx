@@ -106,7 +106,7 @@ const Pricing = () => {
                 <span className="line-through">20 Backend Endpoints</span>
               </li>
               <li>
-                <span className="line-through">100 MAUs</span>
+                <span className="line-through">50 MAUs</span>
               </li>
             </ul>
             <span className="font-aeonik text-lg font-medium mt-4">
@@ -114,7 +114,7 @@ const Pricing = () => {
             </span>{" "}
             <ul className="text-gray-900 text-base mb-2 ml-4 list-disc">
               <li>Unlimited Endpoints</li>
-              <li>200 MAUs</li>
+              <li>100 MAUs</li>
             </ul>
           </div>
           <div className="mb-4">
@@ -143,7 +143,7 @@ const Pricing = () => {
                 <span className="line-through">100 Backend Endpoints</span>
               </li>
               <li>
-                <span className="line-through">2,000 MAUs</span>
+                <span className="line-through">500 MAUs</span>
               </li>
             </ul>
             <span className="font-aeonik text-lg font-medium mt-4">
@@ -151,11 +151,11 @@ const Pricing = () => {
             </span>{" "}
             <ul className="text-gray-900 text-base mb-2 ml-4 list-disc">
               <li>Unlimited Endpoints</li>
-              <li>5,000 MAUs</li>
+              <li>1,000 MAUs</li>
             </ul>
           </div>
           <div className="mb-4">
-            <span className="text-3xl font-bold">$99</span>
+            <span className="text-3xl font-bold">$149</span>
             <span className="text-gray-800 text-sm">/month</span>
           </div>
           <button

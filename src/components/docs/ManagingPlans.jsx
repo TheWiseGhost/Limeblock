@@ -37,7 +37,7 @@ const ManagingPlans = () => {
                 </h3>
                 <p className="text-gray-700">
                   The <strong>Basic Plan</strong> allows for up to{" "}
-                  <span className="font-semibold text-gray-900">10 MAUs</span>.
+                  <span className="font-semibold text-gray-900">20 MAUs</span>.
                   This plan is ideal for small projects or testing purposes.
                 </p>
               </div>
@@ -48,7 +48,7 @@ const ManagingPlans = () => {
                 </h3>
                 <p className="text-gray-700">
                   The <strong>Startup Plan</strong> increases your limit to{" "}
-                  <span className="font-semibold text-gray-900">200 MAUs</span>.
+                  <span className="font-semibold text-gray-900">100 MAUs</span>.
                   This plan is perfect for growing businesses with moderate
                   traffic.
                 </p>
@@ -62,7 +62,7 @@ const ManagingPlans = () => {
                   The <strong>Enterprise Plan</strong> provides a generous limit
                   of{" "}
                   <span className="font-semibold text-gray-900">
-                    5,000 MAUs
+                    1,000 MAUs
                   </span>
                   . This plan is designed for large-scale applications with high
                   user engagement.
