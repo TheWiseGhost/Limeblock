@@ -1,4 +1,6 @@
-import ChatWidget from "@/components/implementation/ChatWidget";
+"use client";
+
+import { ChatWidget } from "@limeblock/react";
 import CodeImplementation from "@/components/landing/CodeImplementation";
 import Demo from "@/components/landing/Demo";
 import Features from "@/components/landing/Features";

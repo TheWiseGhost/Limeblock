@@ -47,6 +47,7 @@ const BlockFace = ({ body, eyes, size, isThinking = false }) => {
 const ChatWidget = ({ apiKey, contextParams }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [widgetLoading, setWidgetLoading] = useState(true);
   const [loadingStep, setLoadingStep] = useState(0);
   const [error, setError] = useState(null);
   const [frontend, setFrontend] = useState(null);
@@ -70,6 +71,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
     const fetchData = async () => {
       try {
         setLoading(true);
+        setWidgetLoading(true);
 
         if (!apiKey) {
           setError("API key not found");
@@ -78,7 +80,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
 
         // Fetch frontend details
         const frontendResponse = await fetch(
-          "http://127.0.0.1:8000/api/public_frontend_details/",
+          "https://limeblockbackend.onrender.com/api/public_frontend_details/",
           {
             method: "POST",
             headers: {
@@ -89,7 +91,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
         );
 
         const checkValid = await fetch(
-          "http://127.0.0.1:8000/api/are_maus_remaining/",
+          "https://limeblockbackend.onrender.com/api/are_maus_remaining/",
           {
             method: "POST",
             headers: {
@@ -114,6 +116,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
         setError("Network error, please try again");
       } finally {
         setLoading(false);
+        setWidgetLoading(false);
       }
     };
 
@@ -200,7 +203,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
       try {
         // Send message to Django backend
         const response = await fetch(
-          "http://127.0.0.1:8000/api/process_prompt/",
+          "https://limeblockbackend.onrender.com/api/process_prompt/",
           {
             method: "POST",
             headers: {
@@ -293,7 +296,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
     try {
       // Send message to Django backend
       const response = await fetch(
-        "http://127.0.0.1:8000/api/commit_backend_action/",
+        "https://limeblockbackend.onrender.com/api/commit_backend_action/",
         {
           method: "POST",
           headers: {
@@ -451,6 +454,10 @@ const ChatWidget = ({ apiKey, contextParams }) => {
   const interactiveStyle = {
     pointerEvents: "auto", // Re-enables pointer events for chat elements
   };
+
+  if (widgetLoading) {
+    return <></>;
+  }
 
   return (
     // Portal container - fixed position, doesn't affect page layout
