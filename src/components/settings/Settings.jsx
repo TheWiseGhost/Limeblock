@@ -9,12 +9,17 @@ import {
 } from "@tabler/icons-react";
 import React, { useState, useEffect } from "react";
 import { useToast } from "../global/Use-Toast";
+import { ChatWidget } from "@limeblock/react";
 
 export default function Settings() {
   const [showApiKey, setShowApiKey] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const contextParams = {
+    user_id: user?.id,
+  };
 
   // Email states
   const [emails, setEmails] = useState([]);
@@ -400,6 +405,10 @@ export default function Settings() {
           </button>
         </div>
       </div>
+      <ChatWidget
+        apiKey={"lime_2JDnwGpM7OOfEcfj3kJ9bwVrGULxh1sL"}
+        contextParams={contextParams}
+      />
     </div>
   );
 }

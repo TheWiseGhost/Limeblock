@@ -3,12 +3,17 @@ import EditUrl from "./EditUrl";
 import ContextParams from "./ContextParams";
 import ApiEndpointTree from "./ApiEndpointTree";
 import Access from "./Access";
+import { ChatWidget } from "@limeblock/react";
 
 const Backend = () => {
   const [user, setUser] = useState(null);
   const [backend, setBackend] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const contextParams = {
+    user_id: user?.id,
+  };
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -139,6 +144,10 @@ const Backend = () => {
           api_key={user?.api_key}
         />
       </div>
+      <ChatWidget
+        apiKey={"lime_2JDnwGpM7OOfEcfj3kJ9bwVrGULxh1sL"}
+        contextParams={contextParams}
+      />
     </div>
   );
 };

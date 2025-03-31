@@ -1,6 +1,7 @@
 "use client";
 
 import { ChatWidget } from "@limeblock/react";
+// import ChatWidget from "@/components/implementation/ChatWidget";
 import CodeImplementation from "@/components/landing/CodeImplementation";
 import Demo from "@/components/landing/Demo";
 import Features from "@/components/landing/Features";
@@ -11,10 +12,7 @@ import Pricing from "@/components/landing/Pricing";
 import SignUPrompt from "@/components/landing/SignUpPrompt";
 
 export default function Home() {
-  const contextParams = {
-    board_id: "679fdb26a14496f9423891fe",
-    user_id: "user_2tFLPXZyEnTmNQsenlQXNU3Q5Z4",
-  };
+  const contextParams = {};
   return (
     <div>
       <Hero />

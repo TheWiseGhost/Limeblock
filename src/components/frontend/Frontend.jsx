@@ -4,12 +4,17 @@ import EditWidget from "./EditWidget";
 import EditContextParams from "./EditContextParams";
 import PageEndpointTree from "./PageEndpointTree";
 import EditChatUI from "./EditChatUI";
+import { ChatWidget } from "@limeblock/react";
 
 const Frontend = () => {
   const [user, setUser] = useState(null);
   const [frontend, setFrontend] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const contextParams = {
+    user_id: user?.id,
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -171,6 +176,10 @@ const Frontend = () => {
           <p>No data available. Please refresh the page or contact support.</p>
         </div>
       )}
+      <ChatWidget
+        apiKey={"lime_2JDnwGpM7OOfEcfj3kJ9bwVrGULxh1sL"}
+        contextParams={contextParams}
+      />
     </div>
   );
 };

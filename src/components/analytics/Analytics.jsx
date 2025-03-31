@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import MAU from "./MAU";
 import EndpointStats from "./EndpointStats";
+import { ChatWidget } from "@limeblock/react";
 
 const Analytics = () => {
   const [user, setUser] = useState(null);
@@ -10,6 +11,10 @@ const Analytics = () => {
   const [backend, setBackend] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const contextParams = {
+    user_id: user?.id,
+  };
 
   const [mauStats, setMauStats] = useState(null);
 
@@ -167,6 +172,10 @@ const Analytics = () => {
           backend_folders={backend?.folders}
         />
       </div>
+      <ChatWidget
+        apiKey={"lime_2JDnwGpM7OOfEcfj3kJ9bwVrGULxh1sL"}
+        contextParams={contextParams}
+      />
     </div>
   );
 };
