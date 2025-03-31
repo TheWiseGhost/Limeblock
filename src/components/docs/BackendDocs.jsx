@@ -77,9 +77,8 @@ MIDDLEWARE = [
 
 # Allow requests from Limeblock domains
 CORS_ALLOWED_ORIGINS = [
-    "https://app.limeblock.io",
-    "https://api.limeblock.io",
-    "https://widget.limeblock.io"
+    "https://limeblock.io",
+    "https://limeblockbackend.onrender.com",
 ]
 
 # If you need to allow credentials (cookies, authorization headers)
@@ -102,9 +101,8 @@ const app = express();
 // Configure CORS
 app.use(cors({
   origin: [
-    'https://app.limeblock.io',
-    'https://api.limeblock.io',
-    'https://widget.limeblock.io'
+    "https://limeblock.io",
+    "https://limeblockbackend.onrender.com",
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
