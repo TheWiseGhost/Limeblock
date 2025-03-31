@@ -23,6 +23,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
     name: "",
     description: "",
     url: url,
+    method: "POST",
     schema: "",
   });
   const [schemaErrors, setSchemaErrors] = useState({});
@@ -39,7 +40,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
   const validateSchema = (schema, endpointId = "new") => {
     if (!schema.trim()) {
       setSchemaErrors((prev) => ({ ...prev, [endpointId]: "" }));
-      return true; // Empty schema is valid
+      return true;
     }
 
     try {
@@ -115,7 +116,6 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
 
   const testEndpoint = async (endpoint) => {
     try {
-      // Save before testing
       setTestingEndpoint(endpoint.id);
       const saveSuccess = await handleSave();
 
@@ -194,17 +194,15 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
   };
 
   const toggleAddEndpoint = (folderId) => {
-    // Close any open edit forms when adding a new endpoint
     setEditingEndpoint(null);
-
     setShowAddEndpoint((prev) => ({
       ...prev,
       [folderId]: !prev[folderId],
     }));
-
     setNewEndpoint({
       name: "",
       url: url,
+      method: "POST",
       schema: "",
     });
   };
@@ -247,10 +245,14 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
   const saveEditedEndpoint = (folderId, endpointId) => {
     const editedData = editingEndpoint.data;
 
-    if (!editedData.name.trim() || !editedData.url.trim()) {
+    if (
+      !editedData.name.trim() ||
+      !editedData.url.trim() ||
+      !editedData.method
+    ) {
       toast({
         title: "Validation Error",
-        description: "Name and URL are required fields",
+        description: "Name, Method, and URL are required fields",
       });
       return;
     }
@@ -283,10 +285,14 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
   };
 
   const addEndpoint = (folderId) => {
-    if (!newEndpoint.name.trim() || !newEndpoint.url.trim()) {
+    if (
+      !newEndpoint.name.trim() ||
+      !newEndpoint.url.trim() ||
+      !newEndpoint.method
+    ) {
       toast({
         title: "Validation Error",
-        description: "Name and URL are required fields",
+        description: "Name, Method, and URL are required fields",
       });
       return;
     }
@@ -322,7 +328,6 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
   };
 
   const deleteEndpoint = (folderId, endpointId) => {
-    // Clear any editing state if we're deleting the endpoint being edited
     if (
       editingEndpoint &&
       editingEndpoint.folderId === folderId &&
@@ -534,6 +539,29 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                       Add New Endpoint
                     </h4>
                     <div className="space-y-4">
+                      {/* Method Dropdown */}
+                      <div className="flex flex-col space-y-1">
+                        <label className="text-xs">Method:</label>
+                        <select
+                          className="border border-gray-300 rounded-md px-1 py-2 w-full text-sm bg-white"
+                          value={newEndpoint.method}
+                          onChange={(e) =>
+                            setNewEndpoint({
+                              ...newEndpoint,
+                              method: e.target.value,
+                            })
+                          }
+                        >
+                          {["GET", "POST", "PUT", "DELETE", "OPTIONS"].map(
+                            (method) => (
+                              <option key={method} value={method}>
+                                {method}
+                              </option>
+                            )
+                          )}
+                        </select>
+                      </div>
+
                       {/* Name Input */}
                       <div className="flex flex-col space-y-1">
                         <label className="text-xs">Name:</label>
@@ -665,7 +693,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                                   {endpoint.description}
                                 </div>
                                 <div className="text-gray-500 text-xs">
-                                  {endpoint.url}
+                                  [{endpoint.method}] {endpoint.url}
                                 </div>
                                 {endpoint.schema &&
                                   !editingEndpoint?.endpointId ===
@@ -748,7 +776,6 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                               </div>
                             </div>
 
-                            {/* Inline edit form for this specific endpoint */}
                             {editingEndpoint &&
                               editingEndpoint.folderId === folder.id &&
                               editingEndpoint.endpointId === endpoint.id && (
@@ -757,6 +784,34 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                                     Edit Endpoint
                                   </div>
                                   <div className="space-y-4">
+                                    {/* Method Dropdown */}
+                                    <div className="flex flex-col space-y-1">
+                                      <label className="text-xs">Method:</label>
+                                      <select
+                                        className="border border-gray-300 rounded-md p-2 w-full text-sm bg-white"
+                                        value={editingEndpoint.data.method}
+                                        onChange={(e) =>
+                                          updateEditingEndpoint(
+                                            "method",
+                                            e.target.value,
+                                            endpoint.id
+                                          )
+                                        }
+                                      >
+                                        {[
+                                          "GET",
+                                          "POST",
+                                          "PUT",
+                                          "DELETE",
+                                          "OPTIONS",
+                                        ].map((method) => (
+                                          <option key={method} value={method}>
+                                            {method}
+                                          </option>
+                                        ))}
+                                      </select>
+                                    </div>
+
                                     {/* Name Input */}
                                     <div className="flex flex-col space-y-1">
                                       <label className="text-xs">Name:</label>
