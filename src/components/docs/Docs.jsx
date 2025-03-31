@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import Sidebar from "./Sidebar";
 import HowToExport from "./HowToExport";

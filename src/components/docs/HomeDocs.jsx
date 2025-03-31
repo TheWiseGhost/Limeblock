@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import Sidebar from "./Sidebar";
 
@@ -32,14 +30,12 @@ const HomeDocs = () => {
               Enjoy using Limeblock!
             </p>
           </div>
-          <button
-            onClick={() => {
-              window.location.href = "/auth_prompt/";
-            }}
+          <a
+            href="/dashboard"
             className="text-sm mt-4 w-fit rounded-lg px-4 py-3 font-inter text-white bg-gray-900 hover:bg-gray-800 transition duration-200"
           >
             Dashboard
-          </button>
+          </a>
           <h2 className="text-2xl font-aeonik font-medium mt-12 mb-4">
             Getting Help
           </h2>

@@ -1,7 +1,4 @@
-"use client";
-
 import React from "react";
-import { Code } from "../global/Code";
 
 const ManagingPlans = () => {
   return (
@@ -91,20 +88,18 @@ const ManagingPlans = () => {
             <h2 className="text-2xl font-aeonik font-medium mt-12 mb-4">
               Upgrading Your Plan
             </h2>
-            <p className="mb-4">
+            <p className="mb-8">
               To upgrade your plan, click the button below. You'll be redirected
               to the checkout page where you can select a new plan that better
               suits your needs.
             </p>
 
-            <button
-              onClick={() => {
-                window.location.href = "/checkout/";
-              }}
+            <a
+              href="/checkout"
               className="bg-gray-900 hover:bg-gray-800 text-white font-inter font-normal px-4 py-3 rounded-lg text-sm transition-colors"
             >
               Upgrade Plan
-            </button>
+            </a>
 
             <h2 className="text-2xl font-aeonik font-medium mt-12 mb-4">
               Troubleshooting

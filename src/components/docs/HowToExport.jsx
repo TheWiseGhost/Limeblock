@@ -1,8 +1,5 @@
-"use client";
-
 import React from "react";
 import { Code } from "../global/Code";
-import Sidebar from "./Sidebar";
 
 const HowToExport = () => {
   // Code snippets stored as variables to avoid syntax errors
