@@ -28,7 +28,7 @@ export default function Dashboard() {
 
         // Fetch user details
         const userResponse = await fetch(
-          "http://127.0.0.1:8000/api/user_details/",
+          "https://limeblockbackend.onrender.com/api/user_details/",
           {
             method: "POST",
             headers: {
@@ -45,7 +45,7 @@ export default function Dashboard() {
 
           // Fetch frontend details using the same user_id
           const frontendResponse = await fetch(
-            "http://127.0.0.1:8000/api/frontend_details/",
+            "https://limeblockbackend.onrender.com/api/frontend_details/",
             {
               method: "POST",
               headers: {
@@ -65,7 +65,7 @@ export default function Dashboard() {
 
           // Fetch MAU stats
           const mauResponse = await fetch(
-            "http://127.0.0.1:8000/api/get_mau_stats/",
+            "https://limeblockbackend.onrender.com/api/get_mau_stats/",
             {
               method: "POST",
               headers: {

@@ -31,7 +31,7 @@ const Analytics = () => {
 
         // Fetch user details
         const userResponse = await fetch(
-          "http://127.0.0.1:8000/api/user_details/",
+          "https://limeblockbackend.onrender.com/api/user_details/",
           {
             method: "POST",
             headers: {
@@ -48,7 +48,7 @@ const Analytics = () => {
 
           // Fetch frontend details using the same user_id
           const frontendResponse = await fetch(
-            "http://127.0.0.1:8000/api/frontend_details/",
+            "https://limeblockbackend.onrender.com/api/frontend_details/",
             {
               method: "POST",
               headers: {
@@ -68,7 +68,7 @@ const Analytics = () => {
 
           // Fetch backend details using the same user_id
           const backendResponse = await fetch(
-            "http://127.0.0.1:8000/api/backend_details/",
+            "https://limeblockbackend.onrender.com/api/backend_details/",
             {
               method: "POST",
               headers: {
@@ -88,7 +88,7 @@ const Analytics = () => {
 
           // Fetch MAU stats
           const mauResponse = await fetch(
-            "http://127.0.0.1:8000/api/get_mau_stats/",
+            "https://limeblockbackend.onrender.com/api/get_mau_stats/",
             {
               method: "POST",
               headers: {

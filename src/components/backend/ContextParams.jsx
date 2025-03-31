@@ -10,7 +10,7 @@ const ContextParams = ({ user_id }) => {
         setLoading(true);
         // Fetch frontend details using the same user_id
         const frontendResponse = await fetch(
-          "http://127.0.0.1:8000/api/frontend_details/",
+          "https://limeblockbackend.onrender.com/api/frontend_details/",
           {
             method: "POST",
             headers: {

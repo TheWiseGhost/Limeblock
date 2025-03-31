@@ -162,7 +162,7 @@ const ChatDemo = () => {
       try {
         // Send message to Django backend
         const response = await fetch(
-          "http://127.0.0.1:8000/api/process_prompt/",
+          "https://limeblockbackend.onrender.com/api/process_prompt/",
           {
             method: "POST",
             headers: {

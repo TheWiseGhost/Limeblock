@@ -43,7 +43,7 @@ export default function Settings() {
 
         // Fetch user details
         const userResponse = await fetch(
-          "http://127.0.0.1:8000/api/user_details/",
+          "https://limeblockbackend.onrender.com/api/user_details/",
           {
             method: "POST",
             headers: {
@@ -121,16 +121,19 @@ export default function Settings() {
       await new Promise((resolve) => setTimeout(resolve, 500));
 
       // Send update request with all emails
-      const response = await fetch("http://127.0.0.1:8000/api/update_emails/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: user.id,
-          emails: emails,
-        }),
-      });
+      const response = await fetch(
+        "https://limeblockbackend.onrender.com/api/update_emails/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user_id: user.id,
+            emails: emails,
+          }),
+        }
+      );
 
       const data = await response.json();
 

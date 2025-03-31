@@ -71,7 +71,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
       await new Promise((resolve) => setTimeout(resolve, 500));
 
       const response = await fetch(
-        "http://127.0.0.1:8000/api/update_backend/",
+        "https://limeblockbackend.onrender.com/api/update_backend/",
         {
           method: "POST",
           headers: {
@@ -125,7 +125,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
       }
 
       const response = await fetch(
-        "http://127.0.0.1:8000/api/process_prompt/",
+        "https://limeblockbackend.onrender.com/api/process_prompt/",
         {
           method: "POST",
           headers: {

@@ -24,7 +24,7 @@ const Backend = () => {
         }
 
         const response = await fetch(
-          "http://127.0.0.1:8000/api/user_details/",
+          "https://limeblockbackend.onrender.com/api/user_details/",
           {
             method: "POST",
             headers: {
@@ -40,7 +40,7 @@ const Backend = () => {
 
           // Fetch backend details using the same user_id
           const backendResponse = await fetch(
-            "http://127.0.0.1:8000/api/backend_details/",
+            "https://limeblockbackend.onrender.com/api/backend_details/",
             {
               method: "POST",
               headers: {

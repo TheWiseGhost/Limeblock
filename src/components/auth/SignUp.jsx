@@ -70,17 +70,20 @@ export default function SignUp() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/create_user/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          business_name: formData.business_name,
-          password: formData.password,
-          emails: formData.emails.filter((email) => email.trim() !== ""),
-        }),
-      });
+      const response = await fetch(
+        "https://limeblockbackend.onrender.com/api/create_user/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            business_name: formData.business_name,
+            password: formData.password,
+            emails: formData.emails.filter((email) => email.trim() !== ""),
+          }),
+        }
+      );
 
       const data = await response.json();
 

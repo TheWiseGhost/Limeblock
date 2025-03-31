@@ -58,7 +58,7 @@ const PageEndpointTree = ({ folders, url, user_id }) => {
       await new Promise((resolve) => setTimeout(resolve, 500));
 
       const response = await fetch(
-        "http://127.0.0.1:8000/api/update_frontend/",
+        "https://limeblockbackend.onrender.com/api/update_frontend/",
         {
           method: "POST",
           headers: {
