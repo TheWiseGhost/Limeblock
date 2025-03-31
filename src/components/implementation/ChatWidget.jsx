@@ -231,6 +231,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
         );
 
         const data = await response.json();
+        console.log("Response data:", JSON.stringify(data, null, 2));
 
         // Add bot response to chat
         if (response.ok) {
@@ -243,18 +244,24 @@ const ChatWidget = ({ apiKey, contextParams }) => {
               ...prev,
               { text: responseText, sender: "bot", link: data.url },
             ]);
+          } else if (data.endpoint_type == "backend") {
+            setMessages((prev) => [
+              ...prev,
+              {
+                text: responseText,
+                sender: "bot",
+                confirm_data: {
+                  endpoint: data.endpoint,
+                  schema: data.schema,
+                  prompt: data.prompt,
+                },
+              },
+            ]);
           } else {
-            if (data.confirm_needed) {
-              setMessages((prev) => [
-                ...prev,
-                { text: responseText, sender: "bot", confirm_action: data },
-              ]);
-            } else {
-              setMessages((prev) => [
-                ...prev,
-                { text: responseText, sender: "bot" },
-              ]);
-            }
+            setMessages((prev) => [
+              ...prev,
+              { text: responseText, sender: "bot" },
+            ]);
           }
         } else {
           // Handle error response
@@ -307,7 +314,6 @@ const ChatWidget = ({ apiKey, contextParams }) => {
             api_key: apiKey,
             endpoint: action_data.endpoint,
             schema: action_data.schema,
-            url: action_data.url,
           }),
         }
       );
@@ -319,24 +325,8 @@ const ChatWidget = ({ apiKey, contextParams }) => {
         let responseText;
 
         responseText = data.formatted_response;
-        if (data.endpoint_type == "frontend") {
-          setMessages((prev) => [
-            ...prev,
-            { text: responseText, sender: "bot", link: data.url },
-          ]);
-        } else {
-          if (data.confirm_needed) {
-            setMessages((prev) => [
-              ...prev,
-              { text: responseText, sender: "bot", confirm_action: data },
-            ]);
-          } else {
-            setMessages((prev) => [
-              ...prev,
-              { text: responseText, sender: "bot" },
-            ]);
-          }
-        }
+
+        setMessages((prev) => [...prev, { text: responseText, sender: "bot" }]);
       } else {
         // Handle error response
         const errorMessage =
@@ -629,7 +619,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                       {messages.map((msg, index) => (
                         <motion.div
                           key={index}
-                          className={`mb-4 flex gap-3 ${
+                          className={`mb-4 flex gap-3 h-fit ${
                             msg.sender === "user"
                               ? "flex-row w-11/12 ml-auto"
                               : "flex-row"
@@ -686,13 +676,11 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                               <></>
                             )}
 
-                            {msg.confirm_action ? (
+                            {msg.confirm_data ? (
                               <button
                                 className="bg-gray-900 px-3 py-2 mt-2 text-white font-inter text-xs rounded-md"
                                 onClick={() => {
-                                  handleConfirmBackendAction(
-                                    msg.confirm_action
-                                  );
+                                  handleConfirmBackendAction(msg.confirm_data);
                                 }}
                               >
                                 Confirm Action
