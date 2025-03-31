@@ -899,7 +899,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
             </motion.form>
             <div className="flex flex-row items-center justify-center text-center pb-2 pt-1">
               <a
-                href="#"
+                href="https://limeblock.io/"
                 className="font-inter text-gray-500 hover:underline transition duration-200"
                 style={{ fontSize: "10px" }}
               >
