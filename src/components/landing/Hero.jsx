@@ -106,7 +106,7 @@ export default function Hero() {
 
         <div className="hidden md:flex gap-8">
           <NavButton text="Docs" href="/docs/" />
-          <NavButton text="Features" href="#features" />
+          <NavButton text="Features" href="/docs/frontend/" />
           <NavButton text="Solutions" href="#solutions" />
           <NavButton text="Pricing" href="/checkout" />
           <NavButton text="Privacy" href="/privacy" />
@@ -178,7 +178,7 @@ export default function Hero() {
           variants={item}
           className="text-5xl md:text-7xl font-aeonik tracking-tight mb-8"
         >
-          How people interact with <br className="hidden md:flex" />
+          How users interact with <br className="hidden md:flex" />
           your app{" "}
           <span className="relative inline-block">
             10x faster
@@ -206,9 +206,9 @@ export default function Hero() {
           variants={item}
           className="text-sm md:text-lg text-gray-600 w-full px-4 md:px-0 max-w-[900px] mx-auto mb-12"
         >
-          Integrate Limeblock into your app and let people commit in-app actions
-          just with a few text prompts, saving time and headaches for all of
-          your users.
+          Integrate Limeblock into your app and let your users commit in-app
+          actions, API requests, page navigation, and more with just with a few
+          text prompts
         </motion.p>
 
         <motion.div

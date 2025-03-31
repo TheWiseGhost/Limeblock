@@ -10,6 +10,7 @@ import Hero from "@/components/landing/Hero";
 import InAppActions from "@/components/landing/InAppActions";
 import Pricing from "@/components/landing/Pricing";
 import SignUPrompt from "@/components/landing/SignUpPrompt";
+import Solutions from "@/components/landing/Solutions";
 
 export default function Home() {
   const contextParams = {};
@@ -17,6 +18,7 @@ export default function Home() {
     <div>
       <Hero />
       <Demo />
+      <Solutions />
       <InAppActions />
       <Features />
       <CodeImplementation />

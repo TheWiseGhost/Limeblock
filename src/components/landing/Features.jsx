@@ -50,13 +50,13 @@ const Features = () => {
     {
       title: "Full Frontend Nav Handling",
       content:
-        "Handle every single page of your website by simply adding urls and description. Get a customized block too so it look great on your site!",
+        "Handle every single page of your website by simply adding urls and descriptions. Create your own customized block so it look great on your site!",
       image: "/FrontendImg.png",
     },
     {
       title: "API Actions",
       content:
-        "Allow our AI to send logical AI crafted API requests to your backend so make your app frictionless and so much faster for any user.",
+        "Allow our AI agent to send logically crafted API requests to your backend, making your app frictionless and so much faster and easier to use for any user.",
       image: "/ApiEndpointImg.png",
     },
     {
