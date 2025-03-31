@@ -55,6 +55,8 @@ const MyApp = () => {
 
 export default MyApp;`;
   const nextjsImplementationCode = `// pages/_app.js or app/layout.js (for App Router)
+  
+"use client";
 import { ChatWidget } from '@limeblock/react';
 
 export default function Layout({ children }) {
@@ -227,6 +229,13 @@ export default function Layout({ children }) {
               copyButton={true}
               className="mb-4"
             />
+
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+              <p className="text-yellow-700">
+                <strong>Important Note:</strong> If you are using NextJS please
+                add "use client"; to the top of the page
+              </p>
+            </div>
 
             <h2 className="text-2xl font-aeonik font-medium mt-8 mb-4">
               Next.js Specific Implementation

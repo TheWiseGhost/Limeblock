@@ -6,7 +6,7 @@ import Sidebar from "./Sidebar";
 
 const GettingStarted = () => {
   // Code snippets stored as variables to avoid syntax errors
-  const createAccountCode = `// No code needed - just visit limeblock.com and sign up`;
+  const createAccountCode = `// No code needed - just visit limeblock.io and sign up`;
   const createButtonCode = `// Give the widget the color, size, and location you want in Limeblock - no code needed`;
   const navigationConfigCode = `// Example of page navigation configuration in the Limeblock app
 {
@@ -130,10 +130,10 @@ export default MyApp;`;
               <li>
                 Visit{" "}
                 <a
-                  href="https://limeblock.com"
+                  href="https://limeblock.io"
                   className="text-blue-600 hover:underline"
                 >
-                  limeblock.com
+                  limeblock.io
                 </a>
               </li>
               <li>Click on "Sign Up" and follow the registration process</li>
@@ -288,9 +288,16 @@ export default MyApp;`;
               className="mb-4"
             />
 
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+              <p className="text-yellow-700">
+                <strong>Important Note:</strong> If you are using NextJS please
+                add "use client"; to the top of the page
+              </p>
+            </div>
+
             <p className="mb-4">
               For more detailed implementation instructions, please refer to our
-              <a href="/export-docs" className="text-blue-600 hover:underline">
+              <a href="/docs/export" className="text-blue-600 hover:underline">
                 {" "}
                 Export Documentation
               </a>

@@ -222,7 +222,7 @@ const FrontendDocs = () => {
                   <div className="flex justify-between items-start">
                     <div>
                       <div className="font-medium">
-                        https://limeblock.com/docs/getting_started/
+                        https://limeblock.io/docs/getting_started/
                       </div>
                       <div className="text-xs text-gray-500">
                         Getting Started Guide
@@ -243,7 +243,7 @@ const FrontendDocs = () => {
                   <div className="flex justify-between items-start">
                     <div>
                       <div className="font-medium">
-                        https://limeblock.com/docs/frontend/
+                        https://limeblock.io/docs/frontend/
                       </div>
                       <div className="text-xs text-gray-500">
                         Frontend Customization
