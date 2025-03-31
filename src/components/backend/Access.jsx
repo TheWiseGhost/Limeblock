@@ -6,10 +6,8 @@ import { Clipboard, Check } from "lucide-react";
 const Access = () => {
   const [copiedIp, setCopiedIp] = useState(null);
   const ipAddresses = [
-    "3.134.238.10",
-    "3.129.111.220",
-    "52.15.112.168",
-    "76.76.21.21",
+    "https://limeblock.io",
+    "https://limeblockbackend.onrender.com",
   ];
 
   const handleCopy = (ip) => {
@@ -24,7 +22,7 @@ const Access = () => {
         Access
       </div>
       <div className="font-inter text-sm flex-1 pl-1">
-        <p>Allow the following IP Addresses access to your backend:</p>
+        <p>Allow the following Addresses access to your backend:</p>
         <ul className="mt-2 flex flex-row space-x-6">
           {ipAddresses.map((ip) => (
             <li key={ip} className="flex flex-row items-center space-x-1 mt-1">
