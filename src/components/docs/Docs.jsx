@@ -5,12 +5,13 @@ import GettingStarted from "./GettingStarted";
 import FrontendDocs from "./FrontendDocs";
 import BackendDocs from "./BackendDocs";
 import ManagingPlans from "./ManagingPlans";
+import VoteForNewFramework from "./VoteForNewFramework";
 
 const Docs = ({ page }) => {
   return (
     <div className="flex flex-row min-h-screen">
       {/* Sidebar (Sticky) */}
-      <div className="w-fit h-screen sticky top-0 overflow-y-auto">
+      <div className="hidden md:flex w-fit h-screen sticky top-0 overflow-y-auto">
         <Sidebar active={page} />
       </div>
 
@@ -21,6 +22,7 @@ const Docs = ({ page }) => {
         {page === "frontend" && <FrontendDocs />}
         {page == "backend" && <BackendDocs />}
         {page == "managing_plans" && <ManagingPlans />}
+        {page == "vote" && <VoteForNewFramework />}
       </div>
     </div>
   );

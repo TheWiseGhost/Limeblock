@@ -156,6 +156,16 @@ const Sidebar = ({ active, className = "" }) => {
             >
               Backend
             </a>
+            <a
+              href="/docs/vote"
+              className={`flex items-center py-1.5 px-2 rounded ${
+                active == "vote"
+                  ? "text-black bg-gray-100"
+                  : "text-gray-700 hover:bg-gray-50"
+              }`}
+            >
+              Vote New Framework
+            </a>
           </div>
         )}
       </div>

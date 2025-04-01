@@ -204,11 +204,11 @@ export default function Hero() {
 
         <motion.p
           variants={item}
-          className="text-sm md:text-lg text-gray-600 w-full px-4 md:px-0 max-w-[900px] mx-auto mb-12"
+          className="text-sm md:text-lg text-gray-600 w-full px-4 md:px-0 max-w-[860px] mx-auto mb-12"
         >
-          Integrate Limeblock into your app and let your users commit in-app
-          actions, API requests, page navigation, and more with just with a few
-          text prompts
+          Integrate Limeblock into your React App and let your users commit
+          in-app actions, API requests, page navigation, and more with just with
+          a few text prompts
         </motion.p>
 
         <motion.div
@@ -224,12 +224,12 @@ export default function Hero() {
             Try for Free
           </motion.a>
           <motion.a
-            href="#solutions"
+            href="/docs/vote/"
             whileHover={{ x: 3 }}
             transition={{ type: "spring", stiffness: 300 }}
             className="px-8 py-3 text-gray-700 hover:text-gray-900 font-medium flex items-center gap-2"
           >
-            How others use it
+            Not a React user
             <motion.svg
               animate={{ x: [0, 6, 0] }}
               transition={{ repeat: Infinity, repeatDelay: 1, duration: 1 }}
