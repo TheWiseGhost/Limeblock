@@ -297,7 +297,7 @@ const FrontendDocs = () => {
                 <p className="font-medium">Pricing Plans</p>
                 <p className="text-sm">
                   Comparison of all available subscription tiers. Features
-                  detailed breakdowns of Free, Pro, and Enterprise plans with
+                  detailed breakdowns of Free, Pro, and Business plans with
                   pricing and feature differences. Users can upgrade their
                   account directly from this page.
                 </p>

@@ -232,20 +232,24 @@ export default function Settings() {
                     : "Free Plan"}
                 </h3>
                 <p className="text-gray-500 text-sm mt-1">
-                  {user?.plan === "enterprise"
-                    ? "Full access for enterprises"
+                  {user?.plan === "business"
+                    ? "Full access for businesss"
                     : user?.plan === "startup"
                     ? "Advanced features for growing businesses"
+                    : user?.plan === "enterprise"
+                    ? "Premium access for enterprises with plenty of users"
                     : "Basic features included"}
                 </p>
               </div>
               <div className="text-right">
                 <p className="font-medium text-gray-900">
                   $
-                  {user?.plan === "enterprise"
+                  {user?.plan === "business"
                     ? "99"
                     : user?.plan === "startup"
                     ? "19"
+                    : user?.plan === "enterprise"
+                    ? "499"
                     : "0"}
                   /month
                 </p>

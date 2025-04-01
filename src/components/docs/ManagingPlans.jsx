@@ -28,7 +28,7 @@ const ManagingPlans = () => {
             </h2>
 
             <div className="space-y-4 mb-6">
-              <div className="bg-gray-50 p-4 rounded-lg">
+              {/* <div className="bg-gray-50 p-4 rounded-lg">
                 <h3 className="font-aeonik font-medium text-black text-lg">
                   Basic Plan
                 </h3>
@@ -37,7 +37,7 @@ const ManagingPlans = () => {
                   <span className="font-semibold text-gray-900">20 MAUs</span>.
                   This plan is ideal for small projects or testing purposes.
                 </p>
-              </div>
+              </div> */}
 
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h3 className="font-aeonik font-medium text-black text-lg">
@@ -53,16 +53,30 @@ const ManagingPlans = () => {
 
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h3 className="font-aeonik font-medium text-black text-lg">
+                  Business Plan
+                </h3>
+                <p className="text-gray-700">
+                  The <strong>Business Plan</strong> provides a limit of{" "}
+                  <span className="font-semibold text-gray-900">
+                    1,000 MAUs
+                  </span>
+                  . This plan is designed for medium-scale applications with
+                  good user engagement.
+                </p>
+              </div>
+
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h3 className="font-aeonik font-medium text-black text-lg">
                   Enterprise Plan
                 </h3>
                 <p className="text-gray-700">
                   The <strong>Enterprise Plan</strong> provides a generous limit
                   of{" "}
                   <span className="font-semibold text-gray-900">
-                    1,000 MAUs
+                    5,000 MAUs
                   </span>
                   . This plan is designed for large-scale applications with high
-                  user engagement.
+                  user engagement and traffic.
                 </p>
               </div>
             </div>
