@@ -2,151 +2,112 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import {
-  IconMessageCircle,
-  IconSearch,
-  IconSettings,
-  IconCheck,
-  IconRocket,
-  IconPalette,
+  IconPlayerPlay,
+  IconPlayerPause,
+  Icon3dCubeSphere,
+  IconRadar,
+  IconRefresh,
+  IconArrowLeft,
+  IconRewindForward5,
+  IconArrowRight,
 } from "@tabler/icons-react";
 
 const Demo = () => {
   const [currentTime, setCurrentTime] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
   const videoRef = useRef(null);
 
-  const isVisible = (startTime, endTime) => {
-    return currentTime >= startTime && currentTime <= endTime;
+  const togglePlay = () => {
+    if (videoRef.current.paused) {
+      videoRef.current.play();
+      setIsPlaying(true);
+    } else {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    }
   };
 
-  useEffect(() => {
-    const video = videoRef.current;
+  const restart = () => {
+    videoRef.current.currentTime = 0;
+    videoRef.current.play();
+    setIsPlaying(true);
+  };
 
-    const updateTime = () => {
-      setCurrentTime(video.currentTime);
-    };
+  const rewind = () => {
+    videoRef.current.currentTime = Math.max(0, currentTime - 5);
+  };
 
-    // Auto-play and set up time tracking
-    const playVideo = async () => {
-      try {
-        video.loop = true;
-        video.muted = true; // Required for autoplay in most browsers
-        await video.play();
-      } catch (err) {
-        console.error("Error attempting to play video:", err);
-      }
-    };
-
-    video?.addEventListener("timeupdate", updateTime);
-    playVideo();
-
-    return () => {
-      video?.removeEventListener("timeupdate", updateTime);
-    };
-  }, []);
+  const fastForward = () => {
+    videoRef.current.currentTime = Math.min(
+      videoRef.current.duration,
+      currentTime + 5
+    );
+  };
 
   return (
-    <div className="h-[300px] md:h-screen flex flex-col bg-white font-inter p-4 relative overflow-hidden -mt-[30px] px-5 md:px-12 pb-6 md:pb-4">
-      <div className="flex flex-row h-full relative">
-        {/* Middle - Video */}
-        <div className="w-full md:w-2/3 ml-6 flex justify-center items-top relative">
-          <video
-            ref={videoRef}
-            autoPlay
-            muted
-            loop
-            playsInline
-            disablePictureInPicture
-            className="w-full h-5/6 rounded-xl overflow-y-hidden object-contain pointer-events-none"
-            controlsList="nodownload"
-            src="/FinalLimeblockDemo.mp4"
-          ></video>
+    <div className="min-h-screen w-full bg-white font-inter relative overflow-hidden px-12 pt-2 pb-24">
+      {/* Text Overlays */}
+      {/* <div className="absolute top-8 left-8 z-20">
+        <div className="bg-white border border-gray-200 text-gray-800 px-6 py-3 rounded-xl text-lg font-medium">
+          Limeblock Demo
         </div>
+      </div>
 
-        {/* Right side elements - Staggered column layout */}
-        <div className="hidden md:flex w-1/3 relative justify-center mt-12">
-          {/* User Input Prompt - First step */}
-          <div
-            className={`absolute bg-white rounded-lg p-4 shadow-md flex items-center transition-opacity duration-500 w-5/6 ${
-              isVisible(0, 3) ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            <div className="mr-3 bg-blue-100 p-2 rounded-full">
-              <IconMessageCircle className="size-5 text-blue-600" />
-            </div>
-            <div className="font-medium">
-              Example prompt given by user - change board color
-            </div>
-          </div>
+      <div className="absolute top-8 left-1/2 -translate-x-1/2 z-20">
+        <div className="bg-white border border-gray-200 text-gray-800 px-6 py-3 rounded-xl text-lg font-medium">
+          Zero Code Required
+        </div>
+      </div>
 
-          {/* AI Scanning - Second step */}
-          <div
-            className={`absolute top-12  bg-white rounded-lg p-4 shadow-md flex items-center transition-opacity duration-500 w-5/6 ${
-              isVisible(4, 9) ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            <div className="mr-3 bg-purple-100 p-2 rounded-full">
-              <IconSearch className="size-5 text-purple-600" />
-            </div>
-            <div className="font-medium">
-              Limeblock AI scans through pages and endpoints
-            </div>
-          </div>
+      <div className="absolute top-8 right-8 z-20">
+        <div className="bg-white border border-gray-200 text-gray-800 px-6 py-3 rounded-xl text-lg font-medium">
+          Set Up in Minutes
+        </div>
+      </div> */}
 
-          {/* Finding Backend API - Third step */}
-          <div
-            className={`absolute top-24  bg-white rounded-lg p-4 shadow-md flex items-center transition-opacity duration-500 w-5/6 ${
-              isVisible(9, 12) ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            <div className="mr-3 bg-gray-100 p-2 rounded-full">
-              <IconSettings className="size-5 text-gray-600" />
-            </div>
-            <div className="font-medium">
-              AI finds a backend API action to commit that will change the
-              user's board
-            </div>
-          </div>
+      {/* Video Container */}
+      <div className="relative h-full w-3/4 mx-auto">
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="h-full w-full object-contain"
+          src="/LimeblockDemo.mp4"
+          onTimeUpdate={(e) => setCurrentTime(e.target.currentTime)}
+        ></video>
 
-          {/* User Confirmation - Fourth step */}
-          <div
-            className={`absolute top-56  bg-white rounded-lg p-4 shadow-md flex items-center transition-opacity duration-500 w-5/6 ${
-              isVisible(10, 13) ? "opacity-100" : "opacity-0"
-            }`}
+        {/* Video Controls */}
+        <div className="absolute bottom-8 right-8 flex items-center gap-4 bg-black/50 backdrop-blur-sm p-3 rounded-xl">
+          <button
+            onClick={rewind}
+            className="text-white hover:text-lime transition-colors"
           >
-            <div className="mr-3 bg-green-100 p-2 rounded-full">
-              <IconCheck className="size-5 text-green-600" />
-            </div>
-            <div className="font-medium">User confirms action</div>
-          </div>
-
-          {/* Action Committed - Fifth step */}
-          <div
-            className={`absolute top-56  bg-white rounded-lg p-4 shadow-md flex items-center transition-opacity duration-500 w-5/6 ${
-              isVisible(13, 17) ? "opacity-100" : "opacity-0"
-            }`}
+            <IconArrowLeft className="size-5" />
+          </button>
+          <button
+            onClick={togglePlay}
+            className="text-white hover:text-lime transition-colors"
           >
-            <div className="mr-3 bg-orange-100 p-2 rounded-full">
-              <IconRocket className="size-5 text-orange-600" />
-            </div>
-            <div className="font-medium">
-              Action is committed and sent to backend
-            </div>
-          </div>
-
-          {/* Board is Blue - Final step */}
-          <div
-            className={`absolute top-56  bg-white rounded-lg p-4 shadow-md flex items-center transition-opacity duration-500 w-5/6 ${
-              isVisible(18, 20) ? "opacity-100" : "opacity-0"
-            }`}
+            {isPlaying ? (
+              <IconPlayerPause className="size-5" />
+            ) : (
+              <IconPlayerPlay className="size-5" />
+            )}
+          </button>
+          <button
+            onClick={fastForward}
+            className="text-white hover:text-lime transition-colors"
           >
-            <div className="mr-3 bg-blue-100 p-2 rounded-full">
-              <IconPalette className="size-5 text-blue-600" />
-            </div>
-            <div className="font-medium">
-              The user's board is now blue - Action successfully executed by
-              Limeblock
-            </div>
-          </div>
+            <IconArrowRight className="size-5" />
+          </button>
+          <button
+            onClick={restart}
+            className="text-white hover:text-lime transition-colors"
+          >
+            <IconRefresh className="size-5" />
+          </button>
         </div>
       </div>
     </div>
