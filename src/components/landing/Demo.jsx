@@ -45,28 +45,22 @@ const Demo = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-white font-inter relative overflow-hidden px-12 pt-2 pb-24">
+    <div className="h-fit md:min-h-screen w-full bg-white font-inter relative overflow-hidden px-4 md:px-12 pb-20 md:pb-24">
       {/* Text Overlays */}
-      {/* <div className="absolute top-8 left-8 z-20">
-        <div className="bg-white border border-gray-200 text-gray-800 px-6 py-3 rounded-xl text-lg font-medium">
-          Limeblock Demo
-        </div>
-      </div>
-
-      <div className="absolute top-8 left-1/2 -translate-x-1/2 z-20">
-        <div className="bg-white border border-gray-200 text-gray-800 px-6 py-3 rounded-xl text-lg font-medium">
-          Zero Code Required
-        </div>
-      </div>
-
-      <div className="absolute top-8 right-8 z-20">
-        <div className="bg-white border border-gray-200 text-gray-800 px-6 py-3 rounded-xl text-lg font-medium">
-          Set Up in Minutes
+      {/* <div className="absolute left-1/2 -translate-x-1/2 z-20">
+        <div className="bg-white border-gray-900 border-2 text-gray-800 px-8 py-3 rounded-md text-sm md:text-lg font-aeonik">
+          Demo
         </div>
       </div> */}
 
+      <div className="absolute bottom-16 md:bottom-20 right-2 md:right-20 z-20">
+        <div className="bg-white border border-gray-900 text-gray-800 px-4 py-3 rounded-md text-xs md:text-sm font-medium">
+          Try yourself in bottom right!
+        </div>
+      </div>
+
       {/* Video Container */}
-      <div className="relative h-full w-3/4 mx-auto">
+      <div className="relative h-full w-full md:w-4/5 mx-auto pt-4">
         <video
           ref={videoRef}
           autoPlay
@@ -79,7 +73,7 @@ const Demo = () => {
         ></video>
 
         {/* Video Controls */}
-        <div className="absolute bottom-8 right-8 flex items-center gap-4 bg-black/50 backdrop-blur-sm p-3 rounded-xl">
+        <div className="absolute top-12 left-8 flex items-center gap-4 bg-black/50 backdrop-blur-sm p-3 rounded-xl">
           <button
             onClick={rewind}
             className="text-white hover:text-lime transition-colors"

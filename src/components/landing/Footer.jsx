@@ -8,7 +8,7 @@ const Footer = () => {
       </h1>
       <div className="border-t-2 h-full rounded-3xl flex font-inter text-white justify-between text-sm md:text-base px-4 md:px-32 flex-row items-center">
         <div className="">
-          <p className="">All systems operational</p>
+          <p className="">Contact: byjuaditya@gmail.com</p>
         </div>
         <div className="">
           <p className="">2025</p>

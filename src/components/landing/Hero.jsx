@@ -224,7 +224,7 @@ export default function Hero() {
             Try for Free
           </motion.a>
           <motion.a
-            href="/showcase"
+            href="#solutions"
             whileHover={{ x: 3 }}
             transition={{ type: "spring", stiffness: 300 }}
             className="px-8 py-3 text-gray-700 hover:text-gray-900 font-medium flex items-center gap-2"
