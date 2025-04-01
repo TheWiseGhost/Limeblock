@@ -13,58 +13,57 @@ import {
 export default function Solutions() {
   const solutions = [
     {
-      title: "Blogs and SEO content",
+      title: "Easy Documentation",
       description:
-        "Help direct people to relevant CTA easily and make the transition from blog post to your customer easier",
+        "Setting up Limeblock's 3 line of code widget will be the easiest task",
       icon: <IconFileText />,
     },
     {
-      title: "Game AI Assistant",
+      title: "Customer Support",
       description:
-        "Enhance player engagement with AI-driven game guides and tips.",
+        "Stop dealing with simple requests for help that could be solved by just pointing people to a page",
       icon: <IconRobot />,
     },
     {
-      title: "E-commerce Chatbot",
+      title: "Conversion Increase",
       description:
-        "Recommend products, assist with purchases, and handle customer queries.",
+        "Easy UX thanks to Limeblock means its easier for new free users to convert into paid ones",
       icon: <IconShoppingCart />,
     },
     {
       title: "SaaS Assistant",
       description:
-        "Help users with any in app action and allow them to quickly get info from docs",
+        "Help users with any in app action or API request and allow them to quickly get info from docs",
       icon: <IconDeviceLaptop />,
     },
     {
-      title: "B2B Onboarding AI",
+      title: "Professional Pricing",
       description:
-        "Guide users through your product with an interactive AI assistant.",
+        "Only pay more if more people use your widget, not for more features. Plus a 30 day money back guarantee",
       icon: <IconBriefcase />,
     },
     {
-      title: "Multilingual Support AI",
+      title: "Worldwide support",
       description:
-        "Assist users in multiple languages with real-time translations.",
+        "Assist users no matter where they are located, don't worry about accessibilty issues",
       icon: <IconWorld />,
     },
     {
-      title: "Customer Support",
-      description:
-        "Resolve issues instantly with AI-powered responses and chat automation.",
+      title: "Rapid Messaging",
+      description: "Quick responses times that are always less than 30 seconds",
       icon: <IconMessageCircle />,
     },
     {
-      title: "AI Business Insights",
+      title: "AI Insights",
       description:
-        "Analyze customer interactions and optimize business strategies.",
+        "Analyze activity on your widget, providing real insight on how your customers use your product.",
       icon: <IconAdjustmentsBolt />,
     },
   ];
   return (
     <div className="flex flex-col px-10" id="solutions">
       <h1 className="font-aeonik font-medium text-5xl md:text-7xl pb-8">
-        Usable for any case
+        Made for Tech Companies
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 relative z-10 pb-20 md:pb-24 w-full">
         {solutions.map((feature, index) => (
