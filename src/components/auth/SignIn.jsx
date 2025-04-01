@@ -9,23 +9,16 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const reviews = [
   {
-    quote:
-      "Limeblock is surprisingly handy for keeping all my business stuff in one place.",
-    author: "John Doe",
-    role: "E-commerce Specialist",
-    initials: "JD",
+    quote: "Limeblock is surprisingly useful, I'm glad I signed up before!",
+    author: "You?",
+    role: "Super Cool Dude",
+    initials: "XX",
   },
   {
-    quote: "The AI integration has saved us countless hours of manual work.",
-    author: "Sarah Smith",
-    role: "Product Manager",
-    initials: "SS",
-  },
-  {
-    quote: "Best decision we made for our business operations this year.",
-    author: "Mike Johnson",
-    role: "Startup Founder",
-    initials: "MJ",
+    quote: "Limeblock is designed to be the best chatbot widget for any site.",
+    author: "Aditya Byju",
+    role: "Founder",
+    initials: "AB",
   },
 ];
 
