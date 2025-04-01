@@ -245,7 +245,7 @@ export default function Settings() {
                 <p className="font-medium text-gray-900">
                   $
                   {user?.plan === "business"
-                    ? "99"
+                    ? "149"
                     : user?.plan === "startup"
                     ? "19"
                     : user?.plan === "enterprise"

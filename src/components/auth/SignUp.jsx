@@ -86,7 +86,7 @@ export default function SignUp() {
 
       if (data.success) {
         localStorage.setItem("user_id", data.user);
-        window.location.href = "/dashboard/";
+        window.location.href = "/checkout/";
       } else if (data.warning) {
         toast({
           title: `Business Name already taken`,

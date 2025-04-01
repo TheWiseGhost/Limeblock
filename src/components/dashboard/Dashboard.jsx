@@ -175,6 +175,11 @@ export default function Dashboard() {
     );
   }
 
+  if (user?.plan == "free" || (user && !user?.plan)) {
+    window.location.href = "/checkout/";
+    return;
+  }
+
   return (
     <div className="bg-white w-full overflow-y-auto pb-12 pt-8 pr-12 pl-10 border-l border-gray-300 rounded-tl-[12px]">
       {/* Header */}
