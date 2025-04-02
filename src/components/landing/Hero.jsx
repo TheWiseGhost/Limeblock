@@ -1,69 +1,187 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
-const NavButton = ({ text, href }) => (
-  <a
-    href={href}
-    className="hidden md:flex cursor-pointer font-inter text-[0.925rem] relative group px-4 py-2"
-  >
-    <span className="relative">
-      {text}
-      <span className="absolute bottom-[-4px] left-0 w-0 h-0.5 bg-lime group-hover:w-full transition-all duration-300 ease-in-out"></span>
-    </span>
-  </a>
-);
+// Typing animation component
+const TypingAnimation = ({ text, onComplete }) => {
+  const [displayText, setDisplayText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-const FeatureCard = ({ icon, title, description, delay }) => {
-  // Create a unique animation for each card to make them float differently
-  const floatAnimation = {
-    y: [0, -12, 0],
-    x: [0, 8, 0],
-    transition: {
-      y: {
-        repeat: Infinity,
-        duration: 2 + Math.random() * 2, // Random duration between 4-6s
-        ease: "easeInOut",
-      },
-      x: {
-        repeat: Infinity,
-        duration: 2 + Math.random() * 2, // Random duration between 5-7s
-        ease: "easeInOut",
-      },
-    },
-  };
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayText((prev) => prev + text[currentIndex]);
+        setCurrentIndex(currentIndex + 1);
+      }, 50); // Speed of typing
 
+      return () => clearTimeout(timeout);
+    } else if (onComplete) {
+      onComplete();
+    }
+  }, [currentIndex, text, onComplete]);
+
+  return <>{displayText}</>;
+};
+
+// Chat message component for the feature cards
+const ChatMessage = ({
+  isUser,
+  content,
+  delay,
+  onActionConfirm,
+  showTyping = false,
+  onTypingComplete,
+}) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ delay, duration: 0.4 }}
+      className={`${
+        isUser
+          ? "bg-gray-50 border max-w-[220px] border-gray-200"
+          : "bg-lime-50 max-w-[200px] border-l-2 border-lime"
+      } rounded-lg p-3 shadow-sm  h-fit`}
+    >
+      <div className="flex gap-2 items-center mb-2 h-fit">
+        {isUser ? (
+          <div className="w-3 h-6 rounded-full flex items-center justify-center text-xs">
+            👤
+          </div>
+        ) : (
+          <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs bg-white p-1">
+            <img
+              src="LimeblockLogo.png"
+              alt="Limeblock AI"
+              className="w-full h-full object-contain"
+            />
+          </div>
+        )}
+        <div className="text-sm font-medium">
+          {isUser ? "User" : "Limeblock AI"}
+        </div>
+      </div>
+      <div className="text-sm font-inter">
+        {showTyping ? (
+          <TypingAnimation text={content} onComplete={onTypingComplete} />
+        ) : (
+          content
+        )}{" "}
+        <br />
+        {onActionConfirm && (
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="mt-2 bg-lime text-black text-xs font-medium py-1 px-3 rounded-md hover:bg-lime-600 transition-colors"
+            onClick={onActionConfirm}
+          >
+            Confirm
+          </motion.button>
+        )}
+      </div>
+    </motion.div>
+  );
+};
+
+// Sign up prompt component
+const SignUpPrompt = ({ delay }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      animate={{
-        opacity: 1,
-        y: 0,
-        ...floatAnimation,
-      }}
-      transition={{
-        opacity: { duration: 0.5, delay },
-        y: { duration: 0.5, delay },
-      }}
-      className="hidden md:flex bg-white rounded-xl shadow-lg"
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay, duration: 0.4 }}
+      className="bg-white border border-gray-200 rounded-lg p-4 max-w-[260px] mr-auto mt-4"
     >
-      <div className="p-3 border border-gray-300 border-dashed">
-        <div className="flex flex-row space-x-2 justify-start items-center mb-2">
-          <div className="text-lime text-xl">{icon}</div>
-          <h3 className="font-aeonik text-lg">{title}</h3>
-        </div>
-
-        <p className="text-gray-600 font-inter text-sm text-left">
-          {description}
-        </p>
-      </div>
+      <p className="text-sm font-inter font-medium text-center mb-3">
+        Want to employ other cool AI actions in your app?
+      </p>
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="w-full bg-lime font-aeonik text-black text-sm py-2 px-4 rounded-md hover:bg-lime-600 transition-colors"
+      >
+        Sign Up
+      </motion.button>
     </motion.div>
+  );
+};
+
+// Chat sequence demonstration
+const ChatSequence = ({ setSwiggleColor }) => {
+  const [step, setStep] = useState(0);
+  const [userTypingComplete, setUserTypingComplete] = useState(false);
+
+  useEffect(() => {
+    // Initial delay before showing user message
+    const initialDelay = setTimeout(() => {
+      setStep(1);
+    }, 2000);
+
+    return () => clearTimeout(initialDelay);
+  }, []);
+
+  const handleUserTypingComplete = () => {
+    setUserTypingComplete(true);
+    setTimeout(() => {
+      setStep(2);
+    }, 1000);
+  };
+
+  const handleConfirm = () => {
+    setSwiggleColor("#000000"); // Change to black color
+    setTimeout(() => {
+      setStep(3);
+    }, 500);
+  };
+
+  return (
+    <div className="flex flex-col gap-3 w-full">
+      <div className="flex flex-row justify-between w-full">
+        {/* User message on the left */}
+        {step >= 1 && (
+          <ChatMessage
+            isUser={true}
+            content="Can you make the swiggle under the heading black?"
+            delay={0}
+            showTyping={!userTypingComplete}
+            onTypingComplete={handleUserTypingComplete}
+          />
+        )}
+
+        {/* AI response on the right */}
+        {step >= 2 && (
+          <ChatMessage
+            isUser={false}
+            content="Confirm action schema {swiggle: '#000000'} to endpoint add_swiggle"
+            delay={0.2}
+            onActionConfirm={handleConfirm}
+          />
+        )}
+      </div>
+
+      {/* Sign up prompt - only after confirm button is pressed and delay */}
+      {step >= 3 && (
+        <div className="flex flex-row justify-between z-0 w-full mt-20 pl-5 pr-8">
+          <SignUpPrompt delay={0.5} />
+          <ChatMessage
+            isUser={false}
+            content="Want to know how I did that?"
+            delay={0.2}
+            onActionConfirm={() => {
+              window.location.href = "/demo/";
+            }}
+          />
+        </div>
+      )}
+    </div>
   );
 };
 
 export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [swiggleColor, setSwiggleColor] = useState("#90F08C"); // Start black
 
   useEffect(() => {
     setIsLoaded(true);
@@ -87,78 +205,10 @@ export default function Hero() {
   };
 
   return (
-    <div className="bg-white pt-6 font-inter relative overflow-hidden h-screen">
-      {/* Navbar */}
-      <motion.nav
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="flex items-center justify-between px-6 md:px-10 py-2 z-10 relative"
-      >
-        <div className="flex items-center gap-2">
-          <img
-            src="/LimeblockLogo.png"
-            alt="Limeblock Logo"
-            className="h-8 w-8"
-          />
-          <span className="font-medium font-aeonik text-lg">Limeblock</span>
-        </div>
-
-        <div className="hidden md:flex gap-8">
-          <NavButton text="Docs" href="/docs/" />
-          <NavButton text="Features" href="/docs/frontend/" />
-          <NavButton text="Solutions" href="#solutions" />
-          <NavButton text="Pricing" href="/checkout" />
-          <NavButton text="Privacy" href="/privacy" />
-          <NavButton text="Terms" href="/terms" />
-        </div>
-
-        <a
-          href="/auth_prompt/"
-          className="relative inline-flex h-12 overflow-hidden rounded-2xl p-[3px] font-aeonik"
-        >
-          <span className="absolute inset-[-100%] animate-[spin_1s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#90F08C_0%,#edeceb_50%,#90F08C_100%)]" />
-          <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-xl bg-white px-5 py-2 text-sm text-gray-800 hover:text-black transition duration-200 backdrop-blur-3xl">
-            Dashboard
-          </span>
-        </a>
-      </motion.nav>
-
-      {/* Side Feature Elements */}
-      <div className="absolute left-8 top-[160px] w-52">
-        <FeatureCard
-          icon="⚡️"
-          title="Lightning Fast"
-          description="Less than 30 second response times"
-          delay={0.8}
-        />
-      </div>
-
-      <div className="absolute right-6 top-[180px] w-52">
-        <FeatureCard
-          icon="🔍"
-          title="Intuitive Search"
-          description="Natural language processing"
-          delay={1.0}
-        />
-      </div>
-
-      <div className="absolute left-20 bottom-[100px] mt-8 w-52">
-        <FeatureCard
-          icon="🛠️"
-          title="Easy Integration"
-          description="Implement our API in minutes, not days."
-          delay={1.2}
-        />
-      </div>
-
-      <div className="absolute right-28 bottom-[80px] w-52">
-        <FeatureCard
-          icon="🕒"
-          title="Better UX"
-          description="Save about 10 minutes per MAU that use Limeblock in your app"
-          delay={1.4}
-        />
+    <div className="bg-white pt-20 font-inter relative overflow-hidden h-screen">
+      {/* Chatbot Feature Cards */}
+      <div className="absolute right-8 top-[140px] z-10 w-full pl-20">
+        <ChatSequence setSwiggleColor={setSwiggleColor} />
       </div>
 
       {/* Hero Section */}
@@ -166,7 +216,7 @@ export default function Hero() {
         variants={container}
         initial="hidden"
         animate={isLoaded ? "show" : "hidden"}
-        className="flex flex-col justify-center px-4 text-center font-inter pt-10 z-0 relative"
+        className="flex flex-col justify-center px-4 text-center font-inter pt-10 relative"
       >
         <motion.p
           variants={item}
@@ -182,23 +232,25 @@ export default function Hero() {
           your app{" "}
           <span className="relative inline-block">
             10x faster
-            <svg
-              className="absolute -bottom-5 md:-bottom-7 left-0 w-full"
-              viewBox="0 0 120 15"
-              xmlns="http://www.w3.org/2000/svg"
-              preserveAspectRatio="none"
-            >
-              <motion.path
-                d="M3,9 Q10,5 20,8.5 Q30,12 40,9 Q50,6 60,8.5 Q70,11 80,7 Q90,3 100,6 Q110,9 117,7"
-                fill="none"
-                stroke="#90F08C"
-                strokeWidth="2"
-                strokeLinecap="round"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 1.5, delay: 0.5, ease: "easeInOut" }}
-              />
-            </svg>
+            <AnimatePresence>
+              <motion.svg
+                className="absolute -bottom-5 md:-bottom-7 left-0 w-full"
+                viewBox="0 0 120 15"
+                xmlns="http://www.w3.org/2000/svg"
+                preserveAspectRatio="none"
+              >
+                <motion.path
+                  d="M3,9 Q10,5 20,8.5 Q30,12 40,9 Q50,6 60,8.5 Q70,11 80,7 Q90,3 100,6 Q110,9 117,7"
+                  fill="none"
+                  stroke={swiggleColor}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 2, ease: "easeInOut", delay: 1 }}
+                />
+              </motion.svg>
+            </AnimatePresence>
           </span>
         </motion.h1>
 
@@ -213,7 +265,7 @@ export default function Hero() {
 
         <motion.div
           variants={item}
-          className="flex gap-2 justify-center font-inter"
+          className="flex gap-2 justify-center font-inter z-20 w-fit mx-auto"
         >
           <motion.a
             href="/auth_prompt/"
@@ -221,7 +273,7 @@ export default function Hero() {
             whileTap={{ scale: 0.95 }}
             className="px-6 py-3 font-aeonik text-black bg-lime rounded-lg hover:bg-primary-600 transition-colors"
           >
-            Try for Free
+            Try Today
           </motion.a>
           <motion.a
             href="/docs/vote/"

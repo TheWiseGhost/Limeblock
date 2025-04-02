@@ -11,11 +11,13 @@ import InAppActions from "@/components/landing/InAppActions";
 import Pricing from "@/components/landing/Pricing";
 import SignUPrompt from "@/components/landing/SignUpPrompt";
 import Solutions from "@/components/landing/Solutions";
+import Navbar from "@/components/landing/Navbar";
 
 export default function Home() {
   const contextParams = {};
   return (
     <div>
+      <Navbar />
       <Hero />
       <Demo />
       <Solutions />
