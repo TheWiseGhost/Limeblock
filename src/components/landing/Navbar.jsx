@@ -39,16 +39,21 @@ export default function Navbar() {
 
   return (
     <motion.nav
-      initial={{ opacity: 0, y: -20 }}
+      initial={{ opacity: 0, y: 0 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 1.5 }}
       className={`fixed top-0 left-0 right-0 flex items-center justify-between py-2 z-50 transition-all duration-300 ease-in-out bg-white ${
         isScrolled
-          ? "px-6 md:px-8 py-1 w-[870px] mx-auto mt-2 rounded-full border border-gray-200 bg-white bg-opacity-90 backdrop-blur-md"
-          : "px-6 md:px-10 pb-2 pt-7 w-full"
+          ? "px-6 md:px-8 py-1 w-[360px] md:w-[870px] mx-auto mt-2 rounded-full border border-gray-200 bg-white bg-opacity-90 backdrop-blur-md"
+          : "px-5 md:px-10 pb-2 pt-7 w-full"
       }`}
     >
-      <div className="flex items-center gap-2">
+      <div
+        className="flex items-center gap-2 cursor-pointer"
+        onClick={() => {
+          window.location.href = "/";
+        }}
+      >
         <img
           src="/LimeblockLogo.png"
           alt="Limeblock Logo"

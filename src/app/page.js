@@ -12,6 +12,8 @@ import Pricing from "@/components/landing/Pricing";
 import SignUPrompt from "@/components/landing/SignUpPrompt";
 import Solutions from "@/components/landing/Solutions";
 import Navbar from "@/components/landing/Navbar";
+import ProductSnippets from "@/components/landing/ProductSnippets";
+import DIY from "@/components/landing/DIY";
 
 export default function Home() {
   const contextParams = {};
@@ -19,7 +21,8 @@ export default function Home() {
     <div>
       <Navbar />
       <Hero />
-      <Demo />
+      <ProductSnippets />
+      <DIY />
       <Solutions />
       <InAppActions />
       <Features />

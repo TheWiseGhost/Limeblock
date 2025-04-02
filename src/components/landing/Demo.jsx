@@ -11,6 +11,8 @@ import {
   IconRewindForward5,
   IconArrowRight,
 } from "@tabler/icons-react";
+import ProductSnippets from "./ProductSnippets";
+import Navbar from "./Navbar";
 
 const Demo = () => {
   const [currentTime, setCurrentTime] = useState(0);
@@ -46,12 +48,15 @@ const Demo = () => {
 
   return (
     <div className="h-fit md:min-h-screen w-full bg-white font-inter relative overflow-hidden px-4 md:px-12 pb-20 md:pb-24">
-      {/* Text Overlays */}
-      {/* <div className="absolute left-1/2 -translate-x-1/2 z-20">
-        <div className="bg-white border-gray-900 border-2 text-gray-800 px-8 py-3 rounded-md text-sm md:text-lg font-aeonik">
-          Demo
+      <Navbar />
+      <div className="h-28" />
+      <h1 className="flex flex-col items-center font-aeonik text-5xl md:text-7xl font-medium mb-8">
+        Basic Demo
+        <div className="bg-gray-50 border text-gray-800 border-gray-600 mt-4 font-inter px-2 md:px-4 text-xs md:text-sm py-1 rounded-full">
+          What your user's will see
         </div>
-      </div> */}
+      </h1>
+      <ProductSnippets />
 
       <div className="absolute bottom-16 md:bottom-20 right-2 md:right-20 z-20">
         <div className="bg-white border border-gray-900 text-gray-800 px-4 py-3 rounded-md text-xs md:text-sm font-medium">
@@ -60,7 +65,13 @@ const Demo = () => {
       </div>
 
       {/* Video Container */}
-      <div className="relative h-full w-full md:w-4/5 mx-auto pt-4">
+      <div className="relative h-full w-full md:w-4/5 mx-auto -mt-8">
+        <h1 className="flex flex-col items-center font-aeonik text-5xl md:text-7xl font-medium mb-8">
+          Developer Demo
+          <div className="bg-gray-50 border text-gray-800 border-gray-600 mt-4 font-inter px-2 md:px-4 text-xs md:text-sm py-1 rounded-full">
+            What you will see
+          </div>
+        </h1>
         <video
           ref={videoRef}
           autoPlay
@@ -73,7 +84,7 @@ const Demo = () => {
         ></video>
 
         {/* Video Controls */}
-        <div className="absolute top-12 left-8 flex items-center gap-4 bg-black/50 backdrop-blur-sm p-3 rounded-xl">
+        <div className="absolute top-44 left-8 flex items-center gap-4 bg-black/50 backdrop-blur-sm p-3 rounded-xl">
           <button
             onClick={rewind}
             className="text-white hover:text-lime transition-colors"

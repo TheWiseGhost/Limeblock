@@ -9,7 +9,7 @@ const GridSection = ({ title, content, image }) => {
 
   return (
     <motion.div
-      className="bg-white rounded-lg shadow-md p-6 h-fit cursor-pointer font-inter"
+      className="bg-white rounded-lg border-l-4 border-lime p-6 h-fit cursor-pointer font-inter"
       onClick={() => setIsOpen(!isOpen)}
     >
       <div className="flex items-center justify-between">

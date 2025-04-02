@@ -40,7 +40,7 @@ const ChatMessage = ({
       className={`${
         isUser
           ? "bg-gray-50 border max-w-[220px] border-gray-200"
-          : "bg-lime-50 max-w-[200px] border-l-2 border-lime"
+          : "max-w-[200px] border-l-2 border-lime bg-white"
       } rounded-lg p-3 shadow-sm  h-fit`}
     >
       <div className="flex gap-2 items-center mb-2 h-fit">
@@ -99,6 +99,9 @@ const SignUpPrompt = ({ delay }) => {
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
+        onClick={() => {
+          window.location.href = "/sign_up/";
+        }}
         className="w-full bg-lime font-aeonik text-black text-sm py-2 px-4 rounded-md hover:bg-lime-600 transition-colors"
       >
         Sign Up
