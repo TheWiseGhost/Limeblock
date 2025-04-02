@@ -40,6 +40,7 @@ const ProductSnippets = () => {
       try {
         video.loop = true;
         video.muted = true;
+        video.playbackRate = 2;
         await video.play();
       } catch (err) {
         console.error("Error attempting to play video:", err);
@@ -128,7 +129,7 @@ const ProductSnippets = () => {
           {/* User Confirmation - Fourth step */}
           <div
             className={`absolute top-52  bg-white rounded-lg p-4 border-l-4 border-l-lime border border-neutral-200 flex items-center transition-opacity duration-500 w-5/6 ${
-              isVisible(24, 26) ? "opacity-100" : "opacity-0"
+              isVisible(24, 27) ? "opacity-100" : "opacity-0"
             }`}
           >
             <div className="mr-3 bg-gray-100 p-2 rounded-full">
@@ -140,7 +141,7 @@ const ProductSnippets = () => {
           {/* Action Committed - Fifth step */}
           <div
             className={`absolute top-56  bg-white rounded-lg p-4 border-l-4 border-l-lime border border-neutral-200 flex items-center transition-opacity duration-500 w-5/6 ${
-              isVisible(26, 32) ? "opacity-100" : "opacity-0"
+              isVisible(27, 35) ? "opacity-100" : "opacity-0"
             }`}
           >
             <div className="mr-3 bg-gray-100 p-2 rounded-full">
@@ -152,7 +153,7 @@ const ProductSnippets = () => {
           {/* Widget is Blue - Final step */}
           <div
             className={`absolute top-56  bg-white rounded-lg p-4 border-l-4 border-l-lime border border-neutral-200 flex items-center transition-opacity duration-500 w-5/6 ${
-              isVisible(33, 38) ? "opacity-100" : "opacity-0"
+              isVisible(36, 40) ? "opacity-100" : "opacity-0"
             }`}
           >
             <div className="mr-3 bg-gray-100 p-2 rounded-full">

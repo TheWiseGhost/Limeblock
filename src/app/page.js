@@ -18,7 +18,7 @@ import DIY from "@/components/landing/DIY";
 export default function Home() {
   const contextParams = {};
   return (
-    <div>
+    <div className="overflow-x-hidden">
       <Navbar />
       <Hero />
       <ProductSnippets />

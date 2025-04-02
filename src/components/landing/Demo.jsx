@@ -1,14 +1,11 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import {
   IconPlayerPlay,
   IconPlayerPause,
-  Icon3dCubeSphere,
-  IconRadar,
   IconRefresh,
   IconArrowLeft,
-  IconRewindForward5,
   IconArrowRight,
 } from "@tabler/icons-react";
 import ProductSnippets from "./ProductSnippets";
