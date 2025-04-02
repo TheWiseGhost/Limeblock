@@ -223,8 +223,6 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                 language: navigator.language,
                 screen_resolution: `${window.screen.width}x${window.screen.height}`,
                 timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-                business_id:
-                  contextParams.business_id || contextParams.board_id, // Use the business identifier
               },
             }),
           }

@@ -144,6 +144,31 @@ const ChatDemo = () => {
     }
   }, [inputMessage]);
 
+  function generateFingerprint() {
+    // Combine various browser properties to create a unique identifier
+    const components = [
+      navigator.userAgent,
+      navigator.language,
+      `${window.screen.width}x${window.screen.height}`,
+      new Date().getTimezoneOffset(),
+      !!window.sessionStorage,
+      !!window.localStorage,
+      !!window.indexedDB,
+      navigator.hardwareConcurrency || "",
+      navigator.deviceMemory || "",
+    ];
+
+    // Simple hash function
+    return components
+      .join("|")
+      .split("")
+      .reduce((a, b) => {
+        a = (a << 5) - a + b.charCodeAt(0);
+        return a & a;
+      }, 0)
+      .toString(36);
+  }
+
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (inputMessage.trim()) {
@@ -172,36 +197,54 @@ const ChatDemo = () => {
               prompt: inputMessage,
               api_key: "lime_2JDnwGpM7OOfEcfj3kJ9bwVrGULxh1sL",
               context: {},
+              client_info: {
+                // Add unique identifier for the client
+                fingerprint: generateFingerprint(),
+                referrer: document.referrer || null,
+                hostname: window.location.hostname,
+                pathname: window.location.pathname,
+                user_agent: navigator.userAgent,
+                language: navigator.language,
+                screen_resolution: `${window.screen.width}x${window.screen.height}`,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+              },
             }),
           }
         );
 
         const data = await response.json();
+        console.log("Response data:", JSON.stringify(data, null, 2));
 
         // Add bot response to chat
         if (response.ok) {
           // If the request was successful
           let responseText;
 
-          if (data.response && data.endpoint_used) {
-            // Format successful response from endpoint
-            responseText = `Request processed using endpoint: ${data.endpoint_used}\n\n`;
-
-            if (typeof data.response === "object") {
-              responseText += JSON.stringify(data.response, null, 2);
-            } else {
-              responseText += data.response;
-            }
+          responseText = data.formatted_response;
+          if (data.endpoint_type == "frontend") {
+            setMessages((prev) => [
+              ...prev,
+              { text: responseText, sender: "bot", link: data.url },
+            ]);
+          } else if (data.endpoint_type == "backend") {
+            setMessages((prev) => [
+              ...prev,
+              {
+                text: responseText,
+                sender: "bot",
+                confirm_data: {
+                  endpoint: data.endpoint,
+                  schema: data.schema,
+                  prompt: data.prompt,
+                },
+              },
+            ]);
           } else {
-            // Generic success message if response structure is different
-            responseText =
-              typeof data === "object" ? JSON.stringify(data, null, 2) : data;
+            setMessages((prev) => [
+              ...prev,
+              { text: responseText, sender: "bot" },
+            ]);
           }
-
-          setMessages((prev) => [
-            ...prev,
-            { text: responseText, sender: "bot" },
-          ]);
         } else {
           // Handle error response
           const errorMessage =
@@ -229,6 +272,155 @@ const ChatDemo = () => {
       }
     }
   };
+
+  const handleConfirmBackendAction = async (action_data) => {
+    if (textAreaRef.current) {
+      textAreaRef.current.style.height = "auto";
+    }
+
+    // Show loading indicator
+    setLoading(true);
+    setLoadingStep(0);
+
+    try {
+      // Send message to Django backend
+      const response = await fetch(
+        "https://limeblockbackend.onrender.com/api/commit_backend_action/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            prompt: action_data.prompt,
+            api_key: "lime_2JDnwGpM7OOfEcfj3kJ9bwVrGULxh1sL",
+            endpoint: action_data.endpoint,
+            schema: action_data.schema,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      // Add bot response to chat
+      if (response.ok) {
+        // If the request was successful
+        let responseText;
+
+        responseText = data.formatted_response;
+
+        setMessages((prev) => [...prev, { text: responseText, sender: "bot" }]);
+      } else {
+        // Handle error response
+        const errorMessage =
+          data.error || data.message || "Something went wrong";
+        setMessages((prev) => [
+          ...prev,
+          {
+            text: `Error: ${errorMessage}`,
+            sender: "bot",
+          },
+        ]);
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      setMessages((prev) => [
+        ...prev,
+        {
+          text: "Sorry, there was a network error. Please try again later.",
+          sender: "bot",
+        },
+      ]);
+    } finally {
+      setLoading(false);
+      setInputMessage("");
+    }
+  };
+
+  // const handleSendMessage = async (e) => {
+  //   e.preventDefault();
+  //   if (inputMessage.trim()) {
+  //     // Add user message to chat
+  //     setMessages([...messages, { text: inputMessage, sender: "user" }]);
+
+  //     // Reset textarea height
+  //     if (textAreaRef.current) {
+  //       textAreaRef.current.style.height = "auto";
+  //     }
+
+  //     // Show loading indicator
+  //     setLoading(true);
+  //     setLoadingStep(0);
+
+  //     try {
+  //       // Send message to Django backend
+  //       const response = await fetch(
+  //         "https://limeblockbackend.onrender.com/api/process_prompt/",
+  //         {
+  //           method: "POST",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({
+  //             prompt: inputMessage,
+  //             api_key: "lime_2JDnwGpM7OOfEcfj3kJ9bwVrGULxh1sL",
+  //             context: {},
+  //           }),
+  //         }
+  //       );
+
+  //       const data = await response.json();
+
+  //       // Add bot response to chat
+  //       if (response.ok) {
+  //         // If the request was successful
+  //         let responseText;
+
+  //         if (data.response && data.endpoint_used) {
+  //           // Format successful response from endpoint
+  //           responseText = `Request processed using endpoint: ${data.endpoint_used}\n\n`;
+
+  //           if (typeof data.response === "object") {
+  //             responseText += JSON.stringify(data.response, null, 2);
+  //           } else {
+  //             responseText += data.response;
+  //           }
+  //         } else {
+  //           // Generic success message if response structure is different
+  //           responseText =
+  //             typeof data === "object" ? JSON.stringify(data, null, 2) : data;
+  //         }
+
+  //         setMessages((prev) => [
+  //           ...prev,
+  //           { text: responseText, sender: "bot" },
+  //         ]);
+  //       } else {
+  //         // Handle error response
+  //         const errorMessage =
+  //           data.error || data.message || "Something went wrong";
+  //         setMessages((prev) => [
+  //           ...prev,
+  //           {
+  //             text: `Error: ${errorMessage}`,
+  //             sender: "bot",
+  //           },
+  //         ]);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error sending message:", error);
+  //       setMessages((prev) => [
+  //         ...prev,
+  //         {
+  //           text: "Sorry, there was a network error. Please try again later.",
+  //           sender: "bot",
+  //         },
+  //       ]);
+  //     } finally {
+  //       setLoading(false);
+  //       setInputMessage("");
+  //     }
+  //   }
+  // };
 
   const messageVariants = {
     initial: { opacity: 0, y: 10 },
@@ -267,142 +459,59 @@ const ChatDemo = () => {
                 transition={{ delay: index * 0.05 }}
               >
                 {msg.sender === "user" ? (
-                  <div className="size-7 rounded-full bg-gray-100 flex items-center justify-center mt-2">
-                    <IconUser className="size-5 text-gray-600" />
-                  </div>
-                ) : (
                   <></>
+                ) : (
+                  <div className="flex mt-auto">
+                    <BlockFace
+                      body={"#90F08C"}
+                      eyes={"#FFFFFF"}
+                      size={36}
+                      isThinking={false}
+                    />
+                  </div>
                 )}
                 <motion.div
-                  className={`inline-block rounded-lg px-4 py-2 pb-8 max-w-xs relative group ${
+                  className={`inline-block rounded-lg text-center px-4 py-4 relative group ${
                     msg.sender === "user"
-                      ? "bg-white text-black pr-1"
-                      : "bg-white text-gray-800 border border-gray-200"
+                      ? "ml-auto text-[0.9rem] w-fit"
+                      : "text-[0.9rem] max-w-11/12"
                   }`}
                   whileHover={{ scale: 1.02 }}
                   style={{
+                    backgroundColor:
+                      msg.sender == "user" ? "#E5E7EB" : "#F3F4F6",
                     whiteSpace: "pre-wrap",
                     textAlign: "left",
+                    color: msg.sender == "user" ? "#000000" : "#111111",
                   }}
                 >
                   {msg.text}
+                  <br />
+                  {msg.link ? (
+                    <button
+                      className="bg-gray-900 px-3 py-2 mt-2 text-white font-inter text-xs rounded-md"
+                      onClick={() => {
+                        window.open(msg.link);
+                      }}
+                    >
+                      Visit Page
+                    </button>
+                  ) : (
+                    <></>
+                  )}
 
-                  {/* Action buttons - always taking space but only visible on hover */}
-                  <div
-                    className={`absolute bg-none bottom-1 flex items-center gap-1 w-full ${
-                      msg.sender === "user"
-                        ? "justify-end right-2"
-                        : "justify-start left-2"
-                    }`}
-                  >
-                    {msg.sender === "user" ? (
-                      /* Edit button for user messages */
-                      <motion.button
-                        onClick={() => {
-                          setInputMessage(msg.text);
-                          if (textAreaRef.current) {
-                            textAreaRef.current.focus();
-                          }
-                        }}
-                        className="bg-transparent hover:bg-gray-200 rounded-full p-1 transition-colors opacity-0 group-hover:opacity-100"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                        title="Edit message"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="14"
-                          height="14"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                        </svg>
-                      </motion.button>
-                    ) : (
-                      /* Copy, Like, Dislike buttons for bot messages */
-                      <>
-                        <motion.button
-                          onClick={() => {
-                            navigator.clipboard.writeText(msg.text);
-                          }}
-                          className="bg-transparent hover:bg-gray-200 rounded-full p-1 transition-colors opacity-0 group-hover:opacity-100"
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.95 }}
-                          title="Copy to clipboard"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="14"
-                            height="14"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <rect
-                              x="9"
-                              y="9"
-                              width="13"
-                              height="13"
-                              rx="2"
-                              ry="2"
-                            ></rect>
-                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                          </svg>
-                        </motion.button>
-
-                        <motion.button
-                          className="bg-transparent hover:bg-gray-200 rounded-full p-1 transition-colors opacity-0 group-hover:opacity-100"
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.95 }}
-                          title="Like"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="14"
-                            height="14"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
-                          </svg>
-                        </motion.button>
-
-                        <motion.button
-                          className="bg-transparent hover:bg-gray-200 rounded-full p-1 transition-colors opacity-0 group-hover:opacity-100"
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.95 }}
-                          title="Dislike"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="14"
-                            height="14"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path>
-                          </svg>
-                        </motion.button>
-                      </>
-                    )}
-                  </div>
+                  {msg.confirm_data ? (
+                    <button
+                      className="bg-gray-900 px-3 py-2 mt-2 text-white font-inter text-xs rounded-md"
+                      onClick={() => {
+                        handleConfirmBackendAction(msg.confirm_data);
+                      }}
+                    >
+                      Confirm Action
+                    </button>
+                  ) : (
+                    <></>
+                  )}
                 </motion.div>
               </motion.div>
             ))}
