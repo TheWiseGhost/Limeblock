@@ -207,7 +207,7 @@ export default function Hero() {
   return (
     <div className="bg-white pt-20 font-inter relative overflow-hidden h-screen">
       {/* Chatbot Feature Cards */}
-      <div className="absolute right-8 top-[140px] z-10 w-full pl-20">
+      <div className="hidden md:block absolute right-8 top-[140px] z-10 w-full pl-20">
         <ChatSequence setSwiggleColor={setSwiggleColor} />
       </div>
 
