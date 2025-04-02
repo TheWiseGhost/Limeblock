@@ -27,7 +27,11 @@ const VideoLoading = () => {
   }, []);
 
   if (!animationData) {
-    return <div></div>; // Fallback loading state
+    return (
+      <div className="font-inter text-gray-700 text-center w-full text-sm">
+        Video Loading...
+      </div>
+    ); // Fallback loading state
   }
 
   return (
