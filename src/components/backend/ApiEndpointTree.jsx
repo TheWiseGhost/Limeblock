@@ -25,6 +25,8 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
     url: url,
     method: "POST",
     schema: "",
+    instructions: "",
+    examplePrompts: [],
   });
   const [schemaErrors, setSchemaErrors] = useState({});
   const [deleteFolderMode, setDeleteFolderMode] = useState(false);
@@ -220,7 +222,11 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
     setEditingEndpoint({
       folderId,
       endpointId: endpoint.id,
-      data: { ...endpoint },
+      data: {
+        ...endpoint,
+        // Add default array if examplePrompts doesn't exist
+        examplePrompts: endpoint.examplePrompts || [],
+      },
     });
 
     if (endpoint.schema) {
@@ -387,6 +393,45 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
       endpointId
     );
     updateEditingEndpoint("schema", formattedSchema, endpointId);
+  };
+
+  const handlePromptChange = (index, value) => {
+    const newPrompts = [...(newEndpoint.examplePrompts || [])];
+    newPrompts[index] = value;
+    setNewEndpoint({ ...newEndpoint, examplePrompts: newPrompts });
+  };
+
+  const handleDeletePrompt = (index) => {
+    const newPrompts = [...(newEndpoint.examplePrompts || [])].filter(
+      (_, i) => i !== index
+    );
+    setNewEndpoint({ ...newEndpoint, examplePrompts: newPrompts });
+  };
+
+  // For the edit endpoint version:
+  const handleEditPromptChange = (index, value) => {
+    if (!editingEndpoint) return;
+
+    const newPrompts = [...(editingEndpoint.data.examplePrompts || [])];
+    newPrompts[index] = value;
+    updateEditingEndpoint(
+      "examplePrompts",
+      newPrompts,
+      editingEndpoint.data.id
+    );
+  };
+
+  const handleEditDeletePrompt = (index) => {
+    if (!editingEndpoint) return;
+
+    const newPrompts = [...(editingEndpoint.data.examplePrompts || [])].filter(
+      (_, i) => i !== index
+    );
+    updateEditingEndpoint(
+      "examplePrompts",
+      newPrompts,
+      editingEndpoint.data.id
+    );
   };
 
   return (
@@ -585,8 +630,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                           Description - Include key info for AI like "can leave
                           X field blank":
                         </label>
-                        <input
-                          type="text"
+                        <textarea
                           placeholder="Enter endpoint description"
                           className="border border-gray-300 rounded-md p-2 w-full text-sm"
                           value={newEndpoint.description}
@@ -596,11 +640,74 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                               description: e.target.value,
                             })
                           }
+                          rows={3}
                         />
                       </div>
 
-                      {/* URL Input */}
+                      {/* Add new instructions field */}
                       <div className="flex flex-col space-y-1">
+                        <label className="text-xs">
+                          Instructions - Detailed steps for using this endpoint:
+                        </label>
+                        <textarea
+                          placeholder="Enter usage instructions"
+                          className="border border-gray-300 rounded-md p-2 w-full text-sm"
+                          value={newEndpoint.instructions}
+                          onChange={(e) =>
+                            setNewEndpoint({
+                              ...newEndpoint,
+                              instructions: e.target.value,
+                            })
+                          }
+                          rows={3}
+                        />
+                      </div>
+
+                      {/* Add example prompts section */}
+                      <div className="flex flex-col space-y-1">
+                        <label className="text-xs">Example Prompts:</label>
+                        {(newEndpoint.examplePrompts || []).map(
+                          (prompt, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center space-x-2"
+                            >
+                              <input
+                                type="text"
+                                className="border border-gray-300 rounded-md p-2 w-full text-sm"
+                                value={prompt}
+                                onChange={(e) =>
+                                  handlePromptChange(index, e.target.value)
+                                }
+                              />
+                              <button
+                                type="button" // Crucial fix here
+                                onClick={() => handleDeletePrompt(index)}
+                                className="text-red-500 hover:text-red-700"
+                              >
+                                <IconX size={14} />
+                              </button>
+                            </div>
+                          )
+                        )}
+                        <button
+                          onClick={() => {
+                            setNewEndpoint({
+                              ...newEndpoint,
+                              examplePrompts: [
+                                ...(newEndpoint.examplePrompts || []),
+                                "",
+                              ],
+                            });
+                          }}
+                          className="text-xs flex flex-row items-center text-gray-800 hover:text-black my-2 w-fit pr-3 py-0.5 rounded-md"
+                        >
+                          <IconPlus className="size-4 mr-0.5" /> Add Prompt
+                        </button>
+                      </div>
+
+                      {/* URL Input */}
+                      <div className="flex flex-col space-y-1 pt-2">
                         <label className="text-xs">URL:</label>
                         <input
                           type="text"
@@ -834,8 +941,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                                       <label className="text-xs">
                                         Description:
                                       </label>
-                                      <input
-                                        type="text"
+                                      <textarea
                                         className="border border-gray-300 rounded-md p-2 w-full text-sm"
                                         value={editingEndpoint.data.description}
                                         onChange={(e) =>
@@ -845,11 +951,88 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                                             endpoint.id
                                           )
                                         }
+                                        rows={3}
                                       />
                                     </div>
 
-                                    {/* URL Input */}
+                                    {/* Add instructions edit field */}
                                     <div className="flex flex-col space-y-1">
+                                      <label className="text-xs">
+                                        Instructions:
+                                      </label>
+                                      <textarea
+                                        className="border border-gray-300 rounded-md p-2 w-full text-sm"
+                                        value={
+                                          editingEndpoint.data.instructions
+                                        }
+                                        onChange={(e) =>
+                                          updateEditingEndpoint(
+                                            "instructions",
+                                            e.target.value,
+                                            endpoint.id
+                                          )
+                                        }
+                                        rows={3}
+                                      />
+                                    </div>
+
+                                    {/* Add example prompts edit section */}
+                                    <div className="flex flex-col space-y-1">
+                                      <label className="text-xs">
+                                        Example Prompts:
+                                      </label>
+                                      {(
+                                        editingEndpoint.data.examplePrompts ||
+                                        []
+                                      ).map((prompt, index) => (
+                                        <div
+                                          key={index}
+                                          className="flex items-center space-x-2"
+                                        >
+                                          <input
+                                            type="text"
+                                            className="border border-gray-300 rounded-md p-2 w-full text-sm"
+                                            value={prompt}
+                                            onChange={(e) =>
+                                              handleEditPromptChange(
+                                                index,
+                                                e.target.value
+                                              )
+                                            }
+                                          />
+                                          <button
+                                            type="button"
+                                            onClick={() =>
+                                              handleEditDeletePrompt(index)
+                                            }
+                                            className="text-red-500 hover:text-red-700"
+                                          >
+                                            <IconX size={14} />
+                                          </button>
+                                        </div>
+                                      ))}
+                                      <button
+                                        onClick={() => {
+                                          const newPrompts = [
+                                            ...(editingEndpoint.data
+                                              .examplePrompts || []),
+                                            "",
+                                          ];
+                                          updateEditingEndpoint(
+                                            "examplePrompts",
+                                            newPrompts,
+                                            editingEndpoint.data.id
+                                          );
+                                        }}
+                                        className="text-xs flex flex-row items-center text-gray-800 hover:text-black my-2 w-fit pr-3 py-0.5 rounded-md"
+                                      >
+                                        <IconPlus className="size-4 mr-0.5" />
+                                        Add Prompt
+                                      </button>
+                                    </div>
+
+                                    {/* URL Input */}
+                                    <div className="flex flex-col space-y-1 pt-2">
                                       <label className="text-xs">URL:</label>
                                       <input
                                         type="text"
