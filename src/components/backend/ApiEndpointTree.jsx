@@ -627,8 +627,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                       {/* Description Input */}
                       <div className="flex flex-col space-y-1">
                         <label className="text-xs">
-                          Description - Include key info for AI like "can leave
-                          X field blank":
+                          Description - Include key info for AI:
                         </label>
                         <textarea
                           placeholder="Enter endpoint description"
@@ -647,7 +646,9 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                       {/* Add new instructions field */}
                       <div className="flex flex-col space-y-1">
                         <label className="text-xs">
-                          Instructions - Detailed steps for using this endpoint:
+                          Instructions - Detailed steps like "can leave X field
+                          blank" or "need to send entire folder structure to
+                          update folders":
                         </label>
                         <textarea
                           placeholder="Enter usage instructions"
@@ -727,8 +728,8 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                       <div className="flex flex-col space-y-1">
                         <div className="flex justify-between items-center">
                           <label className="text-xs">
-                            Schema (JSON format) - Put context params like "id":{" "}
-                            "{"{"}user_id{"}"}":
+                            Schema (JSON format with no comma on final line) -
+                            Put context params like "id": "{"{"}user_id{"}"}":
                           </label>
                           <button
                             onClick={handleNewEndpointSchemaFormat}
@@ -939,7 +940,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                                     {/* Description Input */}
                                     <div className="flex flex-col space-y-1">
                                       <label className="text-xs">
-                                        Description:
+                                        Description Include key info for AI:
                                       </label>
                                       <textarea
                                         className="border border-gray-300 rounded-md p-2 w-full text-sm"
@@ -958,7 +959,10 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                                     {/* Add instructions edit field */}
                                     <div className="flex flex-col space-y-1">
                                       <label className="text-xs">
-                                        Instructions:
+                                        Instructions - Detailed steps like "can
+                                        leave X field blank" or "need to send
+                                        entire folder structure to update
+                                        folders":
                                       </label>
                                       <textarea
                                         className="border border-gray-300 rounded-md p-2 w-full text-sm"
@@ -1052,8 +1056,9 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                                     <div className="flex flex-col space-y-1">
                                       <div className="flex justify-between items-center">
                                         <label className="text-xs">
-                                          Schema (JSON format) - Put context
-                                          params like "id": "{"{"}user_id{"}"}":
+                                          Schema (JSON format with no comma on
+                                          final line) - Put context params like
+                                          "id": "{"{"}user_id{"}"}":
                                         </label>
                                         <button
                                           onClick={() =>
