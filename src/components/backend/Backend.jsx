@@ -13,6 +13,8 @@ const Backend = () => {
 
   const contextParams = {
     user_id: user?.id,
+    folders: backend?.folders,
+    url: backend?.url,
   };
 
   useEffect(() => {

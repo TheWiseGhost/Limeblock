@@ -14,6 +14,8 @@ const Frontend = () => {
 
   const contextParams = {
     user_id: user?.id,
+    folders: frontend?.folders || [],
+    url: frontend?.url,
   };
 
   useEffect(() => {
