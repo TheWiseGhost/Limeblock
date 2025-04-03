@@ -46,7 +46,7 @@ const Pricing = () => {
   return (
     <div className="min-h-screen pt-24 px-4 pb-20 md:px-16 font-inter">
       <h1 className="flex flex-col md:flex-row items-center font-aeonik text-3xl md:text-7xl font-medium mb-12">
-        Launch Week Deals{" "}
+        Launch Deals{" "}
         <div className="bg-gray-50 border text-gray-800 border-gray-600 ml-0 md:ml-8 mt-4 font-inter px-2 md:px-4 text-xs md:text-sm py-1 rounded-full">
           Expires Soon
         </div>
@@ -61,22 +61,12 @@ const Pricing = () => {
               Startup
             </h2>
             <ul className="text-gray-900 text-base mt-6 mb-2 ml-4 list-disc">
-              <li>
-                <span className="line-through">30 Frontend Endpoints</span>
-              </li>
-              <li>
-                <span className="line-through">20 Backend Endpoints</span>
-              </li>
-              <li>
-                <span className="line-through">50 MAUs</span>
-              </li>
-            </ul>
-            <span className="font-aeonik text-lg font-medium mt-4">
-              Launch Week Only:
-            </span>{" "}
-            <ul className="text-gray-900 text-base mb-2 ml-4 list-disc">
+              <li>Analytics</li>
+              <li>Unlimited Team Members</li>
+              <li>Mobile Adaptive</li>
+              <li>Unlimited Pages</li>
               <li>Unlimited Endpoints</li>
-              <li>100 MAUs</li>
+              <li className="font-semibold">100 MAUs</li>
             </ul>
           </div>
           <div className="mb-4">
@@ -97,22 +87,12 @@ const Pricing = () => {
               Business
             </h2>
             <ul className="text-gray-900 text-base mt-6 mb-2 ml-4 list-disc">
-              <li>
-                <span className="line-through">100 Frontend Endpoints</span>
-              </li>
-              <li>
-                <span className="line-through">100 Backend Endpoints</span>
-              </li>
-              <li>
-                <span className="line-through">500 MAUs</span>
-              </li>
-            </ul>
-            <span className="font-aeonik text-lg font-medium mt-4">
-              Launch Week Only:
-            </span>{" "}
-            <ul className="text-gray-900 text-base mb-2 ml-4 list-disc">
+              <li>Analytics</li>
+              <li>Unlimited Team Members</li>
+              <li>Mobile Adaptive</li>
+              <li>Unlimited Pages</li>
               <li>Unlimited Endpoints</li>
-              <li>1,000 MAUs</li>
+              <li className="font-semibold">1,000 MAUs</li>
             </ul>
           </div>
           <div className="mb-4">
@@ -133,22 +113,12 @@ const Pricing = () => {
               Enterprise
             </h2>
             <ul className="text-gray-900 text-base mt-6 mb-2 ml-4 list-disc">
-              <li>
-                <span className="line-through">500 Frontend Endpoints</span>
-              </li>
-              <li>
-                <span className="line-through">500 Backend Endpoints</span>
-              </li>
-              <li>
-                <span className="line-through">2,500 MAUs</span>
-              </li>
-            </ul>
-            <span className="font-aeonik text-lg font-medium mt-4">
-              Launch Week Only:
-            </span>{" "}
-            <ul className="text-gray-900 text-base mb-2 ml-4 list-disc">
+              <li>Analytics</li>
+              <li>Unlimited Team Members</li>
+              <li>Mobile Adaptive</li>
+              <li>Unlimited Pages</li>
               <li>Unlimited Endpoints</li>
-              <li>5,000 MAUs</li>
+              <li className="font-semibold">5,000 MAUs</li>
             </ul>
           </div>
           <div className="mb-4">
