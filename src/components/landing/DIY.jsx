@@ -63,7 +63,7 @@ const VideoWithLoading = ({ video }) => {
         <video
           ref={videoRef}
           src={video.src}
-          className="w-full h-fit object-cover rounded-xl border-t border-gray-400"
+          className="w-full h-fit object-contain md:object-cover rounded-xl border-t border-gray-400"
           autoPlay
           loop
           muted

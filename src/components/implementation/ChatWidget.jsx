@@ -432,8 +432,6 @@ const ChatWidget = ({ apiKey, contextParams }) => {
   // Styles for portal container
   const portalStyle = {
     position: "fixed",
-    bottom: "24px",
-    right: "24px",
     zIndex: 9999,
     pointerEvents: "none", // Makes the container not interfere with other elements
   };
@@ -449,7 +447,10 @@ const ChatWidget = ({ apiKey, contextParams }) => {
 
   return (
     // Portal container - fixed position, doesn't affect page layout
-    <div style={portalStyle}>
+    <div
+      style={portalStyle}
+      className="bottom-[8px] md:bottom-[24px] right-[8px] md:right-[24px]"
+    >
       <AnimatePresence mode="wait">
         {!isOpen ? (
           <motion.button
@@ -512,11 +513,9 @@ const ChatWidget = ({ apiKey, contextParams }) => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="rounded-xl shadow-2xl flex flex-col overflow-hidden font-inter"
+            className="rounded-xl w-[330px] md:w-[390px] h-[460px] md:h-[500px] shadow-2xl flex flex-col overflow-hidden font-inter"
             style={{
               ...interactiveStyle,
-              width: "390px",
-              height: "500px",
               position: "absolute",
               bottom: "0",
               right: "0",
