@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 const NavButton = ({ text, href, isScrolled }) => (
   <a
     href={href}
-    className={`hidden md:flex cursor-pointer font-inter relative group px-4 py-2 transition-all duration-300 ${
+    className={`hidden md:flex cursor-pointer font-inter relative group px-4 py-2 transition-all duration-300 mt-0.5 ${
       isScrolled ? "text-[0.825rem]" : "text-[0.925rem]"
     }`}
   >
@@ -42,10 +42,10 @@ export default function Navbar() {
       initial={{ opacity: 0, y: 0 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1.5 }}
-      className={`fixed top-0 left-0 right-0 flex items-center justify-between py-2 z-50 transition-all duration-300 ease-in-out bg-white ${
+      className={`fixed top-0 left-0 right-0 flex items-center justify-between py-2 z-50 ease-in-out bg-white ${
         isScrolled
-          ? "px-6 md:px-8 py-1 w-[360px] md:w-[870px] mx-auto mt-2 rounded-full border border-gray-200 bg-white bg-opacity-90 backdrop-blur-md"
-          : "px-5 md:px-10 pb-2 pt-7 w-full"
+          ? "px-6 md:px-8 py-1 w-[360px] md:w-[870px] mx-auto mt-2 rounded-full border border-gray-200 bg-white bg-opacity-90 backdrop-blur-md transition-all duration-500"
+          : "px-5 md:px-10 pb-2 pt-7 w-full transition-all duration-0"
       }`}
     >
       <div
