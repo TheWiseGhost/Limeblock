@@ -195,7 +195,7 @@ app.use(cors({
               className="mb-4"
             />
 
-            <h3 className="text-xl font-aeonik font-medium mt-6 mb-4">
+            <h3 className="text-3xl font-aeonik font-medium mt-12 mb-4">
               Best Practices for Endpoint Descriptions
             </h3>
             <p className="mb-4">Write detailed descriptions that include:</p>
@@ -211,14 +211,64 @@ app.use(cors({
               Example of a Good Description:
             </h4>
             <Code
-              code={`Creates a new order in the system with the provided items and shipping information. Validates inventory availability and calculates final price including taxes and shipping. Returns the created order ID and confirmation details, or specific error messages if validation fails (e.g., insufficient inventory, invalid shipping address).`}
+              code={`Creates a new order in the system with the provided items and shipping information. Validates inventory availability and calculates final price including taxes and shipping. Returns the created order ID and confirmation details, or specific error messages if validation fails (e.g., insufficient inventory, invalid shipping address).       `}
               language="text"
               showLineNumbers={false}
               copyButton={true}
               className="mb-4"
             />
 
-            <h2 className="text-2xl font-aeonik font-medium mt-8 mb-4">
+            <h3 className="text-3xl font-aeonik font-medium mt-10 mb-4">
+              Best Practices for Instructions
+            </h3>
+            <p className="mb-4">Effective instructions should include:</p>
+            <ul className="list-disc pl-6 mb-6 space-y-2">
+              <li>Clear and concise language</li>
+              <li>Step-by-step breakdown of actions</li>
+              <li>Expected outcomes or goals</li>
+              <li>Important warnings or tips to avoid potential errors</li>
+              <li>Examples to clarify complex situations</li>
+              <li>
+                Desired structure of schema when sending (example- send the
+                whole schema context or just the part meant to be updated)
+              </li>
+            </ul>
+
+            <h4 className="text-lg font-aeonik font-medium mt-4 mb-2">
+              Example of Good Instructions:
+            </h4>
+            <Code
+              code={`You can leave the name field blank. Make sure to send the entire schema structure including the context, not just the new part. Create unique ids.         `}
+              language="text"
+              showLineNumbers={false}
+              copyButton={true}
+              className="mb-4"
+            />
+
+            <h3 className="text-3xl font-aeonik font-medium mt-10 mb-4">
+              Best Practices for Example Prompts
+            </h3>
+            <p className="mb-4">Effective prompts should:</p>
+            <ul className="list-disc pl-6 mb-6 space-y-2">
+              <li>Have a clear objective or task</li>
+              <li>Have clear purpose</li>
+              <li>Expected output format</li>
+              <li>Encompass the idea a user would want</li>
+              <li>Include key words that indicate this endpoint is best</li>
+            </ul>
+
+            <h4 className="text-lg font-aeonik font-medium mt-4 mb-2">
+              Example of a Good Prompt:
+            </h4>
+            <Code
+              code={`Create a page called community (This is an example For Limeblock's add frontend pages)`}
+              language="text"
+              showLineNumbers={false}
+              copyButton={true}
+              className="mb-4"
+            />
+
+            <h2 className="text-3xl font-aeonik font-medium mt-12 mb-4">
               Context Parameters
             </h2>
             <p className="mb-4">
@@ -361,7 +411,7 @@ app.use(cors({
               />
             </div>
 
-            <h2 className="text-2xl font-aeonik font-medium mt-8 mb-4">
+            <h2 className="text-3xl font-aeonik font-medium mt-12 mb-4">
               Configuring Backend Access
             </h2>
             <p className="mb-4">
@@ -426,8 +476,9 @@ app.use(cors({
             <p className="mb-4">Before deploying to production:</p>
             <ul className="list-disc pl-6 mb-6 space-y-2">
               <li>
-                Use the "Test Endpoint" feature in the Limeblock dashboard to
-                verify connectivity
+                Use the "Test Endpoint" feature (With the edit and delete
+                buttons) in the Limeblock endpoint preview box to verify
+                connectivity
               </li>
               <li>Test with various inputs to ensure robust error handling</li>
               <li>Verify context parameter substitution works correctly</li>
