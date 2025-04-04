@@ -22,7 +22,12 @@ const Sidebar = ({ active, className = "" }) => {
     >
       {/* Get Started */}
       <div className="ml-2 my-4">
-        <div className="flex flex-row items-center mb-8">
+        <div
+          className="flex flex-row items-center mb-8 cursor-pointer"
+          onClick={() => {
+            window.location.href = "/dashboard/";
+          }}
+        >
           <img src="/LimeblockLogo.png" className="size-7" />
           <p className="font-aeonik font-medium text-base text-gray-900 text-center ml-2">
             Limeblock
@@ -82,7 +87,7 @@ const Sidebar = ({ active, className = "" }) => {
                   : "text-gray-700 hover:bg-gray-50"
               }`}
             >
-              Getting started
+              Getting Started
             </a>
             <a
               href="/docs/managing_plans"
@@ -93,6 +98,16 @@ const Sidebar = ({ active, className = "" }) => {
               }`}
             >
               Managing Plans
+            </a>
+            <a
+              href="/docs/report"
+              className={`flex items-center py-1.5 px-2 rounded ${
+                active == "report"
+                  ? "text-black bg-gray-100"
+                  : "text-gray-700 hover:bg-gray-50"
+              }`}
+            >
+              Report Bug
             </a>
             <a
               href="/docs/export"
@@ -155,6 +170,16 @@ const Sidebar = ({ active, className = "" }) => {
               }`}
             >
               Backend
+            </a>
+            <a
+              href="/docs/request"
+              className={`flex items-center py-1.5 px-2 rounded ${
+                active == "request"
+                  ? "text-black bg-gray-100"
+                  : "text-gray-700 hover:bg-gray-50"
+              }`}
+            >
+              Request Feature
             </a>
             <a
               href="/docs/vote"

@@ -5,6 +5,12 @@ import EditContextParams from "./EditContextParams";
 import PageEndpointTree from "./PageEndpointTree";
 import EditChatUI from "./EditChatUI";
 import { ChatWidget } from "@limeblock/react";
+import {
+  IconBug,
+  IconBulb,
+  IconCrown,
+  IconFileText,
+} from "@tabler/icons-react";
 
 const Frontend = () => {
   const [user, setUser] = useState(null);
@@ -131,14 +137,44 @@ const Frontend = () => {
         <h1 className="text-2xl font-aeonik font-medium">
           {user?.business_name} - Frontend
         </h1>
-        <button
-          onClick={() => {
-            window.location.href = "/checkout/";
-          }}
-          className="bg-white hover:bg-gray-50 border border-gray-600 font-aeonik px-6 py-2 rounded-lg text-base transition-colors"
-        >
-          Upgrade
-        </button>
+        <div className="flex flex-row w-fit items-center space-x-5">
+          <button
+            onClick={() => {
+              window.location.href = "/docs/request/";
+            }}
+            className="bg-white flex flex-row items-center hover:bg-gray-50 border border-gray-400 font-inter px-3 py-2 rounded-lg text-xs transition-colors"
+          >
+            <IconBulb className="size-5 mr-1.5 text-green-400 -mt-0.5" />
+            Request Feature
+          </button>
+          <button
+            onClick={() => {
+              window.location.href = "/docs/report/";
+            }}
+            className="bg-white flex flex-row items-center hover:bg-gray-50 border border-gray-400 font-inter px-3 py-2 rounded-lg text-xs transition-colors"
+          >
+            <IconBug className="size-5 mr-1.5 text-red-400 -mt-0.5" />
+            Report Bug
+          </button>
+          <button
+            onClick={() => {
+              window.location.href = "/docs/";
+            }}
+            className="bg-white flex flex-row items-center hover:bg-gray-50 border border-gray-400 font-inter px-3 py-2 rounded-lg text-xs transition-colors"
+          >
+            <IconFileText className="size-5 mr-1.5 text-gray-400 -mt-0.5" />
+            Docs
+          </button>
+          <button
+            onClick={() => {
+              window.location.href = "/checkout/";
+            }}
+            className="bg-white flex flex-row items-center hover:bg-gray-50 border border-gray-400 font-inter px-3 py-2 rounded-lg text-xs transition-colors"
+          >
+            <IconCrown className="size-5 mr-1.5 text-yellow-500 -mt-0.5" />
+            Upgrade
+          </button>
+        </div>
       </div>
 
       {user && frontend ? (

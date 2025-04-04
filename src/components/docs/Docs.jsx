@@ -6,6 +6,8 @@ import FrontendDocs from "./FrontendDocs";
 import BackendDocs from "./BackendDocs";
 import ManagingPlans from "./ManagingPlans";
 import VoteForNewFramework from "./VoteForNewFramework";
+import ReportBug from "./ReportBug";
+import RequestFeature from "./RequestFeature";
 
 const Docs = ({ page }) => {
   return (
@@ -23,6 +25,8 @@ const Docs = ({ page }) => {
         {page == "backend" && <BackendDocs />}
         {page == "managing_plans" && <ManagingPlans />}
         {page == "vote" && <VoteForNewFramework />}
+        {page == "report" && <ReportBug />}
+        {page == "request" && <RequestFeature />}
       </div>
     </div>
   );
