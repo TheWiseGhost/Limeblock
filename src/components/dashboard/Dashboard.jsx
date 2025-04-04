@@ -430,12 +430,12 @@ export default function Dashboard() {
                   </h3>
                   <p className="text-gray-500 text-sm mt-1">
                     {user?.plan === "business"
-                      ? "Full access for businesss"
+                      ? "Maximum 1,000 MAUs"
                       : user?.plan === "startup"
-                      ? "Advanced features for growing businesses"
+                      ? "Maximum 100 MAUs"
                       : user?.plan === "enterprise"
-                      ? "Premium access for enterprises with plenty of users"
-                      : "Basic features included"}
+                      ? "Maximum 5,000 MAUs"
+                      : "Maximum 0 MAUs"}
                   </p>
                 </div>
                 <div className="text-right">
@@ -460,9 +460,7 @@ export default function Dashboard() {
               </div>
             </div>
             <div className="border border-green-300 p-4 rounded-lg flex flex-row items-center justify-between">
-              <h4 className="font-medium text-black">
-                Upgrade for more features
-              </h4>
+              <h4 className="font-medium text-black">Upgrade for more MAUs</h4>
               <button
                 onClick={() => {
                   window.location.href = "/checkout/";

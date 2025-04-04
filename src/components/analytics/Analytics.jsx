@@ -166,7 +166,7 @@ const Analytics = () => {
       </div>
 
       <div className="flex flex-col space-y-8">
-        <MAU mauStats={mauStats} />
+        <MAU mauStats={mauStats} userPlan={user?.plan} />
         <EndpointStats
           frontend_folders={frontend?.folders}
           backend_folders={backend?.folders}

@@ -24,7 +24,7 @@ ChartJS.register(
   ChartDataLabels
 );
 
-export default function MAU({ mauStats }) {
+export default function MAU({ mauStats, userPlan }) {
   const formatMonthKey = (monthKey) => {
     const [year, month] = monthKey.split("-");
     return new Date(parseInt(year), parseInt(month) - 1).toLocaleString(
@@ -60,6 +60,22 @@ export default function MAU({ mauStats }) {
             Object.values(mauStats).filter((num) => num !== 0).length
         )
       : 0;
+
+  // Determine max MAUs based on user plan
+  const getMaxMaus = (plan) => {
+    switch (plan) {
+      case "startup":
+        return 100;
+      case "business":
+        return 1000;
+      case "enterprise":
+        return 5000;
+      default:
+        return 100; // Default fallback
+    }
+  };
+
+  const maxMaus = getMaxMaus(userPlan);
 
   // Chart configuration
   const chartData = {
@@ -187,7 +203,7 @@ export default function MAU({ mauStats }) {
               variants={itemVariants}
             >
               <p className="text-sm text-gray-700 mb-1">Total Users</p>
-              <p className="text-xl font-medium font-aeonik">{totalUsers}</p>
+              <p className="text-2xl font-aeonik">{totalUsers}</p>
             </motion.div>
 
             <motion.div
@@ -223,14 +239,8 @@ export default function MAU({ mauStats }) {
               className="bg-gray-50 p-4 rounded-lg"
               variants={itemVariants}
             >
-              <p className="text-sm text-gray-700 mb-1">Peak Month</p>
-              <p className="text-2xl font-aeonik">
-                {formatMonthKey(
-                  Object.entries(sortedStats).reduce((a, b) =>
-                    a[1] > b[1] ? a : b
-                  )[0]
-                )}
-              </p>
+              <p className="text-sm text-gray-700 mb-1">Max MAUs</p>
+              <p className="text-2xl font-aeonik">{maxMaus.toLocaleString()}</p>
             </motion.div>
 
             {/* Upgrade Prompt Box */}

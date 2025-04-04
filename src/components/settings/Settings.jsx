@@ -233,12 +233,12 @@ export default function Settings() {
                 </h3>
                 <p className="text-gray-500 text-sm mt-1">
                   {user?.plan === "business"
-                    ? "Full access for businesss"
+                    ? "Maximum 1,000 MAUs"
                     : user?.plan === "startup"
-                    ? "Advanced features for growing businesses"
+                    ? "Maximum 100 MAUs"
                     : user?.plan === "enterprise"
-                    ? "Premium access for enterprises with plenty of users"
-                    : "Basic features included"}
+                    ? "Maximum 5,000 MAUs"
+                    : "Maximum 0 MAUs"}
                 </p>
               </div>
               <div className="text-right">
@@ -264,11 +264,11 @@ export default function Settings() {
           </div>
           <div className="border border-green-300 p-4 rounded-lg">
             <h4 className="font-medium text-black mb-2">
-              Upgrade for more features
+              Upgrade for more MAUs
             </h4>
             <p className="text-gray-700 text-sm mb-3">
-              Get access to advanced features, higher limits, and priority
-              support.
+              Make sure all your users can still use Limeblock. Your block will
+              shut down once you hit your cap
             </p>
             <button
               onClick={() => {
@@ -354,7 +354,7 @@ export default function Settings() {
                 />
                 <button
                   onClick={handleAddEmail}
-                  className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors"
+                  className="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded-md text-sm font-normal transition-colors"
                 >
                   Add Email
                 </button>
@@ -406,7 +406,7 @@ export default function Settings() {
         <div className="flex justify-start mt-4">
           <button
             onClick={handleLogout}
-            className="bg-red-50 hover:bg-red-100 text-red-700 px-6 py-2 rounded-lg font-medium transition-colors"
+            className="bg-red-200 hover:bg-red-300 text-red-700 px-6 py-2 rounded-md font-medium transition duration-200"
           >
             Logout
           </button>
