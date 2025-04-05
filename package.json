@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@limeblock/react": "^1.0.0",
+    "@limeblock/react": "^1.1.0",
     "@lottiefiles/react-lottie-player": "^3.6.0",
     "@radix-ui/react-toast": "^1.2.6",
     "@tabler/icons-react": "^3.30.0",
