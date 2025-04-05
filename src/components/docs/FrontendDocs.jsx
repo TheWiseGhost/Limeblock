@@ -1,6 +1,15 @@
 import React from "react";
+import { Code } from "../global/Code";
 
 const FrontendDocs = () => {
+  const basicImplementationCode = `// Basic implementation
+<ChatWidget
+  apiKey={API_KEY}
+  contextParams={contextParams}
+  widgetPosition="bottom-[8px] md:bottom-[24px] right-[8px] md:right-[24px]"
+  chatPosition="bottom-[0px] right-[0px]"
+/>`;
+
   return (
     <div className="flex flex-col px-4 py-8 max-w-4xl mx-auto font-inter text-sm">
       <div className="flex flex-row space-x-2 items-center mb-6">
@@ -82,9 +91,32 @@ const FrontendDocs = () => {
             </div>
           </div>
         </section>
+        <div className="flex flex-col pt-2 pb-6 h-fit">
+          <h2 className="text-2xl font-aeonik font-medium mb-4">
+            Widget and Chat Location/Position
+          </h2>
+          <p className="mb-4">
+            The position props are not required and will default to this. If
+            using, please incorporate correct tailwind styling:
+          </p>
+
+          <Code
+            code={basicImplementationCode}
+            language="jsx"
+            showLineNumbers={false}
+            copyButton={true}
+            className="mb-4"
+          />
+          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
+            <p className="text-yellow-700">
+              <strong>Note:</strong> Widget and Chat Location handling is done
+              when exporting and during implementation, not in the frontend tab
+            </p>
+          </div>
+        </div>
 
         <section>
-          <h2 className="text-2xl font-medium mb-4 font-aeonik">
+          <h2 className="text-2xl font-medium mt-8 mb-4 font-aeonik">
             Chat UI Styling
           </h2>
           <p className="mb-4">

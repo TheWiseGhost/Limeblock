@@ -4,7 +4,7 @@ import { Code } from "../global/Code";
 const GettingStarted = () => {
   // Code snippets stored as variables to avoid syntax errors
   const createAccountCode = `// No code needed - just visit limeblock.io and sign up`;
-  const createButtonCode = `// Give the widget the color, size, and location you want in Limeblock - no code needed`;
+  const createButtonCode = `// Give the widget the color and size you want in Limeblock - no code needed`;
   const navigationConfigCode = `// Example of page navigation configuration in the Limeblock app
 {
   "pages": [
@@ -86,7 +86,9 @@ const MyApp = () => {
       <ChatWidget
         apiKey={API_KEY}
         contextParams={contextParams}
-        // All styling is configured in the Limeblock dashboard
+        widgetPosition="bottom-[8px] md:bottom-[24px] right-[8px] md:right-[24px]"
+        chatPosition="bottom-[0px] right-[0px]"
+        // All styling is configured in the Limeblock dashboard - only position is handled here
       />
     </div>
   );
@@ -211,9 +213,9 @@ export default MyApp;`;
               className="mb-4"
             />
 
-            <p className="mb-4">In the Limeblock dashboard:</p>
+            <p className="mb-4">In the Limeblock app:</p>
             <ol className="list-decimal pl-6 mb-6 space-y-2">
-              <li>Navigate to the "Navigation" tab</li>
+              <li>Navigate to the "Frontend" tab</li>
               <li>Add each page in your application</li>
               <li>Configure when and how the widget suggests navigations</li>
               <li>Set up transition animations between pages</li>
@@ -234,6 +236,14 @@ export default MyApp;`;
               copyButton={true}
               className="mb-4"
             />
+
+            <ol className="list-decimal pl-6 mb-6 space-y-2">
+              <li>Navigate to the "Backend" tab</li>
+              <li>Add API endpoints in your application</li>
+              <li>Configure them</li>
+              <li>Test the navigation flows before publishing</li>
+              <li>Reference Backend Docs for more info</li>
+            </ol>
 
             <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
               <p className="text-yellow-700">
@@ -310,8 +320,10 @@ export default MyApp;`;
                   Widget not appearing
                 </h3>
                 <p>
-                  Check your API key and ensure the widget is published in the
-                  dashboard.
+                  Check your API key and ensure the widget is fully built with
+                  right colors in the dashboard. Delete the position params and
+                  check if it works now - This means you are incorrectly setting
+                  location or not using proper tailwind styling.
                 </p>
               </div>
 

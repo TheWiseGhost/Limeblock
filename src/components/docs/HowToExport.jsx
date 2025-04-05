@@ -18,11 +18,15 @@ const contextParams = {
 <ChatWidget
   apiKey={API_KEY}
   contextParams={contextParams}
+  widgetPosition="bottom-[8px] md:bottom-[24px] right-[8px] md:right-[24px]"
+  chatPosition="bottom-[0px] right-[0px]"
 />`;
   const customImplementationCode = `// Customized implementation
 <ChatWidget
   apiKey={API_KEY}
   contextParams={contextParams}
+  widgetPosition="bottom-[8px] md:bottom-[24px] right-[8px] md:right-[24px]"
+  chatPosition="bottom-[0px] right-[0px]"
     // Customize everything about your block in the limeblock app, not in the code
 />`;
   const completeExampleCode = `import React from 'react';
@@ -45,6 +49,8 @@ const MyApp = () => {
       <ChatWidget
         apiKey={API_KEY}
         contextParams={contextParams}
+        widgetPosition="bottom-[8px] md:bottom-[24px] right-[8px] md:right-[24px]"
+        chatPosition="bottom-[0px] right-[0px]"
       />
     </div>
   );
@@ -69,6 +75,8 @@ export default function Layout({ children }) {
         <ChatWidget
           apiKey={process.env.NEXT_PUBLIC_LIMEBLOCK_API_KEY}
           contextParams={contextParams}
+          widgetPosition="bottom-[8px] md:bottom-[24px] right-[8px] md:right-[24px]"
+          chatPosition="bottom-[0px] right-[0px]"
         />
       </body>
     </html>
@@ -183,8 +191,8 @@ export default function Layout({ children }) {
               Step 5: Add the ChatWidget to Your Component
             </h2>
             <p className="mb-4">
-              Now, add the ChatWidget component to your JSX with the required
-              props:
+              Now, add the ChatWidget component to your JSX with these props
+              (position props not required):
             </p>
 
             <Code
@@ -259,8 +267,8 @@ export default function Layout({ children }) {
                   Widget not displaying
                 </h3>
                 <p>
-                  Ensure your API key is correct and that you've included all
-                  required props.
+                  Ensure your API key is correct and that you've included it in
+                  the props.
                 </p>
               </div>
 
