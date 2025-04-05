@@ -27,6 +27,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
     schema: "",
     instructions: "",
     examplePrompts: [],
+    requiredContextParams: [],
   });
   const [schemaErrors, setSchemaErrors] = useState({});
   const [deleteFolderMode, setDeleteFolderMode] = useState(false);
@@ -226,6 +227,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
         ...endpoint,
         // Add default array if examplePrompts doesn't exist
         examplePrompts: endpoint.examplePrompts || [],
+        requiredContextParams: endpoint.requiredContextParams || [],
       },
     });
 
@@ -253,6 +255,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
 
     if (
       !editedData.name.trim() ||
+      !editedData.description.trim() ||
       !editedData.url.trim() ||
       !editedData.method
     ) {
@@ -293,6 +296,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
   const addEndpoint = (folderId) => {
     if (
       !newEndpoint.name.trim() ||
+      !newEndpoint.description.trim() ||
       !newEndpoint.url.trim() ||
       !newEndpoint.method
     ) {
@@ -430,6 +434,43 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
     updateEditingEndpoint(
       "examplePrompts",
       newPrompts,
+      editingEndpoint.data.id
+    );
+  };
+
+  const handleContextParamChange = (index, value) => {
+    const newParams = [...(newEndpoint.requiredContextParams || [])];
+    newParams[index] = value;
+    setNewEndpoint({ ...newEndpoint, requiredContextParams: newParams });
+  };
+
+  const handleDeleteContextParam = (index) => {
+    const newParams = [...(newEndpoint.requiredContextParams || [])].filter(
+      (_, i) => i !== index
+    );
+    setNewEndpoint({ ...newEndpoint, requiredContextParams: newParams });
+  };
+
+  // For edit endpoint
+  const handleEditContextParamChange = (index, value) => {
+    if (!editingEndpoint) return;
+    const newParams = [...(editingEndpoint.data.requiredContextParams || [])];
+    newParams[index] = value;
+    updateEditingEndpoint(
+      "requiredContextParams",
+      newParams,
+      editingEndpoint.data.id
+    );
+  };
+
+  const handleEditDeleteContextParam = (index) => {
+    if (!editingEndpoint) return;
+    const newParams = [
+      ...(editingEndpoint.data.requiredContextParams || []),
+    ].filter((_, i) => i !== index);
+    updateEditingEndpoint(
+      "requiredContextParams",
+      newParams,
       editingEndpoint.data.id
     );
   };
@@ -704,6 +745,56 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                           className="text-xs flex flex-row items-center text-gray-800 hover:text-black my-2 w-fit pr-3 py-0.5 rounded-md"
                         >
                           <IconPlus className="size-4 mr-0.5" /> Add Prompt
+                        </button>
+                      </div>
+
+                      {/* Required Context Parameters */}
+                      <div className="flex flex-col space-y-1 pt-3">
+                        <label className="text-xs">
+                          Required Context Parameters (Give in same casing as
+                          you give during implementation):
+                        </label>
+                        {(newEndpoint.requiredContextParams || []).map(
+                          (param, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center space-x-2"
+                            >
+                              <input
+                                type="text"
+                                placeholder="e.g., user_id"
+                                className="border border-gray-300 rounded-md p-2 w-full text-sm"
+                                value={param}
+                                onChange={(e) =>
+                                  handleContextParamChange(
+                                    index,
+                                    e.target.value
+                                  )
+                                }
+                              />
+                              <button
+                                type="button"
+                                onClick={() => handleDeleteContextParam(index)}
+                                className="text-red-500 hover:text-red-700"
+                              >
+                                <IconX size={14} />
+                              </button>
+                            </div>
+                          )
+                        )}
+                        <button
+                          onClick={() => {
+                            setNewEndpoint({
+                              ...newEndpoint,
+                              requiredContextParams: [
+                                ...(newEndpoint.requiredContextParams || []),
+                                "",
+                              ],
+                            });
+                          }}
+                          className="text-xs flex flex-row items-center text-gray-800 hover:text-black my-2 w-fit pr-3 py-0.5 rounded-md"
+                        >
+                          <IconPlus className="size-4 mr-0.5" /> Add Parameter
                         </button>
                       </div>
 
@@ -1032,6 +1123,64 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                                       >
                                         <IconPlus className="size-4 mr-0.5" />
                                         Add Prompt
+                                      </button>
+                                    </div>
+
+                                    {/* Required Context Parameters - Edit */}
+                                    <div className="flex flex-col space-y-1 pt-3">
+                                      <label className="text-xs">
+                                        Required Context Parameters:
+                                      </label>
+                                      {(
+                                        editingEndpoint.data
+                                          .requiredContextParams || []
+                                      ).map((param, index) => (
+                                        <div
+                                          key={index}
+                                          className="flex items-center space-x-2"
+                                        >
+                                          <input
+                                            type="text"
+                                            placeholder="e.g., api_key"
+                                            className="border border-gray-300 rounded-md p-2 w-full text-sm"
+                                            value={param}
+                                            onChange={(e) =>
+                                              handleEditContextParamChange(
+                                                index,
+                                                e.target.value
+                                              )
+                                            }
+                                          />
+                                          <button
+                                            type="button"
+                                            onClick={() =>
+                                              handleEditDeleteContextParam(
+                                                index
+                                              )
+                                            }
+                                            className="text-red-500 hover:text-red-700"
+                                          >
+                                            <IconX size={14} />
+                                          </button>
+                                        </div>
+                                      ))}
+                                      <button
+                                        onClick={() => {
+                                          const newParams = [
+                                            ...(editingEndpoint.data
+                                              .requiredContextParams || []),
+                                            "",
+                                          ];
+                                          updateEditingEndpoint(
+                                            "requiredContextParams",
+                                            newParams,
+                                            editingEndpoint.data.id
+                                          );
+                                        }}
+                                        className="text-xs flex flex-row items-center text-gray-800 hover:text-black my-2 w-fit pr-3 py-0.5 rounded-md"
+                                      >
+                                        <IconPlus className="size-4 mr-0.5" />{" "}
+                                        Add Parameter
                                       </button>
                                     </div>
 
