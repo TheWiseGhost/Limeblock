@@ -44,7 +44,12 @@ const BlockFace = ({ body, eyes, size, isThinking = false }) => {
 };
 
 // ChatWidget component that can be imported by other components
-const ChatWidget = ({ apiKey, contextParams }) => {
+const ChatWidget = ({
+  apiKey,
+  contextParams = {},
+  widgetPosition = "bottom-[8px] md:bottom-[24px] right-[8px] md:right-[24px]",
+  chatPosition = "bottom-[0px] right-[0px]",
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [widgetLoading, setWidgetLoading] = useState(true);
@@ -447,10 +452,7 @@ const ChatWidget = ({ apiKey, contextParams }) => {
 
   return (
     // Portal container - fixed position, doesn't affect page layout
-    <div
-      style={portalStyle}
-      className="bottom-[8px] md:bottom-[24px] right-[8px] md:right-[24px]"
-    >
+    <div style={portalStyle} className={`w-fit h-fit ${widgetPosition}`}>
       <AnimatePresence mode="wait">
         {!isOpen ? (
           <motion.button
@@ -513,12 +515,10 @@ const ChatWidget = ({ apiKey, contextParams }) => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="rounded-xl w-[330px] md:w-[390px] h-[460px] md:h-[500px] shadow-2xl flex flex-col overflow-hidden font-inter"
+            className={`rounded-xl w-[330px] md:w-[390px] h-[460px] md:h-[500px] shadow-2xl flex flex-col overflow-hidden font-inter ${chatPosition}`}
             style={{
               ...interactiveStyle,
               position: "absolute",
-              bottom: "0",
-              right: "0",
               backgroundColor: frontend?.pageBackground || "#FFFFFF",
             }}
           >
@@ -685,121 +685,6 @@ const ChatWidget = ({ apiKey, contextParams }) => {
                             ) : (
                               <></>
                             )}
-
-                            {/* Action buttons - always taking space but only visible on hover */}
-                            {/* <div
-                              className={`absolute bg-none bottom-1 flex items-center gap-1 w-full ${
-                                msg.sender === "user"
-                                  ? "justify-end right-2"
-                                  : "justify-start left-2"
-                              }`}
-                            >
-                              {msg.sender === "user" ? (
-                                <motion.button
-                                  onClick={() => {
-                                    setInputMessage(msg.text);
-                                    if (textAreaRef.current) {
-                                      textAreaRef.current.focus();
-                                    }
-                                  }}
-                                  className="bg-transparent hover:bg-gray-200 rounded-full p-1 transition-colors opacity-0 group-hover:opacity-100"
-                                  whileHover={{ scale: 1.1 }}
-                                  whileTap={{ scale: 0.95 }}
-                                  title="Edit message"
-                                >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="14"
-                                    height="14"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                  >
-                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                  </svg>
-                                </motion.button>
-                              ) : (
-                                <>
-                                  <motion.button
-                                    onClick={() => {
-                                      navigator.clipboard.writeText(msg.text);
-                                    }}
-                                    className="bg-transparent hover:bg-gray-200 rounded-full p-1 transition-colors opacity-0 group-hover:opacity-100"
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    title="Copy to clipboard"
-                                  >
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="14"
-                                      height="14"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                    >
-                                      <rect
-                                        x="9"
-                                        y="9"
-                                        width="13"
-                                        height="13"
-                                        rx="2"
-                                        ry="2"
-                                      ></rect>
-                                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                    </svg>
-                                  </motion.button>
-
-                                  <motion.button
-                                    className="bg-transparent hover:bg-gray-200 rounded-full p-1 transition-colors opacity-0 group-hover:opacity-100"
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    title="Like"
-                                  >
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="14"
-                                      height="14"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                    >
-                                      <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
-                                    </svg>
-                                  </motion.button>
-
-                                  <motion.button
-                                    className="bg-transparent hover:bg-gray-200 rounded-full p-1 transition-colors opacity-0 group-hover:opacity-100"
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    title="Dislike"
-                                  >
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="14"
-                                      height="14"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                    >
-                                      <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path>
-                                    </svg>
-                                  </motion.button>
-                                </>
-                              )}
-                            </div> */}
                           </motion.div>
                         </motion.div>
                       ))}
