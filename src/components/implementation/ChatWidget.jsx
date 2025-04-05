@@ -1,6 +1,6 @@
 "use client";
 
-import { IconSend, IconX } from "@tabler/icons-react";
+import { IconBolt, IconFile, IconSend, IconX } from "@tabler/icons-react";
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -62,6 +62,8 @@ const ChatWidget = ({
   const textAreaRef = useRef(null);
 
   const [valid, setValid] = useState(true);
+
+  const [activeOption, setActiveOption] = useState("Find Page");
 
   // Loading states for animation
   const loadingStates = [
@@ -218,6 +220,7 @@ const ChatWidget = ({
               prompt: inputMessage,
               api_key: apiKey,
               context: contextParams,
+              option: activeOption,
               client_info: {
                 // Add unique identifier for the client
                 fingerprint: generateFingerprint(),
@@ -732,7 +735,7 @@ const ChatWidget = ({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              <div className="flex border border-gray-300 px-2">
+              <div className="flex border border-gray-300 px-2 rounded-md flex-col">
                 <motion.textarea
                   ref={textAreaRef}
                   value={inputMessage}
@@ -753,30 +756,68 @@ const ChatWidget = ({
                     }
                   }}
                 />
-                <motion.button
-                  type="submit"
-                  className="size-10 mt-auto place-items-bottom mb-2 rounded-lg text-white flex justify-center items-center"
-                  style={{ backgroundColor: frontend?.body || "#90F08C" }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  disabled={loading}
-                >
-                  {loading ? (
-                    <motion.div
-                      animate={{
-                        rotate: 360,
-                        transition: {
-                          repeat: Infinity,
-                          duration: 1,
-                          ease: "linear",
-                        },
+                <div className="flex flex-row justify-between items-end h-fit w-full -mt-1 md:-mt-4">
+                  <div className="flex flex-row gap-2 h-full pb-3">
+                    <motion.button
+                      type="button"
+                      className={`px-3 py-1 flex flex-row items-center text-xs font-inter rounded-full text-gray-700 ${
+                        activeOption === "Find Page"
+                          ? "border border-gray-400"
+                          : "bg-gray-200"
+                      }`}
+                      style={{
+                        backgroundColor: frontend?.pageBackground || "#FFFFFF",
                       }}
-                      className="w-4 h-4 border-2 border-white border-t-transparent rounded-full"
-                    ></motion.div>
-                  ) : (
-                    <IconSend className="size-6" />
-                  )}
-                </motion.button>
+                      onClick={() => setActiveOption("Find Page")}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.97 }}
+                    >
+                      <IconFile className="size-4 mr-1" />
+                      Find Page
+                    </motion.button>
+                    <motion.button
+                      type="button"
+                      className={`px-3 py-1 flex flex-row items-center text-xs font-inter rounded-full text-gray-700 ${
+                        activeOption === "Do Action"
+                          ? "border border-gray-400"
+                          : "bg-gray-200"
+                      }`}
+                      style={{
+                        backgroundColor: frontend?.pageBackground || "#FFFFFF",
+                      }}
+                      onClick={() => setActiveOption("Do Action")}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.97 }}
+                    >
+                      <IconBolt className="size-4 mr-1" />
+                      Do Action
+                    </motion.button>
+                  </div>
+                  <motion.button
+                    type="submit"
+                    className="size-10 mt-auto place-items-bottom mb-2 rounded-lg text-white flex justify-center items-center"
+                    style={{ backgroundColor: frontend?.body || "#90F08C" }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <motion.div
+                        animate={{
+                          rotate: 360,
+                          transition: {
+                            repeat: Infinity,
+                            duration: 1,
+                            ease: "linear",
+                          },
+                        }}
+                        className="w-4 h-4 border-2 border-white border-t-transparent rounded-full"
+                      ></motion.div>
+                    ) : (
+                      <IconSend className="size-6" />
+                    )}
+                  </motion.button>
+                </div>
               </div>
             </motion.form>
             <div className="flex flex-row items-center justify-center text-center pb-2 pt-1">
