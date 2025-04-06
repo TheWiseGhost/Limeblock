@@ -1,5 +1,6 @@
 "use client";
 
+import { IconShield } from "@tabler/icons-react";
 import React from "react";
 
 const Pricing = () => {
@@ -45,10 +46,13 @@ const Pricing = () => {
 
   return (
     <div className="min-h-screen pt-24 px-4 pb-20 md:px-16 font-inter">
-      <h1 className="flex flex-col md:flex-row items-center font-aeonik text-3xl md:text-7xl font-medium mb-12">
+      <h1 className="flex flex-col md:flex-row items-center font-aeonik text-4xl md:text-7xl font-medium mb-12">
         Launch Deals{" "}
         <div className="bg-gray-50 border text-gray-800 border-gray-600 ml-0 md:ml-8 mt-4 font-inter px-2 md:px-4 text-xs md:text-sm py-1 rounded-full">
           Expires Soon
+        </div>
+        <div className="bg-gray-50 flex flex-row items-center border text-gray-800 border-gray-600 ml-0 md:ml-8 mt-4 font-inter px-2 md:px-4 text-xs md:text-sm py-1 rounded-full">
+          <IconShield className="size-4 mr-1" /> 30 Day Money Back Guarantee
         </div>
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12 font-inter px-4">

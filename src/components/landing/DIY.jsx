@@ -1,3 +1,5 @@
+"use client";
+
 import { IconBinaryTree2, IconFileText } from "@tabler/icons-react";
 import React, { useState, useEffect, useRef } from "react";
 import VideoLoading from "../global/VideoLoading";

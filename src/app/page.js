@@ -1,5 +1,3 @@
-"use client";
-
 // import { ChatWidget } from "@limeblock/react";
 import ChatWidget from "@/components/implementation/ChatWidget";
 import CodeImplementation from "@/components/landing/CodeImplementation";

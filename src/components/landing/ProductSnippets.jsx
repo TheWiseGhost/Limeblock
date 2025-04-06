@@ -82,7 +82,10 @@ const ProductSnippets = () => {
         </div>
 
         {/* Right side elements - Staggered column layout */}
-        <div className="hidden md:flex w-1/3 relative justify-center mt-12">
+        <div className="hidden md:flex w-1/3 relative justify-center mt-24">
+          <h1 className="-mt-20 font-aeonik font-medium text-5xl">
+            Demo Steps
+          </h1>
           {/* User Input Prompt - First step */}
           <div
             className={`absolute bg-white rounded-lg p-4 border-l-4 border-l-lime border border-neutral-200 flex items-center transition-opacity duration-500 w-5/6 ${
@@ -128,7 +131,7 @@ const ProductSnippets = () => {
 
           {/* User Confirmation - Fourth step */}
           <div
-            className={`absolute top-52  bg-white rounded-lg p-4 border-l-4 border-l-lime border border-neutral-200 flex items-center transition-opacity duration-500 w-5/6 ${
+            className={`absolute top-44  bg-white rounded-lg p-4 border-l-4 border-l-lime border border-neutral-200 flex items-center transition-opacity duration-500 w-5/6 ${
               isVisible(24, 27) ? "opacity-100" : "opacity-0"
             }`}
           >
@@ -140,7 +143,7 @@ const ProductSnippets = () => {
 
           {/* Action Committed - Fifth step */}
           <div
-            className={`absolute top-56  bg-white rounded-lg p-4 border-l-4 border-l-lime border border-neutral-200 flex items-center transition-opacity duration-500 w-5/6 ${
+            className={`absolute top-52  bg-white rounded-lg p-4 border-l-4 border-l-lime border border-neutral-200 flex items-center transition-opacity duration-500 w-5/6 ${
               isVisible(27, 35) ? "opacity-100" : "opacity-0"
             }`}
           >
