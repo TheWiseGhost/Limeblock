@@ -17,8 +17,8 @@ const MyApp = () => {
       <ChatWidget
         apiKey={API_KEY}
         contextParams={contextParams}
-        widgetPosition="bottom-[8px] md:bottom-[24px] right-[8px] md:right-[24px]"
-        chatPosition="bottom-[0px] right-[0px]"
+        widgetPosition="bottom-[8px] md:bottom-[24px] right-[8px] md:right-[24px]" // Have a chat widget already?
+        chatPosition="bottom-[0px] right-[0px]" // Just move ours somewhere else on the screen in one line!
       />
     </div>
   );

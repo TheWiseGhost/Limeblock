@@ -8,6 +8,7 @@ import ManagingPlans from "./ManagingPlans";
 import VoteForNewFramework from "./VoteForNewFramework";
 import ReportBug from "./ReportBug";
 import RequestFeature from "./RequestFeature";
+import HaveBot from "./HaveBot";
 
 const Docs = ({ page }) => {
   return (
@@ -27,6 +28,7 @@ const Docs = ({ page }) => {
         {page == "vote" && <VoteForNewFramework />}
         {page == "report" && <ReportBug />}
         {page == "request" && <RequestFeature />}
+        {page == "have_bot" && <HaveBot />}
       </div>
     </div>
   );

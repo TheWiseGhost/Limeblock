@@ -100,6 +100,16 @@ const Sidebar = ({ active, className = "" }) => {
               Managing Plans
             </a>
             <a
+              href="/docs/have_bot"
+              className={`flex items-center py-1.5 px-2 rounded ${
+                active == "have_bot"
+                  ? "text-black bg-gray-100"
+                  : "text-gray-700 hover:bg-gray-50"
+              }`}
+            >
+              Have Existing Chatbot
+            </a>
+            <a
               href="/docs/report"
               className={`flex items-center py-1.5 px-2 rounded ${
                 active == "report"

@@ -259,7 +259,7 @@ export default function Hero() {
 
         <motion.p
           variants={item}
-          className="text-sm md:text-lg text-gray-600 w-full px-4 md:px-0 max-w-[860px] mx-auto mb-12"
+          className="text-sm md:text-lg text-gray-600 w-full px-4 md:px-0 max-w-[860px] mx-auto mb-12 mt-1"
         >
           Integrate Limeblock into your React App and let your users commit
           in-app actions, API requests, page navigation, and more with just with
@@ -268,7 +268,7 @@ export default function Hero() {
 
         <motion.div
           variants={item}
-          className="flex gap-2 justify-center font-inter z-20 w-fit mx-auto"
+          className="flex gap-2 justify-center font-inter z-20 w-fit mx-auto pl-4 md:pl-10"
         >
           <motion.a
             href="/auth_prompt/"
@@ -279,12 +279,12 @@ export default function Hero() {
             Try Today
           </motion.a>
           <motion.a
-            href="/docs/vote/"
+            href="/docs/have_bot/"
             whileHover={{ x: 3 }}
             transition={{ type: "spring", stiffness: 300 }}
-            className="px-8 py-3 text-gray-700 hover:text-gray-900 font-medium flex items-center gap-2"
+            className="px-3 py-3 text-gray-700 hover:text-gray-900 font-medium flex items-center gap-2 text-sm md:text-[0.95rem] ml-2 md:ml-4"
           >
-            Not a React user
+            Have an existing chatbot?
             <motion.svg
               animate={{ x: [0, 6, 0] }}
               transition={{ repeat: Infinity, repeatDelay: 1, duration: 1 }}

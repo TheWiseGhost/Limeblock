@@ -9,7 +9,6 @@ import Footer from "@/components/landing/Footer";
 import Hero from "@/components/landing/Hero";
 import InAppActions from "@/components/landing/InAppActions";
 import Pricing from "@/components/landing/Pricing";
-import SignUPrompt from "@/components/landing/SignUpPrompt";
 import Solutions from "@/components/landing/Solutions";
 import Navbar from "@/components/landing/Navbar";
 import ProductSnippets from "@/components/landing/ProductSnippets";
@@ -27,8 +26,8 @@ export default function Home() {
       <InAppActions />
       <Features />
       <CodeImplementation />
-      <SignUPrompt />
       <Pricing />
+      <div className="h-10" />
       <Footer />
       <ChatWidget
         apiKey={"lime_2JDnwGpM7OOfEcfj3kJ9bwVrGULxh1sL"}
