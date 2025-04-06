@@ -13,6 +13,7 @@ import Solutions from "@/components/landing/Solutions";
 import Navbar from "@/components/landing/Navbar";
 import ProductSnippets from "@/components/landing/ProductSnippets";
 import DIY from "@/components/landing/DIY";
+import ConversionFunnel from "@/components/landing/ConversionFunnel";
 
 export default function Home() {
   const contextParams = {};
@@ -23,6 +24,7 @@ export default function Home() {
       <ProductSnippets />
       <DIY />
       <Solutions />
+      <ConversionFunnel />
       <InAppActions />
       <Features />
       <CodeImplementation />

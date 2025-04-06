@@ -65,7 +65,7 @@ export default function Solutions() {
       <h1 className="font-aeonik font-medium text-5xl md:text-7xl pb-8">
         Made for Tech Companies
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 relative z-10 pb-20 md:pb-24 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 relative z-10 pb-12 md:pb-12 w-full">
         {solutions.map((feature, index) => (
           <Solution key={feature.title} {...feature} index={index} />
         ))}
