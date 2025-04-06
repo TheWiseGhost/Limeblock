@@ -56,10 +56,10 @@ const ProductSnippets = () => {
   }, []);
 
   return (
-    <div className="h-[300px] md:h-screen flex flex-col bg-white font-inter text-sm p-4 relative overflow-hidden -mt-[20px] px-5 md:px-8 pb-6 md:pb-2">
+    <div className="h-fit w-full md:h-screen flex flex-col bg-white font-inter text-sm p-4 relative overflow-hidden mt-12 md:mt-2 px-5 md:px-8 pb-0 md:pb-2">
       <div className="flex flex-row h-full relative">
         {/* Middle - Video */}
-        <div className="w-full md:w-2/3 ml-6 flex justify-center items-top relative">
+        <div className="w-full md:w-2/3 ml-0 md:ml-6 flex justify-center items-top relative">
           {!isVideoLoaded && (
             <div className="absolute inset-0 flex justify-center items-center">
               <VideoLoading />
@@ -72,7 +72,7 @@ const ProductSnippets = () => {
             loop
             playsInline
             disablePictureInPicture
-            className="w-full h-5/6 rounded-xl overflow-y-hidden object-contain pointer-events-none"
+            className="w-full h-full md:h-5/6 rounded-xl overflow-y-hidden object-contain pointer-events-none"
             controlsList="nodownload"
             src="/UpdateWidgetColor.mp4"
             onCanPlay={() => setIsVideoLoaded(true)}

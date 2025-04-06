@@ -35,7 +35,7 @@ export default MyApp;`;
           href="/docs"
           whileHover={{ x: 3 }}
           transition={{ type: "spring", stiffness: 300 }}
-          className="px-8 mt-4 py-3 text-gray-700 hover:text-gray-900 font-medium flex items-center gap-2"
+          className="px-8 mt-4 py-3 text-gray-700 hover:text-gray-900 font-medium hidden md:flex items-center gap-2"
         >
           Read Docs
           <motion.svg

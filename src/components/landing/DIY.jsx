@@ -29,7 +29,7 @@ const DIY = () => {
         </div>
       </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-16 pt-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 pt-8">
         {videos.map((video) => (
           <VideoWithLoading key={video.id} video={video} />
         ))}
@@ -65,7 +65,7 @@ const VideoWithLoading = ({ video }) => {
         <video
           ref={videoRef}
           src={video.src}
-          className="w-full h-fit object-contain md:object-cover rounded-xl border-t border-gray-400"
+          className="w-full h-60 md:h-fit object-contain md:object-cover rounded-xl border-t border-gray-400"
           autoPlay
           loop
           muted

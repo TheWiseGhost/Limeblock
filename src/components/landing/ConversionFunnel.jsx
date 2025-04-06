@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowDown } from "lucide-react";
 
 export default function ConversionFunnel() {
-  const [activeTab, setActiveTab] = useState("with"); // 'with' or 'without'
+  const [activeTab, setActiveTab] = useState("with");
 
   const toggleSwitch = () => {
     setActiveTab(activeTab === "with" ? "without" : "with");
@@ -25,7 +25,6 @@ export default function ConversionFunnel() {
             Without Limeblock
           </span>
 
-          {/* The actual switch in the middle */}
           <button
             onClick={toggleSwitch}
             className="relative inline-flex h-6 w-12 items-center rounded-lg transition-colors focus:outline-none"
@@ -52,13 +51,13 @@ export default function ConversionFunnel() {
         </div>
       </div>
 
-      {/* Horizontal Funnel Visual */}
+      {/* Funnel - responsive horizontal to vertical */}
       <div className="relative">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0">
           {/* Visitors */}
-          <div className="flex flex-col items-center text-center w-1/4">
+          <div className="flex flex-col items-center text-center w-full md:w-1/4">
             <div className="bg-white w-full px-2 py-4 rounded-lg border border-gray-400 mb-2">
-              <div className="text-2xl font-medium text-gray-800 font-aeonik">
+              <div className="text-base md:text-2xl font-medium text-gray-800 font-aeonik">
                 10,000
               </div>
               <div className="text-sm text-gray-500 mt-1">Visitors</div>
@@ -66,12 +65,16 @@ export default function ConversionFunnel() {
             <div className="text-xs text-gray-400">Standard Sample</div>
           </div>
 
-          <ArrowRight className="text-gray-500 mx-2 mb-2" size={20} />
+          <ArrowDown className="md:hidden text-gray-500 my-2" size={20} />
+          <ArrowRight
+            className="hidden md:block text-gray-500 mx-2 mb-2"
+            size={20}
+          />
 
           {/* Sign Ups */}
-          <div className="flex flex-col items-center text-center w-1/4">
+          <div className="flex flex-col items-center text-center w-4/5 md:w-1/4">
             <div className="bg-white w-full px-2 py-4 rounded-lg border border-gray-400 mb-2">
-              <div className="text-2xl font-medium text-gray-800 font-aeonik">
+              <div className="text-base md:text-2xl font-medium text-gray-800 font-aeonik">
                 1,000
               </div>
               <div className="text-sm text-gray-500 mt-1">Sign Ups</div>
@@ -79,10 +82,14 @@ export default function ConversionFunnel() {
             <div className="text-xs text-gray-400">10% conversion</div>
           </div>
 
-          <ArrowRight className="text-gray-500 mx-2 mb-2" size={20} />
+          <ArrowDown className="md:hidden text-gray-500 my-2" size={20} />
+          <ArrowRight
+            className="hidden md:block text-gray-500 mx-2 mb-2"
+            size={20}
+          />
 
           {/* Active Users */}
-          <div className="flex flex-col items-center text-center w-1/4">
+          <div className="flex flex-col items-center text-center w-2/3 md:w-1/4">
             <div
               className={`bg-white w-full px-2 py-4 rounded-lg mb-2 ${
                 activeTab === "with"
@@ -90,7 +97,7 @@ export default function ConversionFunnel() {
                   : "border border-gray-400"
               }`}
             >
-              <div className="text-2xl font-medium text-gray-800 font-aeonik">
+              <div className="text-base md:text-2xl font-medium text-gray-800 font-aeonik">
                 {activeTab === "with" ? "500" : "50"}
               </div>
               <div className="text-sm text-gray-500 mt-1">Active Users</div>
@@ -100,10 +107,14 @@ export default function ConversionFunnel() {
             </div>
           </div>
 
-          <ArrowRight className="text-gray-500 mx-2 mb-2" size={20} />
+          <ArrowDown className="md:hidden text-gray-500 my-2" size={20} />
+          <ArrowRight
+            className="hidden md:block text-gray-500 mx-2 mb-2"
+            size={20}
+          />
 
           {/* Paying Users */}
-          <div className="flex flex-col items-center text-center w-1/4">
+          <div className="flex flex-col items-center text-center w-7/12 md:w-1/4">
             <div
               className={`bg-white w-full px-2 py-4 rounded-lg mb-2 ${
                 activeTab === "with"
@@ -111,7 +122,7 @@ export default function ConversionFunnel() {
                   : "border border-gray-400"
               }`}
             >
-              <div className="text-2xl font-medium text-gray-800 font-aeonik">
+              <div className="text-base md:text-2xl font-medium text-gray-800 font-aeonik">
                 {activeTab === "with" ? "20" : "1"}
               </div>
               <div className="text-sm text-gray-500 mt-1">Paying Customers</div>

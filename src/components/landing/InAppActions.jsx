@@ -336,92 +336,6 @@ const ChatDemo = () => {
     }
   };
 
-  // const handleSendMessage = async (e) => {
-  //   e.preventDefault();
-  //   if (inputMessage.trim()) {
-  //     // Add user message to chat
-  //     setMessages([...messages, { text: inputMessage, sender: "user" }]);
-
-  //     // Reset textarea height
-  //     if (textAreaRef.current) {
-  //       textAreaRef.current.style.height = "auto";
-  //     }
-
-  //     // Show loading indicator
-  //     setLoading(true);
-  //     setLoadingStep(0);
-
-  //     try {
-  //       // Send message to Django backend
-  //       const response = await fetch(
-  //         "https://limeblockbackend.onrender.com/api/process_prompt/",
-  //         {
-  //           method: "POST",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify({
-  //             prompt: inputMessage,
-  //             api_key: "lime_2JDnwGpM7OOfEcfj3kJ9bwVrGULxh1sL",
-  //             context: {},
-  //           }),
-  //         }
-  //       );
-
-  //       const data = await response.json();
-
-  //       // Add bot response to chat
-  //       if (response.ok) {
-  //         // If the request was successful
-  //         let responseText;
-
-  //         if (data.response && data.endpoint_used) {
-  //           // Format successful response from endpoint
-  //           responseText = `Request processed using endpoint: ${data.endpoint_used}\n\n`;
-
-  //           if (typeof data.response === "object") {
-  //             responseText += JSON.stringify(data.response, null, 2);
-  //           } else {
-  //             responseText += data.response;
-  //           }
-  //         } else {
-  //           // Generic success message if response structure is different
-  //           responseText =
-  //             typeof data === "object" ? JSON.stringify(data, null, 2) : data;
-  //         }
-
-  //         setMessages((prev) => [
-  //           ...prev,
-  //           { text: responseText, sender: "bot" },
-  //         ]);
-  //       } else {
-  //         // Handle error response
-  //         const errorMessage =
-  //           data.error || data.message || "Something went wrong";
-  //         setMessages((prev) => [
-  //           ...prev,
-  //           {
-  //             text: `Error: ${errorMessage}`,
-  //             sender: "bot",
-  //           },
-  //         ]);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error sending message:", error);
-  //       setMessages((prev) => [
-  //         ...prev,
-  //         {
-  //           text: "Sorry, there was a network error. Please try again later.",
-  //           sender: "bot",
-  //         },
-  //       ]);
-  //     } finally {
-  //       setLoading(false);
-  //       setInputMessage("");
-  //     }
-  //   }
-  // };
-
   const messageVariants = {
     initial: { opacity: 0, y: 10 },
     animate: {
@@ -650,7 +564,7 @@ const InAppActions = () => {
                     repeatDelay: 0.1,
                     duration: 0.6,
                   }}
-                  className="size-6"
+                  className="size-6 hidden md:block"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"

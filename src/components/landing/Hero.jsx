@@ -208,7 +208,7 @@ export default function Hero() {
   };
 
   return (
-    <div className="bg-white pt-20 font-inter relative overflow-hidden h-screen">
+    <div className="bg-white pt-20 font-inter relative overflow-hidden h-fit md:h-screen">
       {/* Chatbot Feature Cards */}
       <div className="hidden md:block absolute right-8 top-[140px] z-10 w-full pl-20">
         <ChatSequence setSwiggleColor={setSwiggleColor} />
@@ -274,7 +274,7 @@ export default function Hero() {
             href="/auth_prompt/"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-6 py-3 font-aeonik text-black bg-lime rounded-lg hover:bg-primary-600 transition-colors"
+            className="px-4 md:px-6 py-3 font-aeonik text-black bg-lime rounded-lg hover:bg-primary-600 transition-colors text-sm md:text-base"
           >
             Try Today
           </motion.a>
@@ -282,13 +282,13 @@ export default function Hero() {
             href="/docs/have_bot/"
             whileHover={{ x: 3 }}
             transition={{ type: "spring", stiffness: 300 }}
-            className="px-3 py-3 text-gray-700 hover:text-gray-900 font-medium flex items-center gap-2 text-sm md:text-[0.95rem] ml-2 md:ml-4"
+            className="px-1 md:px-3 py-3 text-gray-700 hover:text-gray-900 font-medium flex items-center gap-2 text-sm md:text-[0.95rem] ml-2 md:ml-4"
           >
             Have an existing chatbot?
             <motion.svg
               animate={{ x: [0, 6, 0] }}
               transition={{ repeat: Infinity, repeatDelay: 1, duration: 1 }}
-              className="w-4 h-4"
+              className="w-4 h-4 hidden md:block"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
