@@ -33,7 +33,7 @@ export default MyApp;`;
           </p>
         </div>
         <h1 className="text-4xl font-aeonik font-medium mb-8">
-          Have an existng Chatbot Widget?
+          Have an existing Chatbot Widget?
         </h1>
 
         <div className="text-sm max-w-none">
