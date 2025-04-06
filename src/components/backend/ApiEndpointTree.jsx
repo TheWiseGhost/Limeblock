@@ -128,14 +128,14 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
       }
 
       const response = await fetch(
-        "https://limeblockbackend.onrender.com/api/process_prompt/",
+        "https://limeblockbackend.onrender.com/api/test_endpoint/",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            prompt: `please test out the endpoint at ${endpoint.url} thats called ${endpoint.name}`,
+            endpoint: endpoint,
             api_key: api_key,
           }),
         }
@@ -143,7 +143,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
 
       const data = await response.json();
 
-      if (response.ok) {
+      if (data.success) {
         toast({
           title: "Endpoint Test Successful",
           description: "The endpoint is working correctly",
@@ -751,8 +751,8 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                       {/* Required Context Parameters */}
                       <div className="flex flex-col space-y-1 pt-3">
                         <label className="text-xs">
-                          Required Context Parameters (Give in same casing as
-                          you give during implementation):
+                          Required Context Parameters (IMPORTANT: Give in same
+                          casing as you give during implementation):
                         </label>
                         {(newEndpoint.requiredContextParams || []).map(
                           (param, index) => (
@@ -1129,7 +1129,9 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                                     {/* Required Context Parameters - Edit */}
                                     <div className="flex flex-col space-y-1 pt-3">
                                       <label className="text-xs">
-                                        Required Context Parameters:
+                                        Required Context Parameters (IMPORTANT:
+                                        Give in same casing as you give during
+                                        implementation):
                                       </label>
                                       {(
                                         editingEndpoint.data
