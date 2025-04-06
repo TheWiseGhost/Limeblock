@@ -20,7 +20,7 @@ const Frontend = () => {
 
   const contextParams = {
     user_id: user?.id,
-    folders: frontend?.folders || [],
+    frontend_folders: frontend?.folders || [],
     url: frontend?.url,
   };
 
