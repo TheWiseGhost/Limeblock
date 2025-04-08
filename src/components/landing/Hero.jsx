@@ -231,7 +231,7 @@ export default function Hero() {
           variants={item}
           className="text-5xl md:text-7xl font-aeonik tracking-tight mb-8"
         >
-          How users interact with <br className="hidden md:flex" />
+          Let users interact with <br className="hidden md:flex" />
           your app{" "}
           <span className="relative inline-block">
             10x faster
