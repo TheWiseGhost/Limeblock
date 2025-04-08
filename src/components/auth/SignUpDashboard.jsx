@@ -32,7 +32,7 @@ const SignUpDashboard = () => {
 
         {/* Title */}
         <h1 className="font-aeonik text-2xl font-bold pb-2">
-          Create a Free Account
+          Create an Account
         </h1>
         <p className="text-gray-500 text-sm mb-6">
           Sign up now to let your app use the best chatbot.

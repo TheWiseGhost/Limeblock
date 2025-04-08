@@ -197,6 +197,7 @@ const ChatDemo = () => {
               prompt: inputMessage,
               api_key: "lime_2JDnwGpM7OOfEcfj3kJ9bwVrGULxh1sL",
               context: {},
+              option: "Do Action",
               client_info: {
                 // Add unique identifier for the client
                 fingerprint: generateFingerprint(),
@@ -393,7 +394,7 @@ const ChatDemo = () => {
                   whileHover={{ scale: 1.02 }}
                   style={{
                     backgroundColor:
-                      msg.sender == "user" ? "#E5E7EB" : "#F3F4F6",
+                      msg.sender == "user" ? "#F9F4FF" : "#F3F4F6",
                     whiteSpace: "pre-wrap",
                     textAlign: "left",
                     color: msg.sender == "user" ? "#000000" : "#111111",
@@ -599,7 +600,7 @@ const InAppActions = () => {
             </div>
           </div>
           <div className="hidden md:flex flex-row space-x-10">
-            <div className="-mt-2 h-fit w-5/12">
+            <div className="mt-2 h-fit w-5/12">
               <FeatureCard
                 icon="🛡️" // Shield to represent protection and safety
                 title="Error handling + Guardrails"
