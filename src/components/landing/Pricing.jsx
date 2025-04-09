@@ -65,11 +65,10 @@ const Pricing = () => {
               Startup
             </h2>
             <ul className="text-gray-900 text-base mt-6 mb-2 ml-4 list-disc">
-              <li>Analytics</li>
-              <li>Unlimited Team Members</li>
-              <li>Mobile Adaptive</li>
-              <li>Unlimited Pages</li>
-              <li>Unlimited Endpoints</li>
+              <li>MAU Analytics</li>
+              <li>5 Team Members</li>
+              <li>15 Pages</li>
+              <li>10 API Endpoints</li>
               <li className="font-semibold">100 MAUs</li>
             </ul>
           </div>
@@ -91,11 +90,10 @@ const Pricing = () => {
               Business
             </h2>
             <ul className="text-gray-900 text-base mt-6 mb-2 ml-4 list-disc">
-              <li>Analytics</li>
-              <li>Unlimited Team Members</li>
-              <li>Mobile Adaptive</li>
-              <li>Unlimited Pages</li>
-              <li>Unlimited Endpoints</li>
+              <li>Full Analytics</li>
+              <li>20 Team Members</li>
+              <li>30 Pages</li>
+              <li>20 API Endpoints</li>
               <li className="font-semibold">1,000 MAUs</li>
             </ul>
           </div>
@@ -117,9 +115,9 @@ const Pricing = () => {
               Enterprise
             </h2>
             <ul className="text-gray-900 text-base mt-6 mb-2 ml-4 list-disc">
-              <li>Analytics</li>
+              <li>Full Analytics</li>
               <li>Unlimited Team Members</li>
-              <li>Mobile Adaptive</li>
+              <li>Chat History / Logs</li>
               <li>Unlimited Pages</li>
               <li>Unlimited Endpoints</li>
               <li className="font-semibold">5,000 MAUs</li>

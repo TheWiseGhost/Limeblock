@@ -23,10 +23,6 @@ export default function Settings() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const contextParams = {
-    user_id: user?.id,
-  };
-
   // Email states
   const [emails, setEmails] = useState([]);
   const [originalEmails, setOriginalEmails] = useState([]);
@@ -34,7 +30,28 @@ export default function Settings() {
   const [savingChanges, setSavingChanges] = useState(false);
   const [hasEmailChanges, setHasEmailChanges] = useState(false);
 
+  const contextParams = {
+    user_id: user?.id,
+    emails: emails,
+  };
+
   const { toast } = useToast();
+
+  // Get email limit based on plan
+  const getEmailLimit = () => {
+    switch (user?.plan) {
+      case "startup":
+        return 5;
+      case "business":
+        return 20;
+      case "enterprise":
+        return Infinity;
+      default:
+        return 0; // free plan
+    }
+  };
+
+  const emailLimit = getEmailLimit();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -105,6 +122,13 @@ export default function Settings() {
 
     if (emails.includes(newEmail)) {
       setError("This email is already added");
+      return;
+    }
+
+    if (emails.length >= emailLimit) {
+      setError(
+        `You've reached the maximum number of emails (${emailLimit}) for your plan`
+      );
       return;
     }
 
@@ -300,11 +324,11 @@ export default function Settings() {
           </div>
           <div className="border border-gray-300 p-4 rounded-lg">
             <h4 className="font-medium text-black mb-2">
-              Upgrade for more MAUs
+              Upgrade for more MAUs and Features
             </h4>
             <p className="text-gray-700 text-sm mb-3">
               Make sure all your users can still use Limeblock. Your block will
-              shut down once you hit your cap
+              shut down once you hit your MAU cap
             </p>
 
             <button
@@ -321,7 +345,7 @@ export default function Settings() {
         {/* Email Management Section */}
         <div className="border border-gray-200 rounded-lg p-6">
           <div className="flex flex-row mb-6 justify-between w-full">
-            <h2 className="text-xl font-aeonik font-medium">
+            <h2 className="text-xl flex flex-row items-center font-aeonik font-medium">
               Email Management
             </h2>
             <button
@@ -388,16 +412,24 @@ export default function Settings() {
                   onChange={(e) => setNewEmail(e.target.value)}
                   placeholder="Add new email"
                   className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                  disabled={emails.length >= emailLimit}
                 />
                 <button
                   onClick={handleAddEmail}
-                  className="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded-md text-sm font-normal transition-colors"
+                  disabled={emails.length >= emailLimit}
+                  className={`bg-gray-800 text-white px-4 py-2 rounded-md text-sm font-normal transition-colors ${
+                    emails.length >= emailLimit
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:bg-gray-900"
+                  }`}
                 >
                   Add Email
                 </button>
               </div>
               <p className="text-xs text-center text-gray-500 mt-2">
-                Add emails for notifications and account access
+                {emails.length >= emailLimit
+                  ? "You've reached the maximum number of emails for your plan"
+                  : `Add emails for notifications and account access (${emails.length}/${emailLimit} used)`}
               </p>
             </div>
           </div>
