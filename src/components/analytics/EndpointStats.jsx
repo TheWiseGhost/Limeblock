@@ -6,9 +6,40 @@ import {
   IconChevronRight,
 } from "@tabler/icons-react";
 
-const EndpointStats = ({ frontend_folders, backend_folders }) => {
+const EndpointStats = ({ frontend_folders, backend_folders, user_plan }) => {
   const [openFrontendFolders, setOpenFrontendFolders] = useState({});
   const [openBackendFolders, setOpenBackendFolders] = useState({});
+
+  const isStartupPlan = user_plan === "startup" || user_plan === "free";
+
+  // Function to generate random strings
+  const generateRandomString = (length = 8) => {
+    const chars = "abcdefghijklmnopqrstuvwxyz";
+    let result = "";
+    for (let i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  };
+
+  // Helper function to obfuscate content based on plan
+  const obfuscateContent = (content, isNumeric = false) => {
+    if (isStartupPlan && !isNumeric) {
+      return (
+        <span className="relative">
+          <span className="filter blur-sm">
+            {generateRandomString(content?.length || 8)}
+          </span>
+          {isNumeric && (
+            <span className="absolute right-0 top-0 filter-none">
+              {content}
+            </span>
+          )}
+        </span>
+      );
+    }
+    return content;
+  };
 
   // Helper function to toggle folder open/closed state
   const toggleFolder = (folderId, isBackend) => {
@@ -109,7 +140,18 @@ const EndpointStats = ({ frontend_folders, backend_folders }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h2 className="text-2xl font-aeonik mb-8">Endpoint Analytics</h2>
+      <div className="flex justify-between items-center mb-8">
+        <h2 className="text-2xl font-aeonik">Endpoint Analytics</h2>
+        {isStartupPlan && (
+          <motion.button
+            className="px-4 py-2 bg-gray-700 hover:bg-gray-800 text-white rounded-md text-sm"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Upgrade to View Details
+          </motion.button>
+        )}
+      </div>
 
       <div className="grid grid-cols-2 gap-12">
         {/* Frontend Section */}
@@ -142,18 +184,18 @@ const EndpointStats = ({ frontend_folders, backend_folders }) => {
                   >
                     <div className="flex justify-between">
                       <h5 className="font-inter">
-                        {endpoint.name || "Unnamed Endpoint"}
+                        {obfuscateContent(endpoint.name || "Unnamed Endpoint")}
                       </h5>
                       <span className="text-black font-inter">
                         {endpoint.num_hits} hits
                       </span>
                     </div>
                     <p className="text-xs text-gray-700 mt-1">
-                      Folder: {endpoint.folderName}
+                      Folder: {obfuscateContent(endpoint.folderName)}
                     </p>
                     {endpoint.url && (
                       <p className="text-xs text-gray-500 mt-1">
-                        {endpoint.url}
+                        {obfuscateContent(endpoint.url)}
                       </p>
                     )}
                   </motion.div>
@@ -190,7 +232,7 @@ const EndpointStats = ({ frontend_folders, backend_folders }) => {
                         )}
                       </span>
                       <span className="font-inter text-sm">
-                        {folder.name || "Unnamed Folder"}
+                        {obfuscateContent(folder.name || "Unnamed Folder")}
                       </span>
                     </motion.button>
 
@@ -217,7 +259,9 @@ const EndpointStats = ({ frontend_folders, backend_folders }) => {
                             >
                               <div className="flex justify-between">
                                 <div className="font-inter">
-                                  {endpoint.name || "Unnamed Endpoint"}
+                                  {obfuscateContent(
+                                    endpoint.name || "Unnamed Endpoint"
+                                  )}
                                 </div>
                                 <div className="text-black font-inter">
                                   {endpoint.num_hits || 0} hits
@@ -225,7 +269,7 @@ const EndpointStats = ({ frontend_folders, backend_folders }) => {
                               </div>
                               {endpoint.url && (
                                 <div className="text-xs text-gray-500 mt-1">
-                                  {endpoint.url}
+                                  {obfuscateContent(endpoint.url)}
                                 </div>
                               )}
                             </motion.div>
@@ -278,18 +322,18 @@ const EndpointStats = ({ frontend_folders, backend_folders }) => {
                   >
                     <div className="flex justify-between">
                       <h5 className="font-inter">
-                        {endpoint.name || "Unnamed Endpoint"}
+                        {obfuscateContent(endpoint.name || "Unnamed Endpoint")}
                       </h5>
                       <span className="text-black font-inter">
                         {endpoint.num_hits} hits
                       </span>
                     </div>
                     <p className="text-xs text-gray-700 mt-1">
-                      Folder: {endpoint.folderName}
+                      Folder: {obfuscateContent(endpoint.folderName)}
                     </p>
                     {endpoint.url && (
                       <p className="text-xs text-gray-500 mt-1">
-                        {endpoint.url}
+                        {obfuscateContent(endpoint.url)}
                       </p>
                     )}
                   </motion.div>
@@ -326,7 +370,7 @@ const EndpointStats = ({ frontend_folders, backend_folders }) => {
                         )}
                       </span>
                       <span className="font-inter text-sm">
-                        {folder.name || "Unnamed Folder"}
+                        {obfuscateContent(folder.name || "Unnamed Folder")}
                       </span>
                     </motion.button>
 
@@ -353,7 +397,9 @@ const EndpointStats = ({ frontend_folders, backend_folders }) => {
                             >
                               <div className="flex justify-between">
                                 <div className="font-inter">
-                                  {endpoint.name || "Unnamed Endpoint"}
+                                  {obfuscateContent(
+                                    endpoint.name || "Unnamed Endpoint"
+                                  )}
                                 </div>
                                 <div className="text-black font-inter">
                                   {endpoint.num_hits || 0} hits
@@ -361,7 +407,7 @@ const EndpointStats = ({ frontend_folders, backend_folders }) => {
                               </div>
                               {endpoint.url && (
                                 <div className="text-xs text-gray-500 mt-1">
-                                  {endpoint.url}
+                                  {obfuscateContent(endpoint.url)}
                                 </div>
                               )}
                             </motion.div>

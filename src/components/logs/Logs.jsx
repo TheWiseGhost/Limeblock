@@ -6,7 +6,7 @@ export default function Logs() {
       <div className="flex flex-col items-center space-y-6 h-full pb-20 w-full justify-center">
         <img src="/LimeblockLogo.png" className="size-20 grayscale" />
         <p className="font-inter text-gray-900 text-center">
-          Logs are currently under development
+          Logs are available on the Enterprise Plan
         </p>
       </div>
     </div>

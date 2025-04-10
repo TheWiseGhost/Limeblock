@@ -206,6 +206,7 @@ const Analytics = () => {
         <EndpointStats
           frontend_folders={frontend?.folders}
           backend_folders={backend?.folders}
+          user_plan={user?.plan}
         />
       </div>
       <ChatWidget

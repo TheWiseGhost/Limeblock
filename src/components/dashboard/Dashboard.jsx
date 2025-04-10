@@ -445,7 +445,7 @@ export default function Dashboard() {
           <div className="flex flex-col items-center pt-8 space-y-4 h-full justify-top">
             <img src="/LimeblockLogo.png" className="size-12 grayscale" />
             <p className="font-inter text-sm text-gray-900 text-center">
-              Logs are currently under development
+              Logs are available on the Enterprise Plan
             </p>
           </div>
         </div>
