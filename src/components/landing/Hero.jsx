@@ -261,9 +261,9 @@ export default function Hero() {
           variants={item}
           className="text-sm md:text-lg text-gray-600 w-full px-4 md:px-0 max-w-[860px] mx-auto mb-12 mt-1"
         >
-          Integrate Limeblock into your React App and let your users commit
-          in-app actions, API requests, page navigation, and more with just with
-          a few text prompts
+          Integrate Limeblock into your app and let your users commit in-app
+          actions, API requests, page navigation, and more with just with a few
+          text prompts
         </motion.p>
 
         <motion.div

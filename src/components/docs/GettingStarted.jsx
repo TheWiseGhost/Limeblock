@@ -60,7 +60,9 @@ const schema = {
 };`;
   const apiKeyUsageCode = `// Using your API key from settings
 const LIMEBLOCK_API_KEY = process.env.NEXT_PUBLIC_LIMEBLOCK_API_KEY || "lime_YOUR_API_KEY";`;
-  const finalImplementationCode = `import React from 'react';
+  const finalImplementationCode = `// For Vue, check out the export docs
+  
+import React from 'react';
 import { ChatWidget } from '@limeblock/react';
 
 const MyApp = () => {
