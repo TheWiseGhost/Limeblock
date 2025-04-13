@@ -17,6 +17,11 @@ const existingFrameworks = [
     icon: <IconBrandReact className="text-cyan-600" size={40} />,
     bg: "bg-neutral-100",
   },
+  {
+    name: "Vue",
+    icon: <IconBrandVue className="text-green-500" size={40} />,
+    bg: "bg-green-100",
+  },
 ];
 
 const newFrameworks = [
@@ -24,11 +29,6 @@ const newFrameworks = [
     name: "HTML",
     icon: <IconBrandHtml5 className="text-orange-500" size={40} />,
     bg: "bg-orange-100",
-  },
-  {
-    name: "Vue",
-    icon: <IconBrandVue className="text-green-500" size={40} />,
-    bg: "bg-green-100",
   },
   {
     name: "Angular",
