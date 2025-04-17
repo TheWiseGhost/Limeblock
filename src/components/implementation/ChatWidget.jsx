@@ -11,7 +11,7 @@ const BlockFace = ({ body, eyes, size, isThinking = false }) => {
 
   return (
     <motion.div
-      className="relative rounded-lg flex justify-center items-center"
+      className="relative rounded-[0.3rem] flex justify-center items-center"
       style={{
         backgroundColor: body,
         width: getBodySize(),
@@ -466,7 +466,7 @@ const ChatWidget = ({
             whileHover="hover"
             whileTap="tap"
             variants={buttonVariants}
-            className="rounded-lg overflow-hidden shadow-md"
+            className="rounded-md overflow-hidden shadow-md"
             style={interactiveStyle}
           >
             <motion.div
@@ -475,7 +475,7 @@ const ChatWidget = ({
                 width: `${getBodySize()}px`,
                 height: `${getBodySize()}px`,
               }}
-              className="rounded-lg flex justify-evenly items-center"
+              className="rounded-md flex justify-evenly items-center"
               whileHover={{
                 rotate: [0, -5, 5, -5, 0],
                 transition: { duration: 0.5 },
@@ -489,7 +489,7 @@ const ChatWidget = ({
                   width: `${getEyeSize()}px`,
                   height: `${getEyeSize()}px`,
                 }}
-                className="rounded-sm mb-2"
+                className="rounded-sm mb-[0.625rem]"
                 variants={eyeVariants}
                 animate={isWinking ? { scaleY: 0.1 } : { scaleY: 1 }}
                 initial={{ scaleY: 1 }}
@@ -504,7 +504,7 @@ const ChatWidget = ({
                   width: `${getEyeSize()}px`,
                   height: `${getEyeSize()}px`,
                 }}
-                className="rounded-sm mb-2"
+                className="rounded-sm mb-[0.625rem]"
                 variants={eyeVariants}
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.2 }}
