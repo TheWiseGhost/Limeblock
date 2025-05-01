@@ -52,7 +52,7 @@ const Pricing = () => {
           <IconShield className="size-4 mr-1" /> 30 Day Money Back Guarantee
         </div>
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 font-inter px-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 font-inter">
         <div className="rounded-xl bg-lime/60 px-10 h-[460px] pt-20 pb-8 flex flex-col relative w-full">
           <div className="absolute top-6 right-6 bg-black text-green-300 text-xs px-4 py-2 font-aeonik rounded-full">
             Most Popular
@@ -132,10 +132,20 @@ const Pricing = () => {
           </button>
         </div>
       </div>
-      <h1 className="px-4 font-inter pt-6 text-gray-700 text-sm">
-        * MAU = Monthly Active User who sends at least one message to your
-        Limeblock Chat Widget
-      </h1>
+      <div className="px-4 md:px-0 flex flex-col md:flex-row w-full justify-between">
+        <h1 className="font-inter pt-6 text-gray-700 text-sm">
+          * MAU = Monthly Active User who sends at least one message to your
+          Limeblock Chat Widget
+        </h1>
+        <button
+          onClick={() =>
+            window.alert("Contact our founder with byjuaditya@gmail.com")
+          }
+          className="hidden md:flex px-4 font-inter underline pt-6 text-gray-700 text-sm hover:text-gray-900"
+        >
+          Request Free Trial
+        </button>
+      </div>
     </div>
   );
 };
