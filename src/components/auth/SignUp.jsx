@@ -30,6 +30,7 @@ export default function SignUp() {
     business_name: "",
     password: "",
     emails: [""],
+    code: "",
   });
 
   const { toast } = useToast();
@@ -75,6 +76,7 @@ export default function SignUp() {
             business_name: formData.business_name,
             password: formData.password,
             emails: formData.emails.filter((email) => email.trim() !== ""),
+            code: formData.code.trim() !== "" ? formData.code : null,
           }),
         }
       );
@@ -108,7 +110,7 @@ export default function SignUp() {
       {/* Left Side - Sign Up Form */}
       <div className="w-full md:w-1/2 min-h-screen h-fit flex flex-col justify-center p-12">
         <div className="max-w-md mx-auto w-full">
-          <div className="flex items-center gap-3 pb-8 pt-12">
+          <div className="flex items-center gap-3 pb-8 pt-44 md:pt-36">
             <Image
               src="/LimeblockLogo.png"
               alt="Limeblock"
@@ -207,6 +209,21 @@ export default function SignUp() {
                 }
                 className="w-full p-3 border border-gray-200 rounded-lg font-inter text-sm focus:ring-2 focus:ring-lime-500 focus:border-transparent transition-all"
                 required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-inter mb-2">
+                Promo Code <span className="text-gray-500">(Optional)</span>
+              </label>
+              <input
+                type="text"
+                value={formData.code}
+                onChange={(e) =>
+                  setFormData({ ...formData, code: e.target.value })
+                }
+                className="w-full p-3 border border-gray-200 rounded-lg font-inter text-sm focus:ring-2 focus:ring-lime-500 focus:border-transparent transition-all"
+                placeholder=""
               />
             </div>
 
