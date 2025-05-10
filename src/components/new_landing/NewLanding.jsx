@@ -6,6 +6,7 @@ import Demo from "./Demo";
 import Info from "./Info";
 import FounderNote from "./FounderNote";
 import Footer from "./Footer";
+import TwoSideExp from "./TwoSideExp";
 
 const NewLanding = () => {
   return (
@@ -13,6 +14,7 @@ const NewLanding = () => {
       <Navbar />
       <Hero />
       <Demo />
+      <TwoSideExp />
       <Info />
       <FounderNote />
       <Footer />

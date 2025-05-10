@@ -1,147 +1,163 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { IconBinaryTree2, IconFileText } from "@tabler/icons-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import VideoLoading from "../global/VideoLoading";
 
-const Info = () => {
-  const [activeVideo, setActiveVideo] = useState(0);
+const DIY = () => {
+  const [activeTab, setActiveTab] = useState(0);
+  const [hoveredTab, setHoveredTab] = useState(null);
 
-  // Mock video data
-  const videos = [
+  const tabs = [
     {
-      id: 1,
-      title: "Nature Exploration",
-      src: "/api/placeholder/640/360",
-      description: "Experience the beauty of untouched wilderness",
+      title: "Page Navigation",
+      description: "Add page navigation to your project",
+      icon: <IconFileText className="size-5 mr-2" />,
+      video: {
+        src: "/CroppedAddPageEndpoint.mp4",
+      },
     },
     {
-      id: 2,
-      title: "Urban Architecture",
-      src: "/api/placeholder/640/360",
-      description: "Discover stunning city structures and designs",
+      title: "API Endpoints",
+      description: "Add API endpoints to your project",
+      icon: <IconBinaryTree2 className="size-5 mr-2" />,
+      video: {
+        src: "/CroppedAddAPIEndpoint.mp4",
+      },
     },
     {
-      id: 3,
-      title: "Ocean Life",
-      src: "/api/placeholder/640/360",
-      description: "Dive into the mysterious world beneath the waves",
+      title: "Success Stories",
+      description: "See how others are achieving results",
+      video: {
+        src: "/placeholder-video.mp4",
+      },
     },
   ];
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { duration: 0.5 },
-    },
-  };
-
-  const buttonVariants = {
-    idle: { scale: 1 },
-    hover: { scale: 1.05 },
-    tap: { scale: 0.95 },
-  };
-
-  const videoVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.4 },
-    },
-  };
-
   return (
-    <motion.div
-      className="flex flex-col md:flex-row gap-8 w-full max-w-6xl mx-auto p-6 bg-gray-50 rounded-lg shadow font-inter"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
+    <div
+      className={`flex w-11/12 mx-auto bg-white pt-4 rounded-3xl overflow-hidden shadow-sm border border-gray-100 font-inter`}
     >
-      {/* Left section with title and buttons */}
-      <div className="md:w-1/3">
-        <motion.h2
-          className="text-3xl font-bold mb-6 text-indigo-700"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          Featured Videos
-        </motion.h2>
+      {/* Left sidebar with links */}
+      <div className="w-1/3 p-6 pl-10 flex flex-col border-r border-gray-100">
+        <h2 className="text-3xl font-medium text-gray-900 mb-6 font-aeonik">
+          Highlighted Features
+        </h2>
 
-        <div className="flex flex-col gap-4">
-          {videos.map((video, index) => (
-            <motion.button
-              key={video.id}
-              className={`px-4 py-3 rounded-lg text-left ${
-                activeVideo === index
-                  ? "bg-indigo-600 text-white"
-                  : "bg-white text-gray-800 border border-gray-300"
-              }`}
-              onClick={() => setActiveVideo(index)}
-              variants={buttonVariants}
-              whileHover="hover"
-              whileTap="tap"
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+        <div className="space-y-2">
+          {tabs.map((tab, index) => (
+            <div
+              key={index}
+              className="relative"
+              onMouseEnter={() => setHoveredTab(index)}
+              onMouseLeave={() => setHoveredTab(null)}
             >
-              <h3 className="font-semibold">{video.title}</h3>
-              <p
-                className={`text-sm ${
-                  activeVideo === index ? "text-indigo-100" : "text-gray-500"
+              <button
+                onClick={() => setActiveTab(index)}
+                className={`relative w-full text-left p-3 rounded-lg transition-all duration-200 z-10 ${
+                  activeTab === index
+                    ? "text-black"
+                    : "text-gray-800 hover:bg-gray-50"
                 }`}
               >
-                {video.description}
-              </p>
-            </motion.button>
+                <motion.div
+                  animate={{
+                    x: activeTab === index ? 4 : 0,
+                  }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <div className="flex items-center">
+                    {tab.icon && tab.icon}
+                    <h3 className="font-medium text-base">{tab.title}</h3>
+                  </div>
+                  <p
+                    className={`text-xs mt-1 ${
+                      activeTab === index ? "text-gray-800" : "text-gray-600"
+                    }`}
+                  >
+                    {tab.description}
+                  </p>
+                </motion.div>
+
+                {activeTab === index && (
+                  <motion.div
+                    layoutId="activeIndicator"
+                    className="absolute left-0 top-0 bottom-0 w-1 bg-lime rounded-l-md z-20"
+                    initial={false}
+                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                  />
+                )}
+              </button>
+
+              {hoveredTab === index && activeTab !== index && (
+                <motion.div
+                  className="absolute inset-0 bg-gray-200 bg-opacity-30 rounded-lg -z-1"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                />
+              )}
+            </div>
           ))}
         </div>
       </div>
 
-      {/* Right section with video player */}
-      <motion.div
-        className="md:w-2/3 bg-black rounded-lg overflow-hidden"
-        key={activeVideo}
-        variants={videoVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        <div className="aspect-w-16 aspect-h-9 relative">
-          <img
-            src={videos[activeVideo].src}
-            alt={videos[activeVideo].title}
-            className="w-full h-auto object-cover rounded-lg"
-          />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <motion.div
-              className="w-16 h-16 rounded-full bg-indigo-600 flex items-center justify-center cursor-pointer"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <svg
-                className="w-8 h-8 text-white"
-                fill="currentColor"
-                viewBox="0 0 20 20"
+      {/* Right content area with video */}
+      <div className="w-2/3 p-6 flex flex-col">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, x: 10 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -10 }}
+            transition={{ duration: 0.2 }}
+            className="flex-1 flex flex-col"
+          >
+            <div className="mb-6">
+              <motion.h2
+                className="text-2xl font-semibold text-gray-900 mb-1.5 flex items-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.1 }}
               >
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </motion.div>
-          </div>
-        </div>
+                {tabs[activeTab].icon && (
+                  <span className="mr-2">{tabs[activeTab].icon}</span>
+                )}
+                {tabs[activeTab].title}
+              </motion.h2>
+              <motion.p
+                className="text-gray-600 text-sm"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.15 }}
+              >
+                {tabs[activeTab].description}
+              </motion.p>
+            </div>
 
-        <div className="p-4 bg-gray-800 text-white">
-          <h3 className="text-xl font-semibold">{videos[activeVideo].title}</h3>
-          <p className="text-gray-300 mt-1">
-            {videos[activeVideo].description}
-          </p>
-        </div>
-      </motion.div>
-    </motion.div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.25 }}
+              className="flex-1 bg-gray-50 rounded-lg overflow-hidden border border-gray-200 relative"
+            >
+              <video
+                src={tabs[activeTab].video.src}
+                className="w-full h-full object-contain md:object-cover"
+                autoPlay
+                loop
+                muted
+                playsInline
+                controls={false}
+              />
+            </motion.div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </div>
   );
 };
 
-export default Info;
+export default DIY;
