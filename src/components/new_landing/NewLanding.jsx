@@ -4,14 +4,18 @@ import Hero from "./Hero";
 import ChatWidget from "../implementation/ChatWidget";
 import Demo from "./Demo";
 import Info from "./Info";
+import FounderNote from "./FounderNote";
+import Footer from "./Footer";
 
 const NewLanding = () => {
   return (
-    <div className="flex flex-col items-center justify-center pb-20 bg-[#F5F3ED]">
+    <div className="flex flex-col items-center justify-center bg-[#F5F3ED]">
       <Navbar />
       <Hero />
       <Demo />
       <Info />
+      <FounderNote />
+      <Footer />
       <ChatWidget
         apiKey={"lime_2JDnwGpM7OOfEcfj3kJ9bwVrGULxh1sL"}
         contextParams={{}}

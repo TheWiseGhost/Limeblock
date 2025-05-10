@@ -7,14 +7,14 @@ export default function Hero() {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="flex flex-col items-center justify-center py-24 px-6 text-center pt-40 font-inter">
+    <div className="flex flex-col items-center justify-center px-6 text-center pt-36 font-inter h-fit pb-12">
       <div className="">
-        <h1 className="text-6xl md:text-7xl flex flex-col space-y-3 font-medium font-aeonik h-fit text-black">
-          <span className="flex flex-row space-x-6">
+        <h1 className="text-6xl md:text-7xl flex flex-col space-y-1 font-medium font-aeonik h-fit text-black">
+          <span className="flex flex-row space-x-6 justify-center">
             <span>Adding</span>
             <span className="relative inline-block">
-              AI to your app
-              <AnimatePresence>
+              AI was never
+              {/* <AnimatePresence>
                 <motion.svg
                   className="absolute -bottom-5 md:-bottom-10 left-0 w-full"
                   viewBox="0 0 120 15"
@@ -32,13 +32,12 @@ export default function Hero() {
                     transition={{ duration: 2, ease: "easeInOut", delay: 1 }}
                   />
                 </motion.svg>
-              </AnimatePresence>
+              </AnimatePresence> */}
             </span>
-            <span>was</span>
           </span>{" "}
-          <span>never meant to be hard.</span>
+          <span>meant to be hard.</span>
         </h1>
-        <div className="mb-10 text-lg mt-8">
+        <div className="mb-8 text-lg mt-8">
           <p>Page Navigation, API fetchs, In-App Actions done by AI widget</p>
           <p>30 minutes and no coding required</p>
         </div>
