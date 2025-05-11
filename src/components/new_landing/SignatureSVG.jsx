@@ -50,7 +50,7 @@ const SignatureSVG = ({ inView }) => {
       transition: {
         pathLength: {
           type: "linear",
-          duration: 3,
+          duration: 2,
           bounce: 0,
           delay: i * 0.05, // Stagger the animations
         },

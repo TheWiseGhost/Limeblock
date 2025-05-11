@@ -36,125 +36,131 @@ const DIY = () => {
   ];
 
   return (
-    <div
-      className={`flex w-11/12 mx-auto bg-white pt-4 rounded-3xl overflow-hidden shadow-sm border border-gray-100 font-inter`}
-    >
-      {/* Left sidebar with links */}
-      <div className="w-1/3 p-6 pl-10 flex flex-col border-r border-gray-100">
-        <h2 className="text-3xl font-medium text-gray-900 mb-6 font-aeonik">
-          Highlighted Features
-        </h2>
+    <div className="w-full bg-white h-screen py-10 flex flex-col items-center justify-center">
+      <div
+        className={`flex w-11/12 mx-auto bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-300 font-inter`}
+      >
+        {/* Left sidebar with links */}
+        <div className="w-1/3 p-6 pl-10 flex flex-col border-r border-gray-100">
+          <h2 className="text-3xl font-medium text-gray-900 mb-6 font-aeonik">
+            Highlighted Features
+          </h2>
 
-        <div className="space-y-2">
-          {tabs.map((tab, index) => (
-            <div
-              key={index}
-              className="relative"
-              onMouseEnter={() => setHoveredTab(index)}
-              onMouseLeave={() => setHoveredTab(null)}
-            >
-              <button
-                onClick={() => setActiveTab(index)}
-                className={`relative w-full text-left p-3 rounded-lg transition-all duration-200 z-10 ${
-                  activeTab === index
-                    ? "text-black"
-                    : "text-gray-800 hover:bg-gray-50"
-                }`}
+          <div className="space-y-2">
+            {tabs.map((tab, index) => (
+              <div
+                key={index}
+                className="relative"
+                onMouseEnter={() => setHoveredTab(index)}
+                onMouseLeave={() => setHoveredTab(null)}
               >
-                <motion.div
-                  animate={{
-                    x: activeTab === index ? 4 : 0,
-                  }}
-                  transition={{ type: "spring", stiffness: 300 }}
+                <button
+                  onClick={() => setActiveTab(index)}
+                  className={`relative w-full text-left p-3 rounded-lg transition-all duration-200 z-10 ${
+                    activeTab === index
+                      ? "text-black"
+                      : "text-gray-800 hover:bg-gray-50"
+                  }`}
                 >
-                  <div className="flex items-center">
-                    {tab.icon && tab.icon}
-                    <h3 className="font-medium text-base">{tab.title}</h3>
-                  </div>
-                  <p
-                    className={`text-xs mt-1 ${
-                      activeTab === index ? "text-gray-800" : "text-gray-600"
-                    }`}
-                  >
-                    {tab.description}
-                  </p>
-                </motion.div>
-
-                {activeTab === index && (
                   <motion.div
-                    layoutId="activeIndicator"
-                    className="absolute left-0 top-0 bottom-0 w-1 bg-lime rounded-l-md z-20"
-                    initial={false}
-                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    animate={{
+                      x: activeTab === index ? 4 : 0,
+                    }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <div className="flex items-center">
+                      {tab.icon && tab.icon}
+                      <h3 className="font-medium text-base">{tab.title}</h3>
+                    </div>
+                    <p
+                      className={`text-xs mt-1 ${
+                        activeTab === index ? "text-gray-800" : "text-gray-600"
+                      }`}
+                    >
+                      {tab.description}
+                    </p>
+                  </motion.div>
+
+                  {activeTab === index && (
+                    <motion.div
+                      layoutId="activeIndicator"
+                      className="absolute left-0 top-0 bottom-0 w-1 bg-lime rounded-l-md z-20"
+                      initial={false}
+                      transition={{
+                        type: "spring",
+                        stiffness: 500,
+                        damping: 30,
+                      }}
+                    />
+                  )}
+                </button>
+
+                {hoveredTab === index && activeTab !== index && (
+                  <motion.div
+                    className="absolute inset-0 bg-gray-200 bg-opacity-30 rounded-lg -z-1"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
                   />
                 )}
-              </button>
+              </div>
+            ))}
+          </div>
+        </div>
 
-              {hoveredTab === index && activeTab !== index && (
-                <motion.div
-                  className="absolute inset-0 bg-gray-200 bg-opacity-30 rounded-lg -z-1"
+        {/* Right content area with video */}
+        <div className="w-2/3 p-6 flex flex-col">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, x: 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -10 }}
+              transition={{ duration: 0.2 }}
+              className="flex-1 flex flex-col"
+            >
+              <div className="mb-6">
+                <motion.h2
+                  className="text-2xl font-semibold text-gray-900 mb-1.5 flex items-center"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.15 }}
+                  transition={{ delay: 0.1 }}
+                >
+                  {tabs[activeTab].icon && (
+                    <span className="mr-2">{tabs[activeTab].icon}</span>
+                  )}
+                  {tabs[activeTab].title}
+                </motion.h2>
+                <motion.p
+                  className="text-gray-600 text-sm"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.15 }}
+                >
+                  {tabs[activeTab].description}
+                </motion.p>
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.25 }}
+                className="flex-1 bg-gray-50 rounded-lg overflow-hidden border border-gray-200 relative"
+              >
+                <video
+                  src={tabs[activeTab].video.src}
+                  className="w-full h-full object-contain md:object-cover"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  controls={false}
                 />
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Right content area with video */}
-      <div className="w-2/3 p-6 flex flex-col">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, x: 10 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -10 }}
-            transition={{ duration: 0.2 }}
-            className="flex-1 flex flex-col"
-          >
-            <div className="mb-6">
-              <motion.h2
-                className="text-2xl font-semibold text-gray-900 mb-1.5 flex items-center"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.1 }}
-              >
-                {tabs[activeTab].icon && (
-                  <span className="mr-2">{tabs[activeTab].icon}</span>
-                )}
-                {tabs[activeTab].title}
-              </motion.h2>
-              <motion.p
-                className="text-gray-600 text-sm"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.15 }}
-              >
-                {tabs[activeTab].description}
-              </motion.p>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.25 }}
-              className="flex-1 bg-gray-50 rounded-lg overflow-hidden border border-gray-200 relative"
-            >
-              <video
-                src={tabs[activeTab].video.src}
-                className="w-full h-full object-contain md:object-cover"
-                autoPlay
-                loop
-                muted
-                playsInline
-                controls={false}
-              />
+              </motion.div>
             </motion.div>
-          </motion.div>
-        </AnimatePresence>
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );
