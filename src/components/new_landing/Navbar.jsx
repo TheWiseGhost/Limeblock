@@ -94,7 +94,7 @@ export default function Navbar() {
       >
         <span className="absolute inset-[-100%] animate-[spin_1s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#90F08C_0%,#edeceb_50%,#90F08C_100%)]" />
         <span
-          className={`inline-flex h-full w-full cursor-pointer items-center justify-center rounded-xl bg-white bg-opacity-80 text-gray-800 hover:text-black transition duration-200 backdrop-blur-3xl ${
+          className={`inline-flex h-full w-full cursor-pointer items-center justify-center rounded-xl bg-white text-gray-800 hover:text-black transition duration-200 backdrop-blur-3xl ${
             isScrolled
               ? "px-4 py-0.5 text-[0.8rem]"
               : "px-5 py-0.5 text-[0.825rem]"

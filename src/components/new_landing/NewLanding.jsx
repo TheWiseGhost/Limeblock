@@ -12,6 +12,9 @@ import FounderNote from "./FounderNote";
 import Footer from "./Footer";
 import TwoSideExp from "./TwoSideExp";
 import Transition from "./Transition";
+import Steps from "./Steps";
+import FirstTransition from "./FirstTransition";
+import ProblemSolution from "./ProblemSolution";
 
 const NewLanding = () => {
   const container = useRef();
@@ -31,11 +34,12 @@ const NewLanding = () => {
     requestAnimationFrame(raf);
   }, []);
   return (
-    <div className="flex flex-col items-center justify-center bg-[#F5F3ED]">
+    <div className="flex flex-col items-center justify-center bg-[#F3F3F5]">
       <Navbar />
       <Hero />
-      <Demo />
-      <TwoSideExp />
+      <FirstTransition />
+      <ProblemSolution />
+      <Steps />
       <Transition />
       <div className="w-full bg-white pb-6">
         <Footer />

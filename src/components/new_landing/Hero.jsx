@@ -199,7 +199,7 @@ export default function Hero() {
       </div>
 
       <div className="text-center z-20">
-        <h1 className="text-6xl md:text-7xl flex flex-col space-y-2 font-medium font-aeonik h-fit text-black">
+        <h1 className="text-6xl md:text-7xl flex flex-col space-y-2 font-aeonik h-fit text-black">
           <span className="flex flex-row space-x-6 justify-center">
             <span className="relative inline-block">
               Adding AI
@@ -211,14 +211,14 @@ export default function Hero() {
                   preserveAspectRatio="none"
                 >
                   <motion.path
-                    d="M3,9 Q20,7 40,8 Q60,9 80,9 Q100,9 117,8 L117,7 Q97,11 77,12 Q57,12 37,11 Q17,10 57,14"
+                    d="M3,9 Q20,7 40,8 Q60,9 80,9 Q100,9 117,8 L117,7 Q97,10 77,10 Q57,11 37,11 Q17,10 67,12"
                     fill="none"
                     stroke={swiggleColor}
-                    strokeWidth="1"
+                    strokeWidth="0.7"
                     strokeLinecap="round"
                     initial={{ pathLength: 0 }}
                     animate={{ pathLength: 1 }}
-                    transition={{ duration: 2, ease: "easeInOut", delay: 1 }}
+                    transition={{ duration: 1.5, ease: "easeInOut", delay: 1 }}
                   />
                 </motion.svg>
               </AnimatePresence>

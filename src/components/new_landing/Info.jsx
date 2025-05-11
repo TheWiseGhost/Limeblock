@@ -30,19 +30,17 @@ const DIY = () => {
       title: "Success Stories",
       description: "See how others are achieving results",
       video: {
-        src: "/placeholder-video.mp4",
+        src: "/CroppedAddAPIEndpoint.mp4",
       },
     },
   ];
 
   return (
-    <div className="w-full bg-white h-screen py-10 flex flex-col items-center justify-center">
-      <div
-        className={`flex w-11/12 mx-auto bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-300 font-inter`}
-      >
+    <div className="min-w-full bg-white min-h-screen py-10 flex flex-col items-center justify-center">
+      <div className="flex w-11/12 mx-auto bg-white rounded-xl overflow-hidden border border-neutral-700 font-inter">
         {/* Left sidebar with links */}
         <div className="w-1/3 p-6 pl-10 flex flex-col border-r border-gray-100">
-          <h2 className="text-3xl font-medium text-gray-900 mb-6 font-aeonik">
+          <h2 className="text-4xl font-medium text-gray-900 mb-10 mt-4 font-aeonik">
             Highlighted Features
           </h2>
 
@@ -146,11 +144,11 @@ const DIY = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.25 }}
-                className="flex-1 bg-gray-50 rounded-lg overflow-hidden border border-gray-200 relative"
+                className="w-full h-full bg-gray-50 rounded-lg overflow-hidden border border-gray-200 relative"
               >
                 <video
                   src={tabs[activeTab].video.src}
-                  className="w-full h-full object-contain md:object-cover"
+                  className="object-contain w-full"
                   autoPlay
                   loop
                   muted

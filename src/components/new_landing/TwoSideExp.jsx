@@ -13,8 +13,8 @@ export default function ThreeStepProcess() {
           Just add pages, endpoints, schemas.
         </h1>
         <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
-          Build production-grade internal tools in minutes with Limeblock's
-          intuitive three-step process
+          Build a chat widget that does the same thing production-grade ai tools
+          for your app in minutes with Limeblock's intuitive three-step process
         </p>
       </div>
 
