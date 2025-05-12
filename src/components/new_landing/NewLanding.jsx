@@ -15,6 +15,7 @@ import Transition from "./Transition";
 import Steps from "./Steps";
 import FirstTransition from "./FirstTransition";
 import ProblemSolution from "./ProblemSolution";
+import Pricing from "./Pricing";
 
 const NewLanding = () => {
   const container = useRef();
@@ -34,13 +35,14 @@ const NewLanding = () => {
     requestAnimationFrame(raf);
   }, []);
   return (
-    <div className="flex flex-col items-center justify-center bg-[#F3F3F5]">
+    <div className="flex flex-col w-full items-center justify-center bg-[#F3F3F5]">
       <Navbar />
       <Hero />
       <FirstTransition />
       <ProblemSolution />
       <Steps />
       <Transition />
+      <Pricing />
       <div className="w-full bg-white pb-6">
         <Footer />
       </div>
