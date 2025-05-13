@@ -54,28 +54,39 @@ export default function ProblemSolution() {
                 className="absolute inset-0 flex"
               >
                 {/* Left Column */}
-                <div className="w-1/2 p-8 flex flex-col justify-center">
+                <div className="w-3/5 p-8 flex flex-col justify-center">
                   <div className="text-xs uppercase tracking-wide text-gray-500 mb-2">
                     The Problem
                   </div>
                   <h2 className="text-4xl font-aeonik font-medium mb-4 leading-tight">
                     User activation is a nightmare for every software
                   </h2>
-                  <p className="text-gray-600 text-sm">
+                  <p className="text-gray-600 text-sm pb-6">
                     With attention spans getting smaller, converting curious
                     sign ups into meaningful potential paying users is harder
                     than ever
                   </p>
+                  <div className="flex items-center space-x-2">
+                    <div className="bg-white border border-gray-400 rounded-lg px-4 py-2 text-sm">
+                      Need this?
+                    </div>
+                    <div className="border-b border-dashed border-gray-400 w-6"></div>
+                    <img
+                      src="LimeblockLogo.png"
+                      alt="Limeblock AI"
+                      className="size-8"
+                    />
+                  </div>
                 </div>
 
                 {/* Right Column */}
-                <div className="w-1/2 p-8 flex items-center justify-center font-aeonik">
+                <div className="w-2/5 p-8 pr-20 flex items-center justify-center font-aeonik">
                   <div className="flex flex-col items-center">
-                    <div className="bg-white border border-gray-300 rounded-lg w-80 p-3 text-center text-lg">
+                    <div className="bg-white border border-gray-400 rounded-lg w-96 p-3 text-center text-lg">
                       10,000 Visitors
                     </div>
-                    <div className="h-6 border-l border-dashed border-gray-300"></div>
-                    <div className="bg-white border border-gray-300 rounded-lg w-60 p-3 text-center text-lg">
+                    <div className="h-6 border-l border-dashed border-gray-400"></div>
+                    <div className="bg-white border border-gray-400 rounded-lg w-64 p-3 text-center text-lg">
                       1,000 Sign Ups
                     </div>
                     <div className="flex items-center">
@@ -83,10 +94,10 @@ export default function ProblemSolution() {
                         Massive Drop
                       </div>
                     </div>
-                    <div className="bg-white border border-gray-300 rounded-lg w-40 p-3 text-center text-lg">
+                    <div className="bg-white border border-gray-400 rounded-lg w-40 p-3 text-center text-lg">
                       50 MAUs
                     </div>
-                    <div className="h-6 border-l border-dashed border-gray-300"></div>
+                    <div className="h-6 border-l border-dashed border-gray-400"></div>
                     <div className="text-sm font-dm text-gray-500 mt-1">
                       Only 10 Paying Customers
                     </div>
@@ -120,7 +131,7 @@ export default function ProblemSolution() {
                       className="size-8"
                     />
                     <div className="border-b border-dashed border-gray-400 w-6"></div>
-                    <div className="bg-white border border-gray-300 rounded-lg px-4 py-2 text-sm">
+                    <div className="bg-white border border-gray-400 rounded-lg px-4 py-2 text-sm">
                       Just chat with me!
                     </div>
                   </div>

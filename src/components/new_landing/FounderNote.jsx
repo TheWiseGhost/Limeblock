@@ -18,7 +18,7 @@ const FounderNote = () => {
   }, [controls, inView]);
 
   return (
-    <div className="flex flex-col rounded-2xl items-center justify-center min-h-screen bg-white px-16 pb-12 font-inter my-10">
+    <div className="flex flex-col rounded-2xl items-center justify-center min-h-screen bg-white px-16 pb-5 font-inter">
       <div className="max-w-2xl w-full">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}

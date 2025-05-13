@@ -5,6 +5,7 @@ import Lenis from "lenis";
 import Info from "./Info";
 import TwoSideExp from "./TwoSideExp";
 import FounderNote from "./FounderNote";
+import OtherCompanies from "./OtherCompanies";
 
 const Transition = () => {
   const container = useRef();
@@ -28,7 +29,7 @@ const Transition = () => {
     <div>
       <main
         ref={container}
-        className="relative h-[200vh] bg-white overflow-hidden"
+        className="flex flex-col h-[200vh] bg-white overflow-hidden w-full"
       >
         <div className="z-0 sticky top-0" />
         <Section1 scrollYProgress={scrollYProgress} />
@@ -44,9 +45,9 @@ const Section1 = ({ scrollYProgress }) => {
   return (
     <motion.div
       style={{ scale, rotate }}
-      className="sticky top-0 h-screen my_grid pb-[10vh]"
+      className="sticky top-0 h-screen pb-[10vh]"
     >
-      <Info />
+      <OtherCompanies />
     </motion.div>
   );
 };

@@ -192,7 +192,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <div className="flex flex-col w-full items-center justify-center px-6 pt-32 font-inter h-fit pb-16 relative overflow-hidden">
+    <div className="flex flex-col w-full items-center justify-center px-6 pt-32 font-inter h-fit pb-16 relative overflow-hidden bg-[#F3F3F5]">
       {/* Added ChatBot Feature Cards */}
       <div className="hidden md:block absolute right-8 top-[140px] z-10 w-full pl-20">
         <ChatSequence setSwiggleColor={setSwiggleColor} />

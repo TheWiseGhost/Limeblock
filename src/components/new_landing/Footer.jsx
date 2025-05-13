@@ -101,7 +101,7 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-x-12 gap-y-8 md:w-2/3 md:justify-end">
           <LinkSection
             title="Product"
-            links={["Overview", "Sourcing", "Evaluation", "Communication"]}
+            links={["Overview", "Demo", "Features"]}
           />
 
           <LinkSection

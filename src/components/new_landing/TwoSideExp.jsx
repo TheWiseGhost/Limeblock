@@ -21,7 +21,7 @@ export default function ThreeStepProcess() {
       {/* Three step process */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
         {/* Step 1: Add Pages */}
-        <div className="bg-gray-50 p-8 rounded-xl shadow-sm">
+        <div className="bg-[#F3F3F5] p-8 rounded-xl shadow-sm">
           <div className="flex items-center mb-4">
             <Layout className="text-lime-600 mr-3" size={24} />
             <h2 className="text-xl font-semibold">Step 1: Add Pages</h2>
@@ -60,7 +60,7 @@ export default function ThreeStepProcess() {
         </div>
 
         {/* Step 2: Add Endpoints */}
-        <div className="bg-gray-50 p-8 rounded-xl shadow-sm">
+        <div className="bg-[#F3F3F5] p-8 rounded-xl shadow-sm">
           <div className="flex items-center mb-4">
             <Code className="text-lime-600 mr-3" size={24} />
             <h2 className="text-xl font-semibold">Step 2: Add Endpoints</h2>
@@ -96,7 +96,7 @@ export default function ThreeStepProcess() {
         </div>
 
         {/* Step 3: Add Schema */}
-        <div className="bg-gray-50 p-8 rounded-xl shadow-sm">
+        <div className="bg-[#F3F3F5] p-8 rounded-xl shadow-sm">
           <div className="flex items-center mb-4">
             <FileJson className="text-lime-600 mr-3" size={24} />
             <h2 className="text-xl font-semibold">Step 3: Add Schema</h2>

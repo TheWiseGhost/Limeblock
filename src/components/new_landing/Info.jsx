@@ -1,6 +1,11 @@
 "use client";
 
-import { IconBinaryTree2, IconFileText } from "@tabler/icons-react";
+import {
+  IconBinaryTree2,
+  IconBulb,
+  IconFileText,
+  IconLayoutSidebar,
+} from "@tabler/icons-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import VideoLoading from "../global/VideoLoading";
@@ -27,16 +32,25 @@ const DIY = () => {
       },
     },
     {
-      title: "Success Stories",
-      description: "See how others are achieving results",
+      title: "Example Use",
+      description: "How we used Limeblock ourselves",
+      icon: <IconBulb className="size-5 mr-2" />,
       video: {
-        src: "/CroppedAddAPIEndpoint.mp4",
+        src: "/UpdateWidgetColor.mp4",
+      },
+    },
+    {
+      title: "App Runthrough",
+      description: "What you'll see in Limeblock's dev app",
+      icon: <IconLayoutSidebar className="size-5 mr-2" />,
+      video: {
+        src: "/LimeblockDemo.mp4",
       },
     },
   ];
 
   return (
-    <div className="min-w-full bg-white min-h-screen py-10 flex flex-col items-center justify-center">
+    <div className="w-full bg-white h-fit py-10 flex flex-col items-center justify-center">
       <div className="flex w-11/12 mx-auto bg-white rounded-xl overflow-hidden border border-neutral-700 font-inter">
         {/* Left sidebar with links */}
         <div className="w-1/3 p-6 pl-10 flex flex-col border-r border-gray-100">
@@ -116,7 +130,7 @@ const DIY = () => {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -10 }}
               transition={{ duration: 0.2 }}
-              className="flex-1 flex flex-col"
+              className="flex flex-col w-full"
             >
               <div className="mb-6">
                 <motion.h2
@@ -144,11 +158,11 @@ const DIY = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.25 }}
-                className="w-full h-full bg-gray-50 rounded-lg overflow-hidden border border-gray-200 relative"
+                className="min-w-full h-full rounded-lg overflow-hidden border border-gray-200 relative"
               >
                 <video
                   src={tabs[activeTab].video.src}
-                  className="object-contain w-full"
+                  className="object-cover w-full"
                   autoPlay
                   loop
                   muted

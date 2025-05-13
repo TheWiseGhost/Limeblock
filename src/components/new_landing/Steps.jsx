@@ -62,7 +62,7 @@ export default function Steps() {
               className={`py-3 px-6 flex items-center rounded-t-lg justify-center text-sm font-medium transition-colors relative z-10 ${
                 activeTab === tab.id
                   ? "text-gray-800 bg-white border border-black border-b-white"
-                  : "text-gray-500 hover:text-gray-700 bg-gray-100"
+                  : "text-gray-700 hover:text-gray-800 bg-gray-200"
               }`}
             >
               <span className="mr-2">{tab.icon}</span>
