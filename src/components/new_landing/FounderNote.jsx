@@ -37,7 +37,7 @@ const FounderNote = () => {
         >
           We're building a future where devs connect with users more
           effectively, startups don't lose their sign ups, and people interact
-          10x faster.
+          with great products 10x faster.
         </motion.p>
 
         <motion.p

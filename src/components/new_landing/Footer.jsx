@@ -5,8 +5,16 @@ import { motion } from "framer-motion";
 import { IconArrowRight } from "@tabler/icons-react";
 
 // Link Item Component with Hover Animation
-const LinkItem = ({ text }) => {
+const LinkItem = ({ text, url, alert = "" }) => {
   const [isHovered, setIsHovered] = useState(false);
+
+  const handleClick = (e) => {
+    // If no URL is provided, show an alert
+    if (!url) {
+      e.preventDefault();
+      window.alert("Contact us at byjuaditya@gmail.com");
+    }
+  };
 
   return (
     <motion.li
@@ -15,7 +23,8 @@ const LinkItem = ({ text }) => {
       onHoverEnd={() => setIsHovered(false)}
     >
       <motion.a
-        href="#"
+        href={url || "#"}
+        onClick={handleClick}
         className="inline-block text-gray-300 hover:text-white"
         whileHover={{ x: 3 }}
         transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -42,7 +51,7 @@ const LinkSection = ({ title, links }) => (
     <h3 className="text-sm font-semibold mb-4">{title}</h3>
     <ul className="space-y-2 text-sm">
       {links.map((link, index) => (
-        <LinkItem key={index} text={link} />
+        <LinkItem key={index} text={link.text || link} url={link.url} />
       ))}
     </ul>
   </div>
@@ -51,6 +60,43 @@ const LinkSection = ({ title, links }) => (
 // Main Footer Component
 const Footer = () => {
   const [isHovered, setIsHovered] = useState(false);
+
+  const handleEarlyAccess = () => {
+    alert(
+      "Thanks for your interest! We'll notify you when early access becomes available."
+    );
+  };
+
+  // Define links with URLs when available
+  const productLinks = [
+    { text: "Overview", url: "/" },
+    { text: "Demo", url: "/demo" },
+    { text: "Features", url: "/" },
+  ];
+
+  const demoLinks = [
+    { text: "Dev Side", url: "/demo/dev/" },
+    { text: "Client Side", url: "/demo/client/" },
+    { text: "API Endpoints", url: "/demo/api/" },
+    { text: "Founder Demo", url: "/demo/founder/" },
+    { text: "Schedule", url: "", alert: "Contact us at byjuaditya@gmail.com" },
+  ];
+
+  const docsLinks = [
+    { text: "Overview", url: "/docs" },
+    { text: "Frontend", url: "/docs/frontend" },
+    { text: "Backend", url: "/docs/backend" },
+    { text: "Export", url: "/docs/export" },
+    { text: "Request", url: "/docs/request" },
+    { text: "Report", url: "/docs/report" },
+  ];
+
+  const companyLinks = [
+    { text: "About", url: "/" },
+    { text: "Careers", url: "", alert: "Contact us at byjuaditya@gmail.com" },
+    { text: "Contact", url: "", alert: "Contact us at byjuaditya@gmail.com" },
+  ];
+
   return (
     <footer className="w-full px-10 h-80 font-inter">
       <div className="w-full mx-auto flex flex-col md:flex-row justify-between h-80 md:px-16 pt-12 rounded-3xl bg-neutral-950 text-white text-sm">
@@ -62,7 +108,7 @@ const Footer = () => {
             transition={{ duration: 0.5 }}
           >
             <div className="flex flex-row items-center space-x-3">
-              <img src="LimeblockLogo.png" className="size-9" />
+              <img src="/LimeblockLogo.png" className="size-9" />
               <h1 className="font-aeonik font-bold text-2xl">Limeblock</h1>
             </div>
 
@@ -78,7 +124,8 @@ const Footer = () => {
             </motion.div>
 
             <button
-              className="inline-flex items-center bg-white text-black px-6 py-4 rounded-xl font-medium transition-colors mt-12"
+              onClick={handleEarlyAccess}
+              className="inline-flex items-center bg-white text-black px-6 py-4 rounded-xl font-medium transition-colors mt-12 cursor-pointer"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
@@ -99,38 +146,13 @@ const Footer = () => {
 
         {/* Right Side - Link Sections */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-x-12 gap-y-8 md:w-2/3 md:justify-end">
-          <LinkSection
-            title="Product"
-            links={["Overview", "Demo", "Features"]}
-          />
+          <LinkSection title="Product" links={productLinks} />
 
-          <LinkSection
-            title="Demo"
-            links={[
-              "Dev Side",
-              "Client Side",
-              "API Endpoints",
-              "Founder Demo",
-              "Schedule",
-            ]}
-          />
+          <LinkSection title="Demo" links={demoLinks} />
 
-          <LinkSection
-            title="Docs"
-            links={[
-              "Overview",
-              "Frontend",
-              "Backend",
-              "Export",
-              "Request",
-              "Report",
-            ]}
-          />
+          <LinkSection title="Docs" links={docsLinks} />
 
-          <LinkSection
-            title="Company"
-            links={["About", "Blog", "Careers", "Contact"]}
-          />
+          <LinkSection title="Company" links={companyLinks} />
         </div>
       </div>
     </footer>

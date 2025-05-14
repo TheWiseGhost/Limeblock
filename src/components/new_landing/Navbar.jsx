@@ -76,12 +76,12 @@ export default function Navbar() {
         }`}
       >
         <NavButton text="Docs" href="/docs/" isScrolled={isScrolled} />
+        <NavButton text="Features" href="/docs/" isScrolled={isScrolled} />
         <NavButton
-          text="Features"
-          href="/docs/frontend/"
+          text="Internals"
+          href="/docs/getting_started/"
           isScrolled={isScrolled}
         />
-        <NavButton text="Solutions" href="#solutions" isScrolled={isScrolled} />
         <NavButton text="Demo" href="/demo" isScrolled={isScrolled} />
         <NavButton text="Pricing" href="/checkout" isScrolled={isScrolled} />
       </div>

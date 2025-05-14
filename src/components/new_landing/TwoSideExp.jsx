@@ -138,13 +138,6 @@ export default function ThreeStepProcess() {
           </div>
         </div>
       </div>
-
-      {/* Call to action button */}
-      <div className="mt-12">
-        <button className="bg-lime-500 hover:bg-lime-600 text-white font-medium py-3 px-8 rounded-lg shadow-sm transition-colors">
-          Get Started with Limeblock
-        </button>
-      </div>
     </div>
   );
 }
