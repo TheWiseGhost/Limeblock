@@ -71,13 +71,12 @@ const Footer = () => {
   const productLinks = [
     { text: "Overview", url: "/" },
     { text: "Demo", url: "/demo" },
-    { text: "Features", url: "/" },
+    { text: "Features", url: "/docs/getting_started/" },
   ];
 
   const demoLinks = [
     { text: "Dev Side", url: "/demo/dev/" },
     { text: "Client Side", url: "/demo/client/" },
-    { text: "API Endpoints", url: "/demo/api/" },
     { text: "Founder Demo", url: "/demo/founder/" },
     { text: "Schedule", url: "", alert: "Contact us at byjuaditya@gmail.com" },
   ];
