@@ -27,8 +27,8 @@ export default function ThreeStepProcess() {
             <h2 className="text-xl font-semibold">Step 1: Add Pages</h2>
           </div>
           <p className="text-gray-600 mb-6">
-            Design beautiful interfaces with our drag-and-drop editor or let
-            Limeblock generate pages from your data.
+            Add your app pages into Limeblock and let users quickly find any
+            page they need
           </p>
 
           <div className="border border-gray-200 bg-white rounded-lg p-4">
@@ -66,8 +66,8 @@ export default function ThreeStepProcess() {
             <h2 className="text-xl font-semibold">Step 2: Add Endpoints</h2>
           </div>
           <p className="text-gray-600 mb-6">
-            Connect your databases and APIs or create new endpoints to power
-            your application's functionality.
+            Connect your backend through API endpoints. Limeblock will send
+            requests and create the in app magic.
           </p>
 
           <div className="border border-gray-200 bg-white rounded-lg p-4">
@@ -102,8 +102,8 @@ export default function ThreeStepProcess() {
             <h2 className="text-xl font-semibold">Step 3: Add Schema</h2>
           </div>
           <p className="text-gray-600 mb-6">
-            Define your data models and relationships to ensure type safety and
-            enable powerful auto-generation features.
+            Define an example schema for each endpoint, and AI will smartly fill
+            it to commit actions.
           </p>
 
           <div className="border border-gray-200 bg-white rounded-lg p-4">

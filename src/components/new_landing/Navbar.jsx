@@ -42,7 +42,7 @@ export default function Navbar() {
       initial={{ opacity: 0, y: 0 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 3 }}
-      className={`fixed top-0 left-0 right-0 flex items-center py-2 z-50 ease-in-out bg-none ${
+      className={`fixed top-0 left-0 right-0 flex items-center py-2 z-50 ease-in-out bg-white bg-opacity-20 ${
         isScrolled
           ? "px-6 md:px-8 py-1 w-[360px] md:w-[870px] mx-auto mt-2 rounded-full border border-gray-200 bg-none bg-opacity-90 backdrop-blur-md transition-all duration-500"
           : "px-5 md:px-10 pb-2 pt-7 w-full transition-all duration-500"

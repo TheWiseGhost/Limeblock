@@ -61,12 +61,6 @@ const LinkSection = ({ title, links }) => (
 const Footer = () => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const handleEarlyAccess = () => {
-    alert(
-      "Thanks for your interest! We'll notify you when early access becomes available."
-    );
-  };
-
   // Define links with URLs when available
   const productLinks = [
     { text: "Overview", url: "/" },
@@ -123,10 +117,12 @@ const Footer = () => {
             </motion.div>
 
             <button
-              onClick={handleEarlyAccess}
               className="inline-flex items-center bg-white text-black px-6 py-4 rounded-xl font-medium transition-colors mt-12 cursor-pointer"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
+              onClick={() => {
+                window.location.href = "/sign_up/";
+              }}
             >
               <motion.div
                 className="p-[0.4rem] text-white size-8 rounded-lg"

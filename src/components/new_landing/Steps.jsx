@@ -1,40 +1,51 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  FileText,
+  Plug,
+  Package,
+  MessageCircle,
+  ArrowRight,
+} from "lucide-react";
 
-export default function Steps() {
+export default function LimeblockSteps() {
   const [activeTab, setActiveTab] = useState(0);
 
   const tabs = [
-    { id: 0, label: "User Research", icon: "📚" },
-    { id: 1, label: "Design", icon: "🎨" },
-    { id: 2, label: "Product Management", icon: "📊" },
-    { id: 3, label: "Marketing", icon: "📣" },
+    { id: 0, label: "Add Pages", icon: <FileText size={18} /> },
+    { id: 1, label: "Add Endpoints", icon: <Plug size={18} /> },
+    { id: 2, label: "Import Widget", icon: <Package size={18} /> },
+    { id: 3, label: "Use Widget", icon: <MessageCircle size={18} /> },
   ];
 
   const tabContent = [
     {
-      title: "Capture user insights faster than ever before",
+      title: "Add your app pages",
       description:
-        "Quickly collect and analyze user feedback and behavior at scale to maximize the impact of your research and drive data-backed product decisions.",
-      cta: "Explore Sprig for User Research Teams",
+        "Set up dedicated pages for your chat interface, including conversation history and user settings to provide a seamless AI chat experience for your users.",
+      linkText: "Learn more about page setup",
+      linkUrl: "/docs/frontend/",
     },
     {
-      title: "Design with real user feedback",
+      title: "Add API endpoints hooked to your backend",
       description:
-        "Create intuitive experiences guided by actual user behavior and preferences to ensure your designs solve real problems.",
-      cta: "Explore Sprig for Design Teams",
+        "Set up the required API endpoints to handle any in app action by just adding an example schema to send and the url to send it to. Limeblock will take care of the rest.",
+      linkText: "Explore API documentation",
+      linkUrl: "/docs/backend/",
     },
     {
-      title: "Make data-driven product decisions",
+      title: "Add the Limeblock widget to your application",
       description:
-        "Prioritize features and roadmap items based on quantitative and qualitative user insights rather than guesswork.",
-      cta: "Explore Sprig for Product Teams",
+        "Import our lightweight widget into your React or Vue app using npm. With just a few lines of code, you'll have a fully functional AI chat interface ready to customize.",
+      linkText: "Installation guide",
+      linkUrl: "/docs/export/",
     },
     {
-      title: "Optimize marketing messaging",
+      title: "Customize and deploy your AI chat experience",
       description:
-        "Test marketing copy and campaigns with your target audience to maximize conversion and engagement metrics.",
-      cta: "Explore Sprig for Marketing Teams",
+        "Configure your widget's appearance, behavior, and AI capabilities to match your brand. Then deploy and start collecting valuable user insights and providing assistance.",
+      linkText: "Deployment documentation",
+      linkUrl: "/docs/",
     },
   ];
 
@@ -42,14 +53,18 @@ export default function Steps() {
     <div className="w-full bg-white justify-center items-center flex flex-col pb-16 pt-16 font-inter">
       <div className="text-center mb-16">
         <div className="flex w-fit mx-auto items-center justify-center mb-2 bg-gray-100 py-2 px-4 rounded-xl">
-          <img className="size-5 mr-2" src="/LimeblockLogo.png" />
+          <img
+            className="size-5 mr-2"
+            src="/LimeblockLogo.png"
+            alt="Limeblock Logo"
+          />
           <span className="text-sm font-medium">Use Limeblock</span>
         </div>
         <h1 className="text-5xl font-medium font-aeonik text-gray-900 mt-8">
           Setup to Production in minutes
         </h1>
         <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
-          You could have your chat widget up and running on your app today
+          You could have your AI chat widget up and running on your app today
         </p>
       </div>
       <div className="w-2/3 mx-auto bg-white justify-center items-start flex flex-col">
@@ -89,25 +104,20 @@ export default function Steps() {
               {tabContent[activeTab].description}
             </p>
 
-            <a
-              href="#"
-              className="inline-flex items-center text-blue-600 font-medium hover:text-blue-700 group"
-            >
-              {tabContent[activeTab].cta}
-              <svg
-                className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+            <div className="mt-8">
+              <a
+                href={tabContent[activeTab].linkUrl}
+                className="group inline-flex items-center text-lg font-medium text-gray-600 relative"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                />
-              </svg>
-            </a>
+                <span className="mr-2 relative">
+                  {tabContent[activeTab].linkText}
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gray-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
+                </span>
+                <span className="transform group-hover:translate-x-1 transition-transform duration-300">
+                  <ArrowRight size={20} />
+                </span>
+              </a>
+            </div>
           </motion.div>
         </AnimatePresence>
       </div>

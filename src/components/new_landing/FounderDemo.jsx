@@ -35,6 +35,9 @@ export default function FounderDemo() {
           className="inline-flex items-center bg-white z-20 w-fit text-black px-6 py-4 rounded-xl font-medium transition-colors"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
+          onClick={() => {
+            window.location.href = "/sign_up/";
+          }}
         >
           <motion.div
             className="p-[0.4rem] text-white size-8 rounded-lg"
