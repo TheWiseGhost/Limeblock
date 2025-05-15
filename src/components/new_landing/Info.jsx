@@ -6,13 +6,15 @@ import {
   IconFileText,
   IconLayoutSidebar,
 } from "@tabler/icons-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import VideoLoading from "../global/VideoLoading";
 
-const DIY = () => {
+const Info = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [hoveredTab, setHoveredTab] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const videoRef = useRef(null);
 
   const tabs = [
     {
@@ -48,6 +50,16 @@ const DIY = () => {
       },
     },
   ];
+
+  // Reset loading state when the active tab changes
+  useEffect(() => {
+    setIsLoading(true);
+
+    // Check if video is already loaded when tab changes
+    if (videoRef.current?.readyState >= 3) {
+      setIsLoading(false);
+    }
+  }, [activeTab]);
 
   return (
     <div className="w-full bg-white h-fit py-10 flex flex-col items-center justify-center">
@@ -160,7 +172,13 @@ const DIY = () => {
                 transition={{ delay: 0.25 }}
                 className="min-w-full h-full rounded-lg overflow-hidden border border-gray-200 relative"
               >
+                {isLoading && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-none">
+                    <VideoLoading />
+                  </div>
+                )}
                 <video
+                  ref={videoRef}
                   src={tabs[activeTab].video.src}
                   className="object-cover w-full"
                   autoPlay
@@ -168,6 +186,9 @@ const DIY = () => {
                   muted
                   playsInline
                   controls={false}
+                  onLoadedData={() => setIsLoading(false)}
+                  onCanPlay={() => setIsLoading(false)}
+                  onError={() => setIsLoading(false)} // Fallback in case of errors
                 />
               </motion.div>
             </motion.div>
@@ -178,4 +199,4 @@ const DIY = () => {
   );
 };
 
-export default DIY;
+export default Info;

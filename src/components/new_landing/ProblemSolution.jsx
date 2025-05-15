@@ -157,8 +157,8 @@ export default function ProblemSolution() {
                   <div className="bg-white border-l-[6px] border-l-lime border-2 border-gray-200 rounded-lg p-4">
                     <p className="font-semibold">We used it too!</p>
                     <p className="text-sm text-gray-500 mt-1">
-                      Our own Lego/block wizard lets users create and build
-                      faster than ever
+                      Our own widget lets users create and build faster than
+                      ever
                     </p>
                   </div>
                 </div>
