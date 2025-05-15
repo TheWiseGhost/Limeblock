@@ -181,11 +181,6 @@ export default function Dashboard() {
     );
   }
 
-  if (user?.plan == "free" || (user && !user?.plan)) {
-    window.location.href = "/checkout/";
-    return;
-  }
-
   return (
     <div className="bg-white w-full overflow-y-auto pb-12 pt-8 pr-12 pl-10 border-l border-gray-300 rounded-tl-[12px]">
       {/* Header */}
@@ -471,7 +466,7 @@ export default function Dashboard() {
                       ? "Maximum 100 MAUs"
                       : user?.plan === "enterprise"
                       ? "Maximum 5,000 MAUs"
-                      : "Maximum 0 MAUs"}
+                      : "Maximum 20 MAUs"}
                   </p>
                 </div>
                 <div className="text-right">

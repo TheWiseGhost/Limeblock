@@ -47,7 +47,7 @@ export default function Settings() {
       case "enterprise":
         return Infinity;
       default:
-        return 0; // free plan
+        return 1; // free plan
     }
   };
 
@@ -298,7 +298,7 @@ export default function Settings() {
                     ? "Maximum 100 MAUs"
                     : user?.plan === "enterprise"
                     ? "Maximum 5,000 MAUs"
-                    : "Maximum 0 MAUs"}
+                    : "Maximum 20 MAUs"}
                 </p>
               </div>
               <div className="text-right">

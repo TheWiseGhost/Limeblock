@@ -71,7 +71,7 @@ export default function MAU({ mauStats, userPlan }) {
       case "enterprise":
         return 5000;
       default:
-        return 100; // Default fallback
+        return 20; // Default fallback
     }
   };
 
