@@ -22,7 +22,7 @@ export default function LimeblockSteps() {
     {
       title: "Add your app pages",
       description:
-        "Set up dedicated pages for your chat interface, including conversation history and user settings to provide a seamless AI chat experience for your users.",
+        "Set up pages, including contact and documentation pages, to provide quick links that help users without needed a customer support agent.",
       linkText: "Learn more about page setup",
       linkUrl: "/docs/frontend/",
     },
