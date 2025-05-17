@@ -43,7 +43,7 @@ const Section1 = ({ scrollYProgress }) => {
   return (
     <motion.div
       style={{ scale, rotate }}
-      className="sticky top-0 h-screen my_grid pb-[10vh]"
+      className="sticky top-0 h-screen w-full bg-[#F3F3F5]"
     >
       <Demo />
     </motion.div>
@@ -57,7 +57,7 @@ const Section2 = ({ scrollYProgress }) => {
   return (
     <motion.div
       style={{ scale, rotate }}
-      className="relative h-screen bg-white rounded-t-[3rem]"
+      className="relative min-h-screen bg-white rounded-t-[3rem] w-full"
     >
       <TwoSideExp />
     </motion.div>
