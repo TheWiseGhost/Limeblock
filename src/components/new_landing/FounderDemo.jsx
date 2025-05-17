@@ -2,10 +2,22 @@
 
 import { IconArrowRight } from "@tabler/icons-react";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import VideoLoading from "../global/VideoLoading";
 
 export default function FounderDemo() {
   const [isHovered, setIsHovered] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const videoRef = useRef(null);
+
+  // Reset loading state when component mounts
+  useEffect(() => {
+    // Check if video is already loaded
+    if (videoRef.current?.readyState >= 3) {
+      setIsLoading(false);
+    }
+  }, []);
+
   return (
     <div className="w-full bg-[#F3F3F5] min-h-screen flex flex-col items-center justify-center p-4 font-inter rounded-t-[3rem] pt-2 pb-20">
       {/* Logo and heading */}
@@ -18,14 +30,23 @@ export default function FounderDemo() {
           how we used it ourselves to improve Limeblock's UX.
         </p>
       </div>
-      {/* Demo video */}
-      <div className="w-fit px-2 mx-auto h-fit border border-gray-400 rounded-xl">
+      {/* Demo video with loading indicator */}
+      <div className="w-fit mx-auto h-fit border border-gray-400 rounded-xl relative">
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-none">
+            <VideoLoading />
+          </div>
+        )}
         <video
+          ref={videoRef}
           controls
           autoPlay
           loop
-          className="h-[440px] w-[1000px] mx-auto object-cover"
+          className="h-[440px] w-[1000px] mx-auto object-cover rounded-xl"
           src="/LimeblockAPI Demo.mp4"
+          onLoadedData={() => setIsLoading(false)}
+          onCanPlay={() => setIsLoading(false)}
+          onError={() => setIsLoading(false)} // Fallback in case of errors
         ></video>
       </div>
 
