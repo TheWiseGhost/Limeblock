@@ -34,8 +34,9 @@ const NewLanding = () => {
 
     requestAnimationFrame(raf);
   }, []);
+
   return (
-    <div className="flex flex-col w-full items-center justify-center bg-white">
+    <div className="flex flex-col w-full items-center justify-center bg-white overflow-x-hidden">
       <Navbar />
       <Hero />
       <FirstTransition />

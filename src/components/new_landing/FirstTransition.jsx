@@ -24,11 +24,8 @@ const FirstTransition = () => {
   }, []);
 
   return (
-    <div>
-      <main
-        ref={container}
-        className="relative h-[210vh] overflow-hidden w-full bg-[#F3F3F5]"
-      >
+    <div className="w-screen overflow-y-hidden">
+      <main ref={container} className="relative h-[210vh] w-full bg-[#F3F3F5]">
         <div className="z-0 sticky top-0" />
         <Section1 scrollYProgress={scrollYProgress} />
         <Section2 scrollYProgress={scrollYProgress} />
