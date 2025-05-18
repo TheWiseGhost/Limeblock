@@ -54,7 +54,7 @@ const Section2 = ({ scrollYProgress }) => {
   return (
     <motion.div
       style={{ scale, rotate }}
-      className="relative min-h-screen bg-white rounded-t-[3rem] w-full"
+      className="relative h-[110vh] bg-white rounded-t-[3rem] w-full"
     >
       <TwoSideExp />
     </motion.div>

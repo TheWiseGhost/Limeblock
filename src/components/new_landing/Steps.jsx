@@ -94,7 +94,7 @@ export default function LimeblockSteps() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 0 }}
             transition={{ duration: 0.2 }}
-            className="px-16 py-12 bg-white border border-black -mt-0.5"
+            className="px-16 py-12 bg-white border border-black -mt-[1px]"
           >
             <h2 className="text-4xl font-medium text-gray-900 mb-6 font-aeonik">
               {tabContent[activeTab].title}

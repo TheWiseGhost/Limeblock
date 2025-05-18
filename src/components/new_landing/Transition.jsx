@@ -43,10 +43,7 @@ const Section1 = ({ scrollYProgress }) => {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
   const rotate = useTransform(scrollYProgress, [0, 0], [0, 0]);
   return (
-    <motion.div
-      style={{ scale, rotate }}
-      className="sticky top-0 h-screen pb-[10vh]"
-    >
+    <motion.div style={{ scale, rotate }} className="sticky top-0 h-screen">
       <OtherCompanies />
     </motion.div>
   );
