@@ -5,10 +5,10 @@ export default function ProblemSolution() {
   const [showSolution, setShowSolution] = useState(false);
 
   return (
-    <div className="w-full bg-white flex flex-col items-center justify-center pt-28">
+    <div className="w-full bg-white flex flex-col items-center justify-center pt-28 pb-16">
       <div className="w-5/6 mx-auto font-inter">
         {/* Minimal Toggle */}
-        <div className="flex justify-center mb-6">
+        <div className="flex justify-center mb-2">
           <div className="flex border-b border-gray-200 w-fit font-inter">
             <button
               className={`py-2 px-4 text-base font-medium transition-all relative ${

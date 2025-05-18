@@ -80,10 +80,10 @@ const OtherCompanies = () => {
                 rotate: 0,
                 transition: { duration: 0.3 },
               }}
-              className="relative bg-gray-200 text-gray-900 p-6 pb-12 rounded-xl shadow-lg overflow-hidden"
+              className="relative bg-[#F3F3F5] text-gray-900 p-6 pb-12 rounded-xl shadow-sm overflow-hidden"
               style={{ rotate: `${company.rotation}deg` }}
             >
-              <div className="absolute top-0 right-0 w-24 h-24 rounded-full bg-gray-600 opacity-10 -mr-10 -mt-10" />
+              <div className="absolute top-0 right-0 w-24 h-24 rounded-full bg-gray-400 opacity-10 -mr-10 -mt-10" />
               <div className="relative z-10">
                 <div className="mb-4">{company.icon}</div>
                 <h3 className="text-xl font-aeonik mb-2">{company.name}</h3>

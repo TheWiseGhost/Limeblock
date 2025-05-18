@@ -50,7 +50,7 @@ export default function LimeblockSteps() {
   ];
 
   return (
-    <div className="w-full bg-white justify-center items-center flex flex-col pb-16 pt-16 font-inter">
+    <div className="w-full bg-white justify-center items-center flex flex-col pb-16 pt-24 font-inter">
       <div className="text-center mb-16">
         <div className="flex w-fit mx-auto items-center justify-center mb-2 bg-gray-100 py-2 px-4 rounded-xl">
           <img
@@ -94,7 +94,7 @@ export default function LimeblockSteps() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 0 }}
             transition={{ duration: 0.2 }}
-            className="px-16 py-12 bg-white border border-black -mt-[1px]"
+            className="px-16 py-12 bg-white border border-black rounded-xl rounded-tl-none -mt-[1px]"
           >
             <h2 className="text-4xl font-medium text-gray-900 mb-6 font-aeonik">
               {tabContent[activeTab].title}

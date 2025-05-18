@@ -16,6 +16,7 @@ import Steps from "./Steps";
 import FirstTransition from "./FirstTransition";
 import ProblemSolution from "./ProblemSolution";
 import Pricing from "./Pricing";
+import Process from "./Process";
 
 const NewLanding = () => {
   const container = useRef();
@@ -41,6 +42,7 @@ const NewLanding = () => {
       <Hero />
       <FirstTransition />
       <ProblemSolution />
+      <Process />
       <Steps />
       <Info />
       <Transition />

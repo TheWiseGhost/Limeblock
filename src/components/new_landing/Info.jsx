@@ -62,7 +62,7 @@ const Info = () => {
   }, [activeTab]);
 
   return (
-    <div className="w-full bg-white h-fit py-10 flex flex-col items-center justify-center">
+    <div className="w-full bg-white h-fit py-16 flex flex-col items-center justify-center">
       <div className="flex w-11/12 mx-auto bg-white rounded-xl overflow-hidden border border-neutral-700 font-inter">
         {/* Left sidebar with links */}
         <div className="w-1/3 p-6 pl-10 flex flex-col border-r border-gray-100">
