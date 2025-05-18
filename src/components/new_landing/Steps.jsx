@@ -67,7 +67,7 @@ export default function LimeblockSteps() {
           You could have your AI chat widget up and running on your app today
         </p>
       </div>
-      <div className="w-2/3 mx-auto bg-white justify-center items-start flex flex-col">
+      <div className="w-fit mx-auto bg-white justify-center items-start flex flex-col">
         {/* Tab Navigation */}
         <div className="flex items-start rounded-t-lg space-x-4">
           {tabs.map((tab) => (
