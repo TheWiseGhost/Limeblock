@@ -63,9 +63,9 @@ const Info = () => {
 
   return (
     <div className="w-full bg-white h-fit py-16 flex flex-col items-center justify-center">
-      <div className="flex w-11/12 mx-auto bg-white rounded-xl overflow-hidden border border-neutral-700 font-inter">
+      <div className="flex w-11/12 mx-auto bg-white rounded-xl overflow-hidden font-inter">
         {/* Left sidebar with links */}
-        <div className="w-1/3 p-6 pl-10 flex flex-col border-r border-gray-100">
+        <div className="w-[36%] p-6 pl-10 flex flex-col border-r border-gray-100">
           <h2 className="text-4xl font-medium text-gray-900 mb-10 mt-4 font-aeonik">
             Highlighted Features
           </h2>
@@ -134,7 +134,7 @@ const Info = () => {
         </div>
 
         {/* Right content area with video */}
-        <div className="w-2/3 p-6 flex flex-col">
+        <div className="w-[64%] p-6 flex flex-col pt-10">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
@@ -144,28 +144,6 @@ const Info = () => {
               transition={{ duration: 0.2 }}
               className="flex flex-col w-full"
             >
-              <div className="mb-6">
-                <motion.h2
-                  className="text-2xl font-semibold text-gray-900 mb-1.5 flex items-center"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.1 }}
-                >
-                  {tabs[activeTab].icon && (
-                    <span className="mr-2">{tabs[activeTab].icon}</span>
-                  )}
-                  {tabs[activeTab].title}
-                </motion.h2>
-                <motion.p
-                  className="text-gray-600 text-sm"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.15 }}
-                >
-                  {tabs[activeTab].description}
-                </motion.p>
-              </div>
-
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
