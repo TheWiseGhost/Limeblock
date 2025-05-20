@@ -1,29 +1,112 @@
 import { Database, Layout, Code, FileJson } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function ThreeStepProcess() {
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        when: "beforeChildren",
+        staggerChildren: 0.2,
+        duration: 0.7,
+      },
+    },
+  };
+
+  const headerVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
+  };
+
+  const codeBlockVariants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.5, delay: 0.2 },
+    },
+  };
+
+  const iconVariants = {
+    hidden: { rotate: -10, scale: 0.9, opacity: 0 },
+    visible: {
+      rotate: 0,
+      scale: 1,
+      opacity: 1,
+      transition: { duration: 0.4, type: "spring" },
+    },
+  };
+
   return (
-    <div className="w-full bg-white min-h-screen flex flex-col items-center justify-center p-4 font-inter rounded-t-[3rem] pt-12">
+    <motion.div
+      className="w-full bg-white min-h-screen flex flex-col items-center justify-center p-4 font-inter rounded-t-[3rem] pt-12"
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+    >
       {/* Logo and heading */}
-      <div className="text-center mb-16">
-        <div className="flex w-fit mx-auto items-center justify-center mb-2 bg-gray-100 py-2 px-4 rounded-xl">
-          <img className="size-5 mr-2" src="/LimeblockLogo.png" />
+      <motion.div className="text-center mb-16" variants={headerVariants}>
+        <motion.div
+          className="flex w-fit mx-auto items-center justify-center mb-2 bg-gray-100 py-2 px-4 rounded-xl"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <img
+            className="size-5 mr-2"
+            src="/LimeblockLogo.png"
+            alt="Limeblock Logo"
+          />
           <span className="text-sm font-medium">Meet Limeblock</span>
-        </div>
-        <h1 className="text-5xl font-medium font-aeonik text-gray-900 mt-8">
+        </motion.div>
+        <motion.h1
+          className="text-5xl font-medium font-aeonik text-gray-900 mt-8"
+          variants={headerVariants}
+        >
           Just add pages, endpoints, schemas.
-        </h1>
-        <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
+        </motion.h1>
+        <motion.p
+          className="text-gray-600 mt-4 max-w-2xl mx-auto"
+          variants={headerVariants}
+        >
           Build a chat widget that does the same thing production-grade ai tools
           for your app in minutes with Limeblock's intuitive three-step process
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
 
       {/* Three step process */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
         {/* Step 1: Add Pages */}
-        <div className="bg-[#F3F3F5] p-8 rounded-xl shadow-sm">
+        <motion.div
+          className="bg-[#F3F3F5] p-8 rounded-xl shadow-sm"
+          variants={cardVariants}
+          whileHover={{
+            y: -8,
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 400,
+            damping: 17,
+          }}
+        >
           <div className="flex items-center mb-4">
-            <Layout className="text-lime-600 mr-3" size={24} />
+            <motion.div variants={iconVariants}>
+              <Layout className="text-lime-600 mr-3" size={24} />
+            </motion.div>
             <h2 className="text-xl font-semibold">Step 1: Add Pages</h2>
           </div>
           <p className="text-gray-600 mb-6">
@@ -31,7 +114,14 @@ export default function ThreeStepProcess() {
             page they need
           </p>
 
-          <div className="border border-gray-200 bg-white rounded-lg p-4">
+          <motion.div
+            className="border border-gray-200 bg-white rounded-lg p-4"
+            variants={codeBlockVariants}
+            whileHover={{
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
+              borderColor: "#e2e8f0",
+            }}
+          >
             <code className="text-sm text-gray-700 block">
               <span className="text-purple-600">const</span>{" "}
               <span className="text-blue-600">DashboardPage</span> = () =&gt;{" "}
@@ -56,13 +146,26 @@ export default function ThreeStepProcess() {
               <br />
               {"}"};
             </code>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Step 2: Add Endpoints */}
-        <div className="bg-[#F3F3F5] p-8 rounded-xl shadow-sm">
+        <motion.div
+          className="bg-[#F3F3F5] p-8 rounded-xl shadow-sm"
+          variants={cardVariants}
+          whileHover={{
+            y: -8,
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 400,
+            damping: 17,
+          }}
+        >
           <div className="flex items-center mb-4">
-            <Code className="text-lime-600 mr-3" size={24} />
+            <motion.div variants={iconVariants}>
+              <Code className="text-lime-600 mr-3" size={24} />
+            </motion.div>
             <h2 className="text-xl font-semibold">Step 2: Add Endpoints</h2>
           </div>
           <p className="text-gray-600 mb-6">
@@ -70,7 +173,14 @@ export default function ThreeStepProcess() {
             requests and create the in app magic.
           </p>
 
-          <div className="border border-gray-200 bg-white rounded-lg p-4">
+          <motion.div
+            className="border border-gray-200 bg-white rounded-lg p-4"
+            variants={codeBlockVariants}
+            whileHover={{
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
+              borderColor: "#e2e8f0",
+            }}
+          >
             <code className="text-sm text-gray-700 block">
               <span className="text-purple-600">export async function</span>{" "}
               <span className="text-blue-600">getUsers</span>() {"{"}
@@ -92,13 +202,26 @@ export default function ThreeStepProcess() {
               <br />
               {"}"}
             </code>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Step 3: Add Schema */}
-        <div className="bg-[#F3F3F5] p-8 rounded-xl shadow-sm">
+        <motion.div
+          className="bg-[#F3F3F5] p-8 rounded-xl shadow-sm"
+          variants={cardVariants}
+          whileHover={{
+            y: -8,
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 400,
+            damping: 17,
+          }}
+        >
           <div className="flex items-center mb-4">
-            <FileJson className="text-lime-600 mr-3" size={24} />
+            <motion.div variants={iconVariants}>
+              <FileJson className="text-lime-600 mr-3" size={24} />
+            </motion.div>
             <h2 className="text-xl font-semibold">Step 3: Add Schema</h2>
           </div>
           <p className="text-gray-600 mb-6">
@@ -106,7 +229,14 @@ export default function ThreeStepProcess() {
             it to commit actions.
           </p>
 
-          <div className="border border-gray-200 bg-white rounded-lg p-4">
+          <motion.div
+            className="border border-gray-200 bg-white rounded-lg p-4"
+            variants={codeBlockVariants}
+            whileHover={{
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
+              borderColor: "#e2e8f0",
+            }}
+          >
             <code className="text-sm text-gray-700 block">
               <span className="text-purple-600">const</span>{" "}
               <span className="text-blue-600">UserSchema</span> = {"{"}
@@ -135,9 +265,9 @@ export default function ThreeStepProcess() {
               <br />
               {"}"};
             </code>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }
