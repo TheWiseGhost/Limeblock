@@ -17,6 +17,7 @@ import FirstTransition from "./FirstTransition";
 import ProblemSolution from "./ProblemSolution";
 import Pricing from "./Pricing";
 import Process from "./Process";
+import InAppActions from "../landing/InAppActions";
 
 const NewLanding = () => {
   const container = useRef();
@@ -43,6 +44,7 @@ const NewLanding = () => {
       <FirstTransition />
       <ProblemSolution />
       <Process />
+      <InAppActions />
       <Steps />
       <Info />
       <Transition />

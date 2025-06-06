@@ -2,7 +2,15 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { IconSend, IconUser } from "@tabler/icons-react";
+import {
+  IconSend,
+  IconUser,
+  IconBolt,
+  IconSettings,
+  IconMoodSmile,
+  IconShield,
+  IconClock,
+} from "@tabler/icons-react";
 
 const FeatureCard = ({ icon, title, description, delay, main = false }) => {
   // Create a unique animation for each card to make them float differently
@@ -35,13 +43,13 @@ const FeatureCard = ({ icon, title, description, delay, main = false }) => {
         opacity: { duration: 0.5, delay },
         y: { duration: 0.5, delay },
       }}
-      className="bg-white rounded-xl shadow-lg"
+      className="bg-white rounded-xl"
     >
       <div
         className={`p-3 ${
           main
             ? "border-2 border-green-400"
-            : "border border-gray-300 border-dashed"
+            : "border border-gray-400 border-dashed"
         }`}
       >
         <div className="flex flex-row space-x-2 justify-start items-center mb-2">
@@ -49,7 +57,7 @@ const FeatureCard = ({ icon, title, description, delay, main = false }) => {
           <h3 className="font-aeonik text-lg">{title}</h3>
         </div>
 
-        <p className="text-gray-600 font-inter text-sm text-left">
+        <p className="text-gray-500 font-inter text-sm text-left">
           {description}
         </p>
       </div>
@@ -518,37 +526,16 @@ const ChatDemo = () => {
 
 const InAppActions = () => {
   return (
-    <div className="min-h-screen bg-white font-inter flex flex-col px-4 md:px-8 pb-10">
-      <h1 className="font-aeonik font-medium text-5xl md:text-7xl pb-2">
-        The{" "}
-        <span className="relative inline-block">
-          Superpower
-          <svg
-            className="hidden md:flex absolute -bottom-10 left-0 w-full"
-            viewBox="0 0 120 15"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="none"
-          >
-            <motion.path
-              d="M3,9 Q10,5 20,8.5 Q30,12 40,9 Q50,6 60,8.5 Q70,11 80,7 Q90,3 100,6 Q110,9 117,7"
-              fill="none"
-              stroke="#90F08C"
-              strokeWidth="1"
-              strokeLinecap="round"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 1.5, delay: 0.5, ease: "easeInOut" }}
-            />
-          </svg>
-        </span>{" "}
-        of this block
+    <div className="min-h-screen bg-white font-inter flex flex-col px-4 md:px-16 pt-28 pb-8">
+      <h1 className="font-aeonik font-medium text-5xl md:text-6xl pb-2">
+        The Superpower of this block
       </h1>
       <div className="flex flex-col md:flex-row w-full">
-        <div className="flex flex-col w-full md:w-1/2 pt-16 pl-4">
+        <div className="flex flex-col w-full md:w-1/2 pt-16">
           <div className="flex flex-row space-x-4">
             <div className="pl-0 md:pl-4 h-fit w-3/5">
               <FeatureCard
-                icon="⚡️"
+                icon={<IconBolt className="w-6 h-6 text-black" />}
                 title="Commit In-App Actions"
                 description="Making your product that much easier to use for any user, especially new ones"
                 main={true}
@@ -584,16 +571,16 @@ const InAppActions = () => {
           <div className="hidden md:flex flex-row space-x-10">
             <div className="pt-12 h-fit w-6/12">
               <FeatureCard
-                icon="⚙️" // Gear to represent setup
-                title="Takes 5 minutes to set up"
+                icon={<IconSettings className="w-6 h-6 text-gray-500" />}
+                title="Takes minutes to set up"
                 description="Just plug in your backend endpoints and their defined schemas"
                 delay={0.8}
               />
             </div>
             <div className="pl-4 pt-12 h-fit w-5/12">
               <FeatureCard
-                icon="😌" // Relieved face to represent ease and no stress
-                title="Zero stress or headaches"
+                icon={<IconMoodSmile className="w-6 h-6 text-gray-500" />}
+                title="Zero stress"
                 description="We'll handle all the logistics behind sending data, fetching endpoints, indexing through your site, and more"
                 delay={0.8}
               />
@@ -602,15 +589,15 @@ const InAppActions = () => {
           <div className="hidden md:flex flex-row space-x-10">
             <div className="mt-2 h-fit w-5/12">
               <FeatureCard
-                icon="🛡️" // Shield to represent protection and safety
-                title="Error handling + Guardrails"
+                icon={<IconShield className="w-6 h-6 text-gray-500" />}
+                title="Error handling"
                 description="Confirm buttons for user actions + barriers to avoid taking risky or undoable actions"
                 delay={0.8}
               />
             </div>
             <div className="pl-4 pt-12 h-fit w-1/2">
               <FeatureCard
-                icon="⏱️" // Stopwatch to represent time savings
+                icon={<IconClock className="w-6 h-6 text-gray-500" />}
                 title="Crazy time saves"
                 description="Make your app frictionless - Improving UX, conversions, brand rep, and more"
                 delay={0.8}
