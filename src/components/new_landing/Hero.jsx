@@ -223,9 +223,9 @@ export default function Hero() {
                 </motion.svg>
               </AnimatePresence>
             </span>
-            <span>was never</span>
+            <span>to your</span>
           </span>{" "}
-          <span>meant to be hard.</span>
+          <span>web app made easy</span>
         </h1>
         <div className="mb-8 text-lg mt-8">
           <p>Page Navigation, API fetchs, In-App Actions done by AI widget</p>
