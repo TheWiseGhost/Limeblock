@@ -72,7 +72,11 @@ const Footer = () => {
     { text: "Dev Side", url: "/demo/dev/" },
     { text: "Client Side", url: "/demo/client/" },
     { text: "Founder Demo", url: "/demo/founder/" },
-    { text: "Schedule", url: "", alert: "Contact us at byjuaditya@gmail.com" },
+    {
+      text: "Schedule",
+      url: "https://cal.com/adityabyju",
+      alert: "Contact us at byjuaditya@gmail.com",
+    },
   ];
 
   const docsLinks = [
@@ -87,7 +91,11 @@ const Footer = () => {
   const companyLinks = [
     { text: "About", url: "/" },
     { text: "Careers", url: "", alert: "Contact us at byjuaditya@gmail.com" },
-    { text: "Contact", url: "", alert: "Contact us at byjuaditya@gmail.com" },
+    {
+      text: "Contact",
+      url: "https://cal.com/adityabyju",
+      alert: "Contact us at byjuaditya@gmail.com",
+    },
   ];
 
   return (
