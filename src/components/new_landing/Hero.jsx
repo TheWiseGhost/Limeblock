@@ -229,7 +229,7 @@ export default function Hero() {
         </h1>
         <div className="mb-8 text-lg mt-8">
           <p>Page Navigation, API fetchs, In-App Actions done by AI widget</p>
-          <p>30 minutes and no coding required</p>
+          <p>No coding or MCP server required</p>
         </div>
         <button
           className="inline-flex items-center bg-white z-20 w-fit text-black px-6 py-4 rounded-xl font-medium transition-colors"

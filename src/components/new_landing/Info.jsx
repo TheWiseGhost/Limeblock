@@ -65,7 +65,7 @@ const Info = () => {
     <div className="w-full bg-white h-fit py-16 flex flex-col items-center justify-center">
       <div className="flex w-11/12 mx-auto bg-white rounded-xl overflow-hidden font-inter">
         {/* Left sidebar with links */}
-        <div className="w-[36%] p-6 pl-10 flex flex-col border-r border-gray-100">
+        <div className="w-[36%] p-6 pl-10 flex flex-col border-r border-gray-300">
           <h2 className="text-4xl font-medium text-gray-900 mb-10 mt-4 font-aeonik">
             Highlighted Features
           </h2>
@@ -83,7 +83,7 @@ const Info = () => {
                   className={`relative w-full text-left p-3 rounded-lg transition-all duration-200 z-10 ${
                     activeTab === index
                       ? "text-black"
-                      : "text-gray-800 hover:bg-gray-50"
+                      : "text-gray-800 hover:bg-gray-100"
                   }`}
                 >
                   <motion.div
@@ -118,16 +118,6 @@ const Info = () => {
                     />
                   )}
                 </button>
-
-                {hoveredTab === index && activeTab !== index && (
-                  <motion.div
-                    className="absolute inset-0 bg-gray-200 bg-opacity-30 rounded-lg -z-1"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.15 }}
-                  />
-                )}
               </div>
             ))}
           </div>

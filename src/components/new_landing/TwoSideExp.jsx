@@ -84,7 +84,8 @@ export default function ThreeStepProcess() {
           variants={headerVariants}
         >
           Build a chat widget that does the same thing production-grade ai tools
-          for your app in minutes with Limeblock's intuitive three-step process
+          and MCP <br /> for your app in minutes with Limeblock's intuitive
+          three-step process
         </motion.p>
       </motion.div>
 

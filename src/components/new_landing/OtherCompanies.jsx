@@ -47,7 +47,7 @@ const OtherCompanies = () => {
   ];
 
   return (
-    <div className="w-full bg-white py-20 font-inter">
+    <div className="w-full bg-white pt-12 pb-20 font-inter">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-16">
           <div className="flex w-fit mx-auto items-center justify-center mb-2 bg-gray-100 py-2 px-4 rounded-xl">
