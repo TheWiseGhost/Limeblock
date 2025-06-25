@@ -88,11 +88,7 @@ export default function SignUp() {
 
       if (data.success) {
         localStorage.setItem("user_id", data.user);
-        if (formData.code == process.env.NEXT_PUBLIC_BUSINESS_PROMO_CODE) {
-          window.location.href = "/dashboard/";
-        } else {
-          window.location.href = "/checkout/";
-        }
+        window.location.href = "/dashboard/";
       } else if (data.warning) {
         toast({
           title: `Business Name already taken`,
