@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   IconSend,
-  IconUser,
   IconBolt,
   IconSettings,
   IconMoodSmile,
@@ -19,12 +18,12 @@ const FeatureCard = ({ icon, title, description, delay, main = false }) => {
     x: [0, 8, 0],
     transition: {
       y: {
-        repeat: Infinity,
+        repeat: Number.POSITIVE_INFINITY,
         duration: 2 + Math.random() * 2, // Random duration between 4-6s
         ease: "easeInOut",
       },
       x: {
-        repeat: Infinity,
+        repeat: Number.POSITIVE_INFINITY,
         duration: 2 + Math.random() * 2, // Random duration between 5-7s
         ease: "easeInOut",
       },
@@ -78,7 +77,9 @@ const BlockFace = ({ body, eyes, size, isThinking = false }) => {
         height: size,
       }}
       animate={isThinking ? { scale: [1, 0.9, 1] } : {}}
-      transition={isThinking ? { repeat: Infinity, duration: 1 } : {}}
+      transition={
+        isThinking ? { repeat: Number.POSITIVE_INFINITY, duration: 1 } : {}
+      }
     >
       {/* Eyes */}
       <div className="absolute top-1/4 flex justify-between w-3/5">
@@ -368,7 +369,50 @@ const ChatDemo = () => {
         </div>
 
         {/* Chat Messages */}
-        <div className="flex-grow p-4 overflow-y-auto bg-white">
+        <div
+          className="flex-grow p-4 overflow-y-auto bg-white"
+          onMouseEnter={(e) => {
+            // Add event listener to prevent page scroll when scrolling in chat
+            const preventPageScroll = (e) => {
+              e.stopPropagation();
+            };
+            e.currentTarget.addEventListener("wheel", preventPageScroll, {
+              passive: false,
+            });
+            e.currentTarget._preventPageScroll = preventPageScroll;
+          }}
+          onMouseLeave={(e) => {
+            // Remove event listener when leaving chat
+            if (e.currentTarget._preventPageScroll) {
+              e.currentTarget.removeEventListener(
+                "wheel",
+                e.currentTarget._preventPageScroll
+              );
+              delete e.currentTarget._preventPageScroll;
+            }
+          }}
+          onWheel={(e) => {
+            // Prevent wheel event from bubbling to parent when chat is scrollable
+            const element = e.currentTarget;
+            const { scrollTop, scrollHeight, clientHeight } = element;
+
+            // If scrolling up and already at top, or scrolling down and already at bottom,
+            // allow the event to bubble (so page can scroll)
+            if (
+              (e.deltaY < 0 && scrollTop === 0) ||
+              (e.deltaY > 0 && scrollTop + clientHeight >= scrollHeight)
+            ) {
+              return; // Allow page scroll
+            }
+
+            // Otherwise, prevent page scroll
+            e.stopPropagation();
+          }}
+          style={{
+            scrollbarWidth: "thin",
+            scrollbarColor: "#90F08C #f1f1f1",
+          }}
+        >
           <AnimatePresence>
             {messages.map((msg, index) => (
               <motion.div
@@ -506,7 +550,7 @@ const ChatDemo = () => {
                   animate={{
                     rotate: 360,
                     transition: {
-                      repeat: Infinity,
+                      repeat: Number.POSITIVE_INFINITY,
                       duration: 1,
                       ease: "linear",
                     },
@@ -548,7 +592,7 @@ const InAppActions = () => {
                 <motion.svg
                   animate={{ x: [0, 10, 0] }}
                   transition={{
-                    repeat: Infinity,
+                    repeat: Number.POSITIVE_INFINITY,
                     repeatDelay: 0.1,
                     duration: 0.6,
                   }}
