@@ -10,12 +10,7 @@ import {
 import React, { useState, useEffect } from "react";
 import { useToast } from "../global/Use-Toast";
 import { ChatWidget } from "@limeblock/react";
-import {
-  IconBug,
-  IconBulb,
-  IconCrown,
-  IconFileText,
-} from "@tabler/icons-react";
+import { IconBug, IconBulb, IconFileText } from "@tabler/icons-react";
 
 export default function Settings() {
   const [showApiKey, setShowApiKey] = useState(false);
@@ -36,22 +31,6 @@ export default function Settings() {
   };
 
   const { toast } = useToast();
-
-  // Get email limit based on plan
-  const getEmailLimit = () => {
-    switch (user?.plan) {
-      case "startup":
-        return 5;
-      case "business":
-        return 20;
-      case "enterprise":
-        return Infinity;
-      default:
-        return 1; // free plan
-    }
-  };
-
-  const emailLimit = getEmailLimit();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -122,13 +101,6 @@ export default function Settings() {
 
     if (emails.includes(newEmail)) {
       setError("This email is already added");
-      return;
-    }
-
-    if (emails.length >= emailLimit) {
-      setError(
-        `You've reached the maximum number of emails (${emailLimit}) for your plan`
-      );
       return;
     }
 
@@ -257,15 +229,6 @@ export default function Settings() {
             <IconFileText className="size-5 mr-1.5 text-gray-400 -mt-0.5" />
             Docs
           </button>
-          <button
-            onClick={() => {
-              window.location.href = "/checkout/";
-            }}
-            className="bg-white flex flex-row items-center hover:bg-gray-50 border border-gray-400 font-inter px-3 py-2 rounded-lg text-xs transition-colors"
-          >
-            <IconCrown className="size-5 mr-1.5 text-yellow-500 -mt-0.5" />
-            Upgrade
-          </button>
         </div>
       </div>
 
@@ -278,41 +241,28 @@ export default function Settings() {
 
       {/* Grid Layout */}
       <div className="flex flex-col space-y-8">
-        {/* Current Plan Section */}
+        {/* Current Tokens Section */}
         <div className="border border-gray-200 rounded-lg p-6">
-          <h2 className="text-xl font-aeonik font-medium mb-4">Current Plan</h2>
+          <h2 className="text-xl font-aeonik font-medium mb-4">
+            Current Tokens
+          </h2>
           <div className="bg-gray-50 p-4 rounded-lg mb-4">
             <div className="flex justify-between items-center">
               <div>
                 <h3 className="font-medium text-gray-900">
-                  {user?.plan
-                    ? user.plan.charAt(0).toUpperCase() +
-                      user.plan.slice(1) +
-                      " Plan"
-                    : "Free Plan"}
+                  {user?.tokens?.toLocaleString()} Tokens
                 </h3>
                 <p className="text-gray-500 text-sm mt-1">
-                  {user?.plan === "business"
-                    ? "Maximum 1,000 MAUs"
-                    : user?.plan === "startup"
-                    ? "Maximum 100 MAUs"
-                    : user?.plan === "enterprise"
-                    ? "Maximum 5,000 MAUs"
-                    : "Maximum 20 MAUs"}
+                  {user?.tokens >= 1000000
+                    ? "Safe Amount of Tokens"
+                    : user?.tokens >= 100000
+                    ? "Warning : Low Tokens"
+                    : user?.tokens >= 10000
+                    ? "Critical : Very Low Tokens"
+                    : "Danger : Extremely Low Tokens"}
                 </p>
               </div>
               <div className="text-right">
-                <p className="font-medium text-gray-900">
-                  $
-                  {user?.plan === "business"
-                    ? "149"
-                    : user?.plan === "startup"
-                    ? "19"
-                    : user?.plan === "enterprise"
-                    ? "499"
-                    : "0"}
-                  /month
-                </p>
                 <p className="text-gray-500 text-sm mt-1">
                   Billed{" "}
                   {user?.last_paid
@@ -323,12 +273,10 @@ export default function Settings() {
             </div>
           </div>
           <div className="border border-gray-300 p-4 rounded-lg">
-            <h4 className="font-medium text-black mb-2">
-              Upgrade for more MAUs and Features
-            </h4>
+            <h4 className="font-medium text-black mb-2">Need more tokens?</h4>
             <p className="text-gray-700 text-sm mb-3">
-              Make sure all your users can still use Limeblock. Your block will
-              shut down once you hit your MAU cap
+              Make sure you have enough tokens for your users. Your AI actions
+              will stop working once you run out of tokens.
             </p>
 
             <button
@@ -337,7 +285,7 @@ export default function Settings() {
               }}
               className="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded-md text-sm transition duration-200"
             >
-              View Plans
+              Get Tokens
             </button>
           </div>
         </div>
@@ -412,24 +360,17 @@ export default function Settings() {
                   onChange={(e) => setNewEmail(e.target.value)}
                   placeholder="Add new email"
                   className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-500"
-                  disabled={emails.length >= emailLimit}
                 />
                 <button
                   onClick={handleAddEmail}
-                  disabled={emails.length >= emailLimit}
-                  className={`bg-gray-800 text-white px-4 py-2 rounded-md text-sm font-normal transition-colors ${
-                    emails.length >= emailLimit
-                      ? "opacity-50 cursor-not-allowed"
-                      : "hover:bg-gray-900"
-                  }`}
+                  className="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded-md text-sm font-normal transition-colors"
                 >
                   Add Email
                 </button>
               </div>
               <p className="text-xs text-center text-gray-500 mt-2">
-                {emails.length >= emailLimit
-                  ? "You've reached the maximum number of emails for your plan"
-                  : `Add emails for notifications and account access (${emails.length}/${emailLimit} used)`}
+                Add emails for notifications and account access ({emails.length}{" "}
+                emails)
               </p>
             </div>
           </div>
@@ -440,7 +381,7 @@ export default function Settings() {
           <h2 className="text-xl font-aeonik font-medium mb-4">API Keys</h2>
           <div className="bg-gray-50 p-4 rounded-lg">
             <label className="text-sm text-gray-900 block mb-2">
-              Chat API Key
+              Limeblock API Key
             </label>
             <div className="flex items-center space-x-2">
               <div className="flex-1 bg-white border border-gray-300 rounded-lg px-4 py-2 font-mono text-sm">

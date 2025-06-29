@@ -90,24 +90,14 @@ const Sidebar = ({ active, className = "" }) => {
               Getting Started
             </a>
             <a
-              href="/docs/managing_plans"
+              href="/docs/managing_tokens"
               className={`flex items-center py-1.5 px-2 rounded ${
-                active == "managing_plans"
+                active == "managing_tokens"
                   ? "text-black bg-gray-100"
                   : "text-gray-700 hover:bg-gray-50"
               }`}
             >
-              Managing Plans
-            </a>
-            <a
-              href="/docs/have_bot"
-              className={`flex items-center py-1.5 px-2 rounded ${
-                active == "have_bot"
-                  ? "text-black bg-gray-100"
-                  : "text-gray-700 hover:bg-gray-50"
-              }`}
-            >
-              Have Existing Chatbot
+              Managing Tokens
             </a>
             <a
               href="/docs/report"
@@ -162,16 +152,6 @@ const Sidebar = ({ active, className = "" }) => {
         {expandedSections.features && (
           <div className="ml-6 space-y-1 mt-1 text-[0.8rem]">
             <a
-              href="/docs/frontend"
-              className={`flex items-center py-1.5 px-2 rounded ${
-                active == "frontend"
-                  ? "text-black bg-gray-100"
-                  : "text-gray-700 hover:bg-gray-50"
-              }`}
-            >
-              Frontend
-            </a>
-            <a
               href="/docs/backend"
               className={`flex items-center py-1.5 px-2 rounded ${
                 active == "backend"
@@ -179,7 +159,7 @@ const Sidebar = ({ active, className = "" }) => {
                   : "text-gray-700 hover:bg-gray-50"
               }`}
             >
-              Backend
+              Endpoint Tree
             </a>
             <a
               href="/docs/request"
@@ -190,16 +170,6 @@ const Sidebar = ({ active, className = "" }) => {
               }`}
             >
               Request Feature
-            </a>
-            <a
-              href="/docs/vote"
-              className={`flex items-center py-1.5 px-2 rounded ${
-                active == "vote"
-                  ? "text-black bg-gray-100"
-                  : "text-gray-700 hover:bg-gray-50"
-              }`}
-            >
-              Vote New Framework
             </a>
           </div>
         )}

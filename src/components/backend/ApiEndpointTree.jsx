@@ -8,6 +8,7 @@ import {
   IconPlayerPlay,
   IconEdit,
   IconCheck,
+  IconId,
 } from "@tabler/icons-react";
 import React, { useState, useEffect } from "react";
 import { useToast } from "../global/Use-Toast";
@@ -39,6 +40,14 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
   useEffect(() => {
     if (folders) setNewFolders(folders);
   }, [folders]);
+
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text);
+    toast({
+      title: "Copied!",
+      description: "ID has been copied to clipboard.",
+    });
+  };
 
   const validateSchema = (schema, endpointId = "new") => {
     if (!schema.trim()) {
@@ -602,9 +611,21 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                     </span>
                   </div>
                   <div className="flex items-center space-x-2">
+                    {/* Folder ID copy button */}
+                    <button
+                      className="ml-1 text-gray-500 hover:text-gray-600"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        copyToClipboard(folder.id);
+                      }}
+                      title="Copy Folder ID"
+                    >
+                      <IconId className="size-4" />
+                    </button>
                     <button
                       className="size-6 flex items-center justify-center hover:bg-gray-200 rounded"
                       onClick={() => toggleAddEndpoint(folder.id)}
+                      title="Add Endpoint"
                     >
                       <IconPlus size={16} />
                     </button>
@@ -705,101 +726,8 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                         />
                       </div>
 
-                      {/* Add example prompts section */}
-                      <div className="flex flex-col space-y-1">
-                        <label className="text-xs">Example Prompts:</label>
-                        {(newEndpoint.examplePrompts || []).map(
-                          (prompt, index) => (
-                            <div
-                              key={index}
-                              className="flex items-center space-x-2"
-                            >
-                              <input
-                                type="text"
-                                className="border border-gray-300 rounded-md p-2 w-full text-sm"
-                                value={prompt}
-                                onChange={(e) =>
-                                  handlePromptChange(index, e.target.value)
-                                }
-                              />
-                              <button
-                                type="button" // Crucial fix here
-                                onClick={() => handleDeletePrompt(index)}
-                                className="text-red-500 hover:text-red-700"
-                              >
-                                <IconX size={14} />
-                              </button>
-                            </div>
-                          )
-                        )}
-                        <button
-                          onClick={() => {
-                            setNewEndpoint({
-                              ...newEndpoint,
-                              examplePrompts: [
-                                ...(newEndpoint.examplePrompts || []),
-                                "",
-                              ],
-                            });
-                          }}
-                          className="text-xs flex flex-row items-center text-gray-800 hover:text-black my-2 w-fit pr-3 py-0.5 rounded-md"
-                        >
-                          <IconPlus className="size-4 mr-0.5" /> Add Prompt
-                        </button>
-                      </div>
-
-                      {/* Required Context Parameters */}
-                      <div className="flex flex-col space-y-1 pt-3">
-                        <label className="text-xs">
-                          Required Context Parameters (IMPORTANT: Give in same
-                          casing as you give during implementation):
-                        </label>
-                        {(newEndpoint.requiredContextParams || []).map(
-                          (param, index) => (
-                            <div
-                              key={index}
-                              className="flex items-center space-x-2"
-                            >
-                              <input
-                                type="text"
-                                placeholder="e.g., user_id"
-                                className="border border-gray-300 rounded-md p-2 w-full text-sm"
-                                value={param}
-                                onChange={(e) =>
-                                  handleContextParamChange(
-                                    index,
-                                    e.target.value
-                                  )
-                                }
-                              />
-                              <button
-                                type="button"
-                                onClick={() => handleDeleteContextParam(index)}
-                                className="text-red-500 hover:text-red-700"
-                              >
-                                <IconX size={14} />
-                              </button>
-                            </div>
-                          )
-                        )}
-                        <button
-                          onClick={() => {
-                            setNewEndpoint({
-                              ...newEndpoint,
-                              requiredContextParams: [
-                                ...(newEndpoint.requiredContextParams || []),
-                                "",
-                              ],
-                            });
-                          }}
-                          className="text-xs flex flex-row items-center text-gray-800 hover:text-black my-2 w-fit pr-3 py-0.5 rounded-md"
-                        >
-                          <IconPlus className="size-4 mr-0.5" /> Add Parameter
-                        </button>
-                      </div>
-
                       {/* URL Input */}
-                      <div className="flex flex-col space-y-1 pt-2">
+                      <div className="flex flex-col space-y-1x">
                         <label className="text-xs">URL:</label>
                         <input
                           type="text"
@@ -923,6 +851,14 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                                   )}
                               </div>
                               <div className="flex">
+                                {/* Endpoint ID copy button */}
+                                <button
+                                  className="size-6 flex items-center justify-center hover:bg-gray-100 text-gray-600 rounded mr-1"
+                                  onClick={() => copyToClipboard(endpoint.id)}
+                                  title="Copy Endpoint ID"
+                                >
+                                  <IconId size={14} />
+                                </button>
                                 <button
                                   className="size-6 flex items-center justify-center hover:bg-gray-100 text-gray-600 rounded mr-1"
                                   onClick={() =>
@@ -1071,123 +1007,8 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                                       />
                                     </div>
 
-                                    {/* Add example prompts edit section */}
-                                    <div className="flex flex-col space-y-1">
-                                      <label className="text-xs">
-                                        Example Prompts:
-                                      </label>
-                                      {(
-                                        editingEndpoint.data.examplePrompts ||
-                                        []
-                                      ).map((prompt, index) => (
-                                        <div
-                                          key={index}
-                                          className="flex items-center space-x-2"
-                                        >
-                                          <input
-                                            type="text"
-                                            className="border border-gray-300 rounded-md p-2 w-full text-sm"
-                                            value={prompt}
-                                            onChange={(e) =>
-                                              handleEditPromptChange(
-                                                index,
-                                                e.target.value
-                                              )
-                                            }
-                                          />
-                                          <button
-                                            type="button"
-                                            onClick={() =>
-                                              handleEditDeletePrompt(index)
-                                            }
-                                            className="text-red-500 hover:text-red-700"
-                                          >
-                                            <IconX size={14} />
-                                          </button>
-                                        </div>
-                                      ))}
-                                      <button
-                                        onClick={() => {
-                                          const newPrompts = [
-                                            ...(editingEndpoint.data
-                                              .examplePrompts || []),
-                                            "",
-                                          ];
-                                          updateEditingEndpoint(
-                                            "examplePrompts",
-                                            newPrompts,
-                                            editingEndpoint.data.id
-                                          );
-                                        }}
-                                        className="text-xs flex flex-row items-center text-gray-800 hover:text-black my-2 w-fit pr-3 py-0.5 rounded-md"
-                                      >
-                                        <IconPlus className="size-4 mr-0.5" />
-                                        Add Prompt
-                                      </button>
-                                    </div>
-
-                                    {/* Required Context Parameters - Edit */}
-                                    <div className="flex flex-col space-y-1 pt-3">
-                                      <label className="text-xs">
-                                        Required Context Parameters (IMPORTANT:
-                                        Give in same casing as you give during
-                                        implementation):
-                                      </label>
-                                      {(
-                                        editingEndpoint.data
-                                          .requiredContextParams || []
-                                      ).map((param, index) => (
-                                        <div
-                                          key={index}
-                                          className="flex items-center space-x-2"
-                                        >
-                                          <input
-                                            type="text"
-                                            placeholder="e.g., api_key"
-                                            className="border border-gray-300 rounded-md p-2 w-full text-sm"
-                                            value={param}
-                                            onChange={(e) =>
-                                              handleEditContextParamChange(
-                                                index,
-                                                e.target.value
-                                              )
-                                            }
-                                          />
-                                          <button
-                                            type="button"
-                                            onClick={() =>
-                                              handleEditDeleteContextParam(
-                                                index
-                                              )
-                                            }
-                                            className="text-red-500 hover:text-red-700"
-                                          >
-                                            <IconX size={14} />
-                                          </button>
-                                        </div>
-                                      ))}
-                                      <button
-                                        onClick={() => {
-                                          const newParams = [
-                                            ...(editingEndpoint.data
-                                              .requiredContextParams || []),
-                                            "",
-                                          ];
-                                          updateEditingEndpoint(
-                                            "requiredContextParams",
-                                            newParams,
-                                            editingEndpoint.data.id
-                                          );
-                                        }}
-                                        className="text-xs flex flex-row items-center text-gray-800 hover:text-black my-2 w-fit pr-3 py-0.5 rounded-md"
-                                      >
-                                        <IconPlus className="size-4 mr-0.5" />{" "}
-                                        Add Parameter
-                                      </button>
-                                    </div>
-
                                     {/* URL Input */}
-                                    <div className="flex flex-col space-y-1 pt-2">
+                                    <div className="flex flex-col space-y-1">
                                       <label className="text-xs">URL:</label>
                                       <input
                                         type="text"

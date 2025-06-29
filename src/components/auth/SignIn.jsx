@@ -15,7 +15,7 @@ const reviews = [
     initials: "XX",
   },
   {
-    quote: "Limeblock is designed to be the best chatbot widget for any site.",
+    quote: "Limeblock is designed to be the best AI plugin for any site.",
     author: "Aditya Byju",
     role: "Founder",
     initials: "AB",

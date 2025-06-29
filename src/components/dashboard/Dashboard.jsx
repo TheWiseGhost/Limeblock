@@ -6,6 +6,12 @@ import {
   IconBulb,
   IconCrown,
   IconFileText,
+  IconChevronRight,
+  IconChevronDown,
+  IconId,
+  IconEye,
+  IconEyeOff,
+  IconCopy,
 } from "@tabler/icons-react";
 import React, { useState, useEffect } from "react";
 
@@ -13,9 +19,10 @@ export default function Dashboard() {
   const [showApiKey, setShowApiKey] = useState(false);
   const [user, setUser] = useState(null);
   const [frontend, setFrontend] = useState(null);
+  const [backend, setBackend] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [mauStats, setMauStats] = useState({});
+  const [tokenStats, setTokenStats] = useState({});
 
   const contextParams = {
     user_id: user?.id,
@@ -32,7 +39,6 @@ export default function Dashboard() {
           return;
         }
 
-        // Fetch user details
         const userResponse = await fetch(
           "https://limeblockbackend.onrender.com/api/user_details/",
           {
@@ -49,7 +55,6 @@ export default function Dashboard() {
         if (userData.success) {
           setUser(userData.user);
 
-          // Fetch frontend details using the same user_id
           const frontendResponse = await fetch(
             "https://limeblockbackend.onrender.com/api/frontend_details/",
             {
@@ -62,16 +67,32 @@ export default function Dashboard() {
           );
 
           const frontendData = await frontendResponse.json();
-
           if (frontendData.success) {
             setFrontend(frontendData.frontend);
           } else {
             setError("Failed to load frontend settings");
           }
 
-          // Fetch MAU stats
-          const mauResponse = await fetch(
-            "https://limeblockbackend.onrender.com/api/get_mau_stats/",
+          const backendResponse = await fetch(
+            "https://limeblockbackend.onrender.com/api/backend_details/",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ user_id: userId }),
+            }
+          );
+
+          const backendData = await backendResponse.json();
+          if (backendData.success) {
+            setBackend(backendData.backend);
+          } else {
+            console.error("Failed to load backend settings");
+          }
+
+          const tokenResponse = await fetch(
+            "https://limeblockbackend.onrender.com/api/get_token_stats/",
             {
               method: "POST",
               headers: {
@@ -81,12 +102,11 @@ export default function Dashboard() {
             }
           );
 
-          const mauData = await mauResponse.json();
-
-          if (!mauData.error) {
-            setMauStats(mauData.mau_stats);
+          const tokenData = await tokenResponse.json();
+          if (!tokenData.error) {
+            setTokenStats(tokenData.usage_stats || {});
           } else {
-            console.error("MAU stats error:", mauData.error);
+            console.error("Token stats error:", tokenData.error);
           }
         } else {
           setError("Failed to load user information");
@@ -104,51 +124,57 @@ export default function Dashboard() {
 
   const handleCopyApiKey = () => {
     navigator.clipboard.writeText(user?.api_key);
+    alert("API Key copied to clipboard!");
   };
 
-  // Helper function to format month keys for display
   const formatMonthKey = (monthKey) => {
     const [year, month] = monthKey.split("-");
     const date = new Date(parseInt(year), parseInt(month) - 1);
     return date.toLocaleString("default", { month: "short" });
   };
 
-  // Get max MAU value for chart scaling
-  const maxMauValue =
-    Object.values(mauStats).length > 0
-      ? Math.max(...Object.values(mauStats))
+  const formatTokens = (tokens) => {
+    if (tokens >= 1000000) {
+      return `${(tokens / 1000000).toFixed(1)}M`;
+    } else if (tokens >= 1000) {
+      return `${(tokens / 1000).toFixed(1)}K`;
+    }
+    return tokens.toString();
+  };
+
+  const maxTokenValue =
+    Object.values(tokenStats).length > 0
+      ? Math.max(...Object.values(tokenStats))
       : 0;
 
-  // Calculate total users by summing all MAUs
-  const totalUsers = Object.values(mauStats).reduce(
+  const totalTokens = Object.values(tokenStats).reduce(
     (sum, count) => sum + count,
     0
   );
 
-  // Calculate MAU increase from previous month to current month
-  const calculateMauIncrease = () => {
-    if (Object.keys(mauStats).length < 2) return 0;
+  const calculateTokenIncrease = () => {
+    if (Object.keys(tokenStats).length < 2) return 0;
 
-    const sortedMonths = Object.keys(mauStats).sort();
+    const sortedMonths = Object.keys(tokenStats).sort();
     const currentMonth = sortedMonths[sortedMonths.length - 1];
     const previousMonth = sortedMonths[sortedMonths.length - 2];
 
-    const currentMau = mauStats[currentMonth] || 0;
-    const previousMau = mauStats[previousMonth] || 0;
+    const currentTokens = tokenStats[currentMonth] || 0;
+    const previousTokens = tokenStats[previousMonth] || 0;
 
-    return currentMau - previousMau;
+    return currentTokens - previousTokens;
   };
 
-  const mauIncrease = calculateMauIncrease();
-  const mauIncreasePercentage = (() => {
-    if (Object.keys(mauStats).length < 2) return 100;
+  const tokenIncrease = calculateTokenIncrease();
+  const tokenIncreasePercentage = (() => {
+    if (Object.keys(tokenStats).length < 2) return 100;
 
-    const sortedMonths = Object.keys(mauStats).sort();
+    const sortedMonths = Object.keys(tokenStats).sort();
     const previousMonth = sortedMonths[sortedMonths.length - 2];
-    const previousMau = mauStats[previousMonth];
+    const previousTokens = tokenStats[previousMonth];
 
-    if (!previousMau) return 100;
-    return Math.round((mauIncrease / previousMau) * 100);
+    if (!previousTokens) return 100;
+    return Math.round((tokenIncrease / previousTokens) * 100);
   })();
 
   if (loading) {
@@ -183,7 +209,6 @@ export default function Dashboard() {
 
   return (
     <div className="bg-white w-full overflow-y-auto pb-12 pt-8 pr-12 pl-10 border-l border-gray-300 rounded-tl-[12px]">
-      {/* Header */}
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-aeonik font-medium">
           {user?.business_name} - Dashboard
@@ -228,67 +253,36 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Grid Layout */}
       <div className="grid grid-cols-5 gap-6">
-        {/* Widget Configuration Card - 2 columns */}
         <div className="col-span-2 border border-gray-300 rounded-md p-6">
-          <h2 className="text-2xl font-aeonik mb-8">My Widget</h2>
-          <div className="flex gap-4 w-full mb-6">
-            <div className="w-1/2 h-44 flex">
-              <div
-                style={{ backgroundColor: frontend?.body }}
-                className="size-44 rounded-xl flex justify-evenly pt-10 px-4"
-              >
-                <div
-                  style={{ backgroundColor: frontend?.eyes }}
-                  className="size-9 rounded-lg"
-                ></div>
-                <div
-                  style={{ backgroundColor: frontend?.eyes }}
-                  className="size-9 rounded-lg"
-                ></div>
-              </div>
-            </div>
-
-            <div className="flex flex-col w-1/2 px-4 space-y-6">
-              <div className="flex justify-between">
-                <div
-                  style={{ backgroundColor: frontend?.body }}
-                  className="size-12 border border-gray-300 rounded-md"
-                ></div>
-                <div
-                  style={{ backgroundColor: frontend?.eyes }}
-                  className="size-12 border border-gray-300 rounded-md"
-                ></div>
-                <div className="size-12 border border-gray-300 font-aeonik rounded-md flex items-center justify-center text-gray-800">
-                  {frontend?.size}
-                </div>
-              </div>
-              <div className="space-y-5 flex flex-col">
-                <button
-                  onClick={() => {
-                    window.location.href = "/frontend/";
-                  }}
-                  className="w-full border border-gray-400 rounded-lg py-2 text-sm font-inter hover:bg-gray-50 transition-colors"
-                >
-                  Style Widget
-                </button>
-                <button
-                  onClick={() => {
-                    window.open("/docs/export");
-                  }}
-                  className="w-full border border-gray-400 rounded-lg py-2 text-sm font-inter hover:bg-gray-50 transition-colors"
-                >
-                  Export Widget
-                </button>
-              </div>
-            </div>
+          <div className="flex justify-start items-center mb-4">
+            <h2 className="text-2xl font-aeonik">API Endpoints</h2>
           </div>
-          <div className="pt-2">
+
+          <div className="max-h-[300px] overflow-y-auto font-inter">
+            {backend && backend.folders && backend.folders.length > 0 ? (
+              backend.folders.slice(0, 3).map((folder) => (
+                <div key={folder.id} className="mb-3">
+                  <div className="flex items-center p-2 bg-gray-50 rounded-md">
+                    <span className="text-gray-900 text-sm">{folder.name}</span>
+                    <span className="text-gray-500 text-xs ml-2">
+                      {" "}
+                      ({folder.endpoints.length} endpoints){" "}
+                    </span>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="text-center text-gray-500 py-8 text-sm">
+                {backend
+                  ? "No API endpoints configured yet"
+                  : "Loading API endpoints..."}
+              </div>
+            )}
+          </div>
+          <div className="mt-12">
             <div className="flex items-center gap-2">
-              <span className="text-base font-inter text-gray-800">
-                API Key:
-              </span>
+              <span className="text-sm font-inter text-gray-800">API Key:</span>
               <input
                 type={showApiKey ? "text" : "password"}
                 value={user?.api_key}
@@ -299,71 +293,40 @@ export default function Dashboard() {
                 onClick={() => setShowApiKey(!showApiKey)}
                 className="p-1 hover:bg-gray-100 rounded"
               >
-                <svg
-                  className="w-4 h-4 text-gray-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  {showApiKey ? (
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"
-                    />
-                  ) : (
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                    />
-                  )}
-                </svg>
+                {showApiKey ? <IconEyeOff size={16} /> : <IconEye size={16} />}
               </button>
               <button
                 onClick={handleCopyApiKey}
                 className="p-1 hover:bg-gray-100 rounded"
                 title="Copy API Key"
               >
-                <svg
-                  className="w-4 h-4 text-gray-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
-                  />
-                </svg>
+                <IconCopy size={16} />
               </button>
             </div>
           </div>
         </div>
 
-        {/* Analytics Card - 3 columns */}
         <div className="col-span-3 border border-gray-300 rounded-md p-6">
-          <h2 className="text-2xl font-aeonik mb-6">Analytics</h2>
-
-          {/* Summary stats */}
+          <h2 className="text-2xl font-aeonik mb-6">Token Analytics</h2>
           <div className="grid grid-cols-3 gap-4 mt-6 font-inter">
             <div className="bg-gray-50 p-4 rounded-lg">
               <h4 className="text-sm text-gray-700 font-inter">
-                Current Month MAU
+                Current Month Usage
               </h4>
               <p className="text-2xl font-aeonik mt-1">
-                {Object.entries(mauStats).length > 0
-                  ? mauStats[Object.keys(mauStats).sort().reverse()[0]] || 0
-                  : 0}
+                {Object.entries(tokenStats).length > 0
+                  ? formatTokens(
+                      tokenStats[Object.keys(tokenStats).sort().reverse()[0]] ||
+                        0
+                    )
+                  : "0"}
               </p>
             </div>
             <div className="bg-gray-50 p-4 rounded-lg">
-              <h4 className="text-sm text-gray-700 font-inter">Total Users</h4>
-              <p className="text-2xl font-aeonik mt-1">{totalUsers}</p>
+              <h4 className="text-sm text-gray-700 font-inter">Total Usage</h4>
+              <p className="text-2xl font-aeonik mt-1">
+                {formatTokens(totalTokens)}
+              </p>
             </div>
             <div className="bg-gray-50 p-4 rounded-lg">
               <h4 className="text-sm text-gray-700 font-inter">
@@ -371,37 +334,38 @@ export default function Dashboard() {
               </h4>
               <div className="flex items-center mt-1">
                 <p className="text-2xl font-aeonik">
-                  {mauIncrease > 0 ? "+" : ""}
-                  {mauIncrease}
+                  {tokenIncrease > 0 ? "+" : ""}
+                  {formatTokens(tokenIncrease)}
                 </p>
                 <span
                   className={`ml-2 text-sm font-inter ${
-                    mauIncrease >= 0 ? "text-green-600" : "text-red-600"
+                    tokenIncrease >= 0 ? "text-green-600" : "text-red-600"
                   }`}
                 >
-                  ({mauIncrease >= 0 ? "+" : ""}
-                  {mauIncreasePercentage}%)
+                  ({tokenIncrease >= 0 ? "+" : ""}
+                  {tokenIncreasePercentage}%)
                 </span>
               </div>
             </div>
           </div>
-
-          {/* Additional stats */}
           <div className="mt-6">
             <div className="flex justify-between text-sm font-inter text-gray-700">
               <div>
                 <p>
-                  Average MAU:{" "}
+                  Average Usage:{" "}
                   <span className="font-medium text-black">
-                    {Object.values(mauStats).length > 0
-                      ? Math.round(
-                          Object.values(mauStats)
-                            .filter((num) => num !== 0)
-                            .reduce((a, b) => a + b, 0) /
-                            Object.values(mauStats).filter((num) => num !== 0)
-                              .length
+                    {Object.values(tokenStats).length > 0
+                      ? formatTokens(
+                          Math.round(
+                            Object.values(tokenStats)
+                              .filter((num) => num !== 0)
+                              .reduce((a, b) => a + b, 0) /
+                              Object.values(tokenStats).filter(
+                                (num) => num !== 0
+                              ).length
+                          )
                         )
-                      : 0}
+                      : "0"}
                   </span>
                 </p>
               </div>
@@ -409,12 +373,12 @@ export default function Dashboard() {
                 <p>
                   Peak Month:{" "}
                   <span className="font-medium text-black">
-                    {Object.entries(mauStats).length > 0
+                    {Object.entries(tokenStats).length > 0
                       ? formatMonthKey(
-                          Object.entries(mauStats).reduce(
+                          Object.entries(tokenStats).reduce(
                             (max, [month, count]) =>
-                              count > mauStats[max] ? month : max,
-                            Object.keys(mauStats)[0]
+                              count > tokenStats[max] ? month : max,
+                            Object.keys(tokenStats)[0]
                           )
                         )
                       : "N/A"}
@@ -423,18 +387,16 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-
           <button
             onClick={() => {
               window.location.href = "/analytics/";
             }}
-            className="px-6 mt-16 border border-gray-400 rounded-lg py-2 text-sm font-inter hover:bg-gray-50 transition-colors"
+            className="px-6 mt-12 border border-gray-400 rounded-lg py-2 text-sm font-inter hover:bg-gray-50 transition-colors"
           >
             View All Analytics
           </button>
         </div>
 
-        {/* Logs Card - 3 columns */}
         <div className="col-span-3 border border-gray-300 rounded-md p-6">
           <h2 className="text-2xl font-aeonik mb-4">Logs</h2>
           <div className="flex flex-col items-center pt-8 space-y-4 h-full justify-top">
@@ -445,43 +407,27 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Expected Cost Card - 2 columns */}
         <div className="col-span-2 border border-gray-300 rounded-md p-6">
-          <h2 className="text-2xl font-aeonik mb-4">Current Cost</h2>
+          <h2 className="text-2xl font-aeonik mb-4">Current Tokens</h2>
           <div className="h-48 font-inter">
             <div className="bg-gray-50 p-4 rounded-lg mb-4">
               <div className="flex justify-between items-center">
                 <div>
                   <h3 className="font-medium text-gray-900">
-                    {user?.plan
-                      ? user.plan.charAt(0).toUpperCase() +
-                        user.plan.slice(1) +
-                        " Plan"
-                      : "Free Plan"}
+                    {user?.tokens?.toLocaleString()} Tokens
                   </h3>
                   <p className="text-gray-500 text-sm mt-1">
-                    {user?.plan === "business"
-                      ? "Maximum 1,000 MAUs"
-                      : user?.plan === "startup"
-                      ? "Maximum 100 MAUs"
-                      : user?.plan === "enterprise"
-                      ? "Maximum 5,000 MAUs"
-                      : "Maximum 20 MAUs"}
+                    {user?.tokens >= 1000000
+                      ? "Safe Amount of Tokens"
+                      : user?.tokens >= 100000
+                      ? "Warning : Low Tokens"
+                      : user?.tokens >= 10000
+                      ? "Critical : Very Low Tokens"
+                      : "Danger : Extremely Low Tokens"}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="font-medium text-gray-900">
-                    $
-                    {user?.plan === "business"
-                      ? "149"
-                      : user?.plan === "startup"
-                      ? "19"
-                      : user?.plan === "enterprise"
-                      ? "499"
-                      : "0"}
-                    /month
-                  </p>
-                  <p className="text-gray-500 text-sm mt-1">
+                  <p className="text-gray-500 text-sm mt-6">
                     Billed{" "}
                     {user?.last_paid
                       ? new Date(user.last_paid).toLocaleDateString()
@@ -491,14 +437,14 @@ export default function Dashboard() {
               </div>
             </div>
             <div className="border border-gray-300 p-4 rounded-md flex flex-row items-center justify-between">
-              <h4 className="font-medium text-black">Upgrade for more MAUs</h4>
+              <h4 className="font-medium text-black">Need more tokens?</h4>
               <button
                 onClick={() => {
                   window.location.href = "/checkout/";
                 }}
                 className="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded-md text-sm transition duration-200"
               >
-                View Plans
+                Get Tokens
               </button>
             </div>
           </div>

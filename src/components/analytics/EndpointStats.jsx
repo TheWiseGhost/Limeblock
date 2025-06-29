@@ -6,54 +6,15 @@ import {
   IconChevronRight,
 } from "@tabler/icons-react";
 
-const EndpointStats = ({ frontend_folders, backend_folders, user_plan }) => {
-  const [openFrontendFolders, setOpenFrontendFolders] = useState({});
+const EndpointStats = ({ backend_folders }) => {
   const [openBackendFolders, setOpenBackendFolders] = useState({});
 
-  const isStartupPlan = user_plan === "startup" || user_plan === "free";
-
-  // Function to generate random strings
-  const generateRandomString = (length = 8) => {
-    const chars = "abcdefghijklmnopqrstuvwxyz";
-    let result = "";
-    for (let i = 0; i < length; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
-  };
-
-  // Helper function to obfuscate content based on plan
-  const obfuscateContent = (content, isNumeric = false) => {
-    if (isStartupPlan && !isNumeric) {
-      return (
-        <span className="relative">
-          <span className="filter blur-sm">
-            {generateRandomString(content?.length || 8)}
-          </span>
-          {isNumeric && (
-            <span className="absolute right-0 top-0 filter-none">
-              {content}
-            </span>
-          )}
-        </span>
-      );
-    }
-    return content;
-  };
-
   // Helper function to toggle folder open/closed state
-  const toggleFolder = (folderId, isBackend) => {
-    if (isBackend) {
-      setOpenBackendFolders((prev) => ({
-        ...prev,
-        [folderId]: !prev[folderId],
-      }));
-    } else {
-      setOpenFrontendFolders((prev) => ({
-        ...prev,
-        [folderId]: !prev[folderId],
-      }));
-    }
+  const toggleFolder = (folderId) => {
+    setOpenBackendFolders((prev) => ({
+      ...prev,
+      [folderId]: !prev[folderId],
+    }));
   };
 
   // Function to extract all endpoints from folders
@@ -79,23 +40,14 @@ const EndpointStats = ({ frontend_folders, backend_folders, user_plan }) => {
   };
 
   // Get all endpoints and sort by num_hits
-  const frontendEndpoints = getAllEndpoints(frontend_folders);
   const backendEndpoints = getAllEndpoints(backend_folders);
 
-  // Get top 3 most hit endpoints
-  const topFrontendEndpoints = [...frontendEndpoints]
-    .sort((a, b) => b.num_hits - a.num_hits)
-    .slice(0, 3);
-
+  // Get top endpoints (show more since we have more space)
   const topBackendEndpoints = [...backendEndpoints]
     .sort((a, b) => b.num_hits - a.num_hits)
-    .slice(0, 3);
+    .slice(0, 8);
 
-  // Calculate total hits for frontend and backend
-  const totalFrontendHits = frontendEndpoints.reduce(
-    (sum, endpoint) => sum + endpoint.num_hits,
-    0
-  );
+  // Calculate total hits for backend
   const totalBackendHits = backendEndpoints.reduce(
     (sum, endpoint) => sum + endpoint.num_hits,
     0
@@ -135,248 +87,127 @@ const EndpointStats = ({ frontend_folders, backend_folders, user_plan }) => {
 
   return (
     <motion.div
-      className="border border-gray-300 rounded-lg p-6 font-inter"
+      className="border border-gray-300 rounded-lg p-6 font-inter w-full"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-2xl font-aeonik">Endpoint Analytics</h2>
-        {isStartupPlan && (
-          <motion.button
-            className="px-4 py-2 bg-gray-700 hover:bg-gray-800 text-white rounded-md text-sm"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.95 }}
+        <div className="flex items-center gap-4">
+          <h2 className="text-2xl font-aeonik">Endpoint Analytics</h2>
+          <motion.span
+            className="px-4 py-1 text-gray-900 rounded-full text-base font-normal font-aeonik border border-gray-300"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
-            Upgrade to View Details
-          </motion.button>
-        )}
+            {totalBackendHits} Total Hits
+          </motion.span>
+        </div>
       </div>
 
       <div className="grid grid-cols-2 gap-12">
-        {/* Frontend Section */}
+        {/* Most Used Endpoints - Left Side */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="show"
         >
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-inter">Frontend Endpoints</h3>
-            <motion.span
-              className="px-4 py-1 text-gray-900 rounded-full text-base font-normal font-aeonik border border-gray-300"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            >
-              {totalFrontendHits} Total Hits
-            </motion.span>
-          </div>
-
-          {/* Top Frontend Endpoints */}
-          <div className="mb-6">
-            {topFrontendEndpoints.length > 0 ? (
-              <motion.div className="space-y-3" variants={containerVariants}>
-                {topFrontendEndpoints.map((endpoint) => (
-                  <motion.div
-                    key={endpoint.id}
-                    className="bg-gray-50 p-4 rounded-lg pr-6"
-                    variants={itemVariants}
-                    whileHover={{ scale: 1.01 }}
-                  >
-                    <div className="flex justify-between">
-                      <h5 className="font-inter">
-                        {obfuscateContent(endpoint.name || "Unnamed Endpoint")}
-                      </h5>
-                      <span className="text-black font-inter">
-                        {endpoint.num_hits} hits
-                      </span>
-                    </div>
-                    <p className="text-xs text-gray-700 mt-1">
-                      Folder: {obfuscateContent(endpoint.folderName)}
-                    </p>
-                    {endpoint.url && (
-                      <p className="text-xs text-gray-500 mt-1">
-                        {obfuscateContent(endpoint.url)}
+          {topBackendEndpoints.length > 0 ? (
+            <motion.div className="space-y-3" variants={containerVariants}>
+              {topBackendEndpoints.map((endpoint, index) => (
+                <motion.div
+                  key={endpoint.id}
+                  className="bg-gray-50 p-4 rounded-lg"
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.01 }}
+                >
+                  <div className="flex justify-between items-start">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded-full font-medium">
+                          #{index + 1}
+                        </span>
+                        <h5 className="font-inter font-medium">
+                          {endpoint.name || "Unnamed Endpoint"}
+                        </h5>
+                      </div>
+                      <p className="text-xs text-gray-700 mb-1">
+                        Folder: {endpoint.folderName}
                       </p>
-                    )}
-                  </motion.div>
-                ))}
-              </motion.div>
-            ) : (
-              <p className="text-gray-500 bg-gray-50 p-4 rounded-lg">
-                No frontend endpoints found
-              </p>
-            )}
-          </div>
-
-          {/* All Frontend Folders */}
-          <div>
-            <h4 className="text-base text-black mb-3">All Folders Stats</h4>
-            {frontend_folders && frontend_folders.length > 0 ? (
-              <motion.div className="space-y-3" variants={containerVariants}>
-                {frontend_folders.map((folder) => (
-                  <motion.div
-                    key={folder.id}
-                    className="border border-gray-200 rounded-lg overflow-hidden"
-                    variants={itemVariants}
-                  >
-                    <motion.button
-                      onClick={() => toggleFolder(folder.id, false)}
-                      className="w-full p-4 flex justify-start space-x-2 items-center bg-white text-left"
-                      whileHover={{ backgroundColor: "#f9fafb" }}
-                    >
-                      <span className="text-gray-500">
-                        {openFrontendFolders[folder.id] ? (
-                          <IconChevronDown className="size-4 text-black" />
-                        ) : (
-                          <IconChevronRight className="size-4 text-black" />
-                        )}
+                      {endpoint.url && (
+                        <p className="text-xs text-gray-500 font-mono">
+                          {endpoint.url}
+                        </p>
+                      )}
+                    </div>
+                    <div className="text-right ml-4">
+                      <span className="text-lg font-inter font-semibold text-black">
+                        {endpoint.num_hits}
                       </span>
-                      <span className="font-inter text-sm">
-                        {obfuscateContent(folder.name || "Unnamed Folder")}
-                      </span>
-                    </motion.button>
-
-                    {openFrontendFolders[folder.id] && (
-                      <motion.div
-                        className="p-2 space-y-3"
-                        variants={accordionVariants}
-                        initial="hidden"
-                        animate="show"
-                        exit="hidden"
-                      >
-                        {folder.endpoints && folder.endpoints.length > 0 ? (
-                          folder.endpoints.map((endpoint) => (
-                            <motion.div
-                              key={endpoint.id}
-                              className="p-3 bg-white rounded-lg border border-gray-300 text-sm"
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              transition={{ duration: 0.2 }}
-                              whileHover={{
-                                y: -2,
-                                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-                              }}
-                            >
-                              <div className="flex justify-between">
-                                <div className="font-inter">
-                                  {obfuscateContent(
-                                    endpoint.name || "Unnamed Endpoint"
-                                  )}
-                                </div>
-                                <div className="text-black font-inter">
-                                  {endpoint.num_hits || 0} hits
-                                </div>
-                              </div>
-                              {endpoint.url && (
-                                <div className="text-xs text-gray-500 mt-1">
-                                  {obfuscateContent(endpoint.url)}
-                                </div>
-                              )}
-                            </motion.div>
-                          ))
-                        ) : (
-                          <p className="text-gray-500 text-sm p-3 bg-white rounded-lg">
-                            No endpoints in this folder
-                          </p>
-                        )}
-                      </motion.div>
-                    )}
-                  </motion.div>
-                ))}
-              </motion.div>
-            ) : (
-              <p className="text-gray-500 bg-gray-50 p-4 rounded-lg">
-                No frontend folders found
-              </p>
-            )}
-          </div>
+                      <p className="text-xs text-gray-500">hits</p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : (
+            <p className="text-gray-500 bg-gray-50 p-6 rounded-lg text-center">
+              No backend endpoints found
+            </p>
+          )}
         </motion.div>
 
-        {/* Backend Section */}
+        {/* Folder Structure - Right Side */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="show"
         >
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-inter">Backend Endpoints</h3>
-            <motion.span
-              className="px-4 py-1 text-gray-900 rounded-full text-base font-normal font-aeonik border border-gray-300"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            >
-              {totalBackendHits} Total Hits
-            </motion.span>
-          </div>
+          {backend_folders && backend_folders.length > 0 ? (
+            <motion.div className="space-y-3" variants={containerVariants}>
+              {backend_folders.map((folder) => {
+                const folderHits =
+                  folder.endpoints?.reduce(
+                    (sum, endpoint) => sum + (endpoint.num_hits || 0),
+                    0
+                  ) || 0;
 
-          {/* Top Backend Endpoints */}
-          <div className="mb-6">
-            {topBackendEndpoints.length > 0 ? (
-              <motion.div className="space-y-3" variants={containerVariants}>
-                {topBackendEndpoints.map((endpoint) => (
-                  <motion.div
-                    key={endpoint.id}
-                    className="bg-gray-50 p-4 rounded-lg pr-6"
-                    variants={itemVariants}
-                    whileHover={{ scale: 1.01 }}
-                  >
-                    <div className="flex justify-between">
-                      <h5 className="font-inter">
-                        {obfuscateContent(endpoint.name || "Unnamed Endpoint")}
-                      </h5>
-                      <span className="text-black font-inter">
-                        {endpoint.num_hits} hits
-                      </span>
-                    </div>
-                    <p className="text-xs text-gray-700 mt-1">
-                      Folder: {obfuscateContent(endpoint.folderName)}
-                    </p>
-                    {endpoint.url && (
-                      <p className="text-xs text-gray-500 mt-1">
-                        {obfuscateContent(endpoint.url)}
-                      </p>
-                    )}
-                  </motion.div>
-                ))}
-              </motion.div>
-            ) : (
-              <p className="text-gray-500 bg-gray-50 p-4 rounded-lg">
-                No backend endpoints found
-              </p>
-            )}
-          </div>
-
-          {/* All Backend Folders */}
-          <div>
-            <h4 className="text-base text-black mb-3">All Folders Stats</h4>
-            {backend_folders && backend_folders.length > 0 ? (
-              <motion.div className="space-y-3" variants={containerVariants}>
-                {backend_folders.map((folder) => (
+                return (
                   <motion.div
                     key={folder.id}
                     className="border border-gray-200 rounded-lg overflow-hidden"
                     variants={itemVariants}
                   >
                     <motion.button
-                      onClick={() => toggleFolder(folder.id, true)}
-                      className="w-full p-4 flex justify-start space-x-2 items-center bg-white text-left"
+                      onClick={() => toggleFolder(folder.id)}
+                      className="w-full p-4 flex justify-between items-center bg-white text-left"
                       whileHover={{ backgroundColor: "#f9fafb" }}
                     >
-                      <span className="text-gray-500">
-                        {openBackendFolders[folder.id] ? (
-                          <IconChevronDown className="size-4 text-black" />
-                        ) : (
-                          <IconChevronRight className="size-4 text-black" />
-                        )}
-                      </span>
-                      <span className="font-inter text-sm">
-                        {obfuscateContent(folder.name || "Unnamed Folder")}
-                      </span>
+                      <div className="flex items-center space-x-3">
+                        <span className="text-gray-500">
+                          {openBackendFolders[folder.id] ? (
+                            <IconChevronDown className="size-4 text-black" />
+                          ) : (
+                            <IconChevronRight className="size-4 text-black" />
+                          )}
+                        </span>
+                        <span className="font-inter text-sm">
+                          {folder.name || "Unnamed Folder"}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-6">
+                        <span className="text-xs text-gray-500">
+                          {folder.endpoints?.length || 0} endpoints
+                        </span>
+                        <span className="text-sm font-inter font-semibold text-black">
+                          {folderHits} hits
+                        </span>
+                      </div>
                     </motion.button>
 
                     {openBackendFolders[folder.id] && (
                       <motion.div
-                        className="p-2 space-y-3"
+                        className="p-2 space-y-2 bg-gray-50"
                         variants={accordionVariants}
                         initial="hidden"
                         animate="show"
@@ -386,48 +217,44 @@ const EndpointStats = ({ frontend_folders, backend_folders, user_plan }) => {
                           folder.endpoints.map((endpoint) => (
                             <motion.div
                               key={endpoint.id}
-                              className="p-3 bg-white rounded-lg border border-gray-300 text-sm"
+                              className="p-3 bg-white rounded-lg border border-gray-200 text-sm"
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
                               transition={{ duration: 0.2 }}
-                              whileHover={{
-                                y: -2,
-                                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-                              }}
                             >
-                              <div className="flex justify-between">
-                                <div className="font-inter">
-                                  {obfuscateContent(
-                                    endpoint.name || "Unnamed Endpoint"
+                              <div className="flex justify-between items-start">
+                                <div className="flex-1">
+                                  <div className="font-inter font-medium mb-1">
+                                    {endpoint.name || "Unnamed Endpoint"}
+                                  </div>
+                                  {endpoint.url && (
+                                    <div className="text-xs text-gray-500 font-mono">
+                                      {endpoint.url}
+                                    </div>
                                   )}
                                 </div>
-                                <div className="text-black font-inter">
-                                  {endpoint.num_hits || 0} hits
+                                <div className="text-black font-inter font-semibold ml-3">
+                                  {endpoint.num_hits || 0}
                                 </div>
                               </div>
-                              {endpoint.url && (
-                                <div className="text-xs text-gray-500 mt-1">
-                                  {obfuscateContent(endpoint.url)}
-                                </div>
-                              )}
                             </motion.div>
                           ))
                         ) : (
-                          <p className="text-gray-500 text-sm p-3 bg-white rounded-lg">
+                          <p className="text-gray-500 text-sm p-3 bg-white rounded-lg text-center">
                             No endpoints in this folder
                           </p>
                         )}
                       </motion.div>
                     )}
                   </motion.div>
-                ))}
-              </motion.div>
-            ) : (
-              <p className="text-gray-500 bg-gray-50 p-4 rounded-lg">
-                No backend folders found
-              </p>
-            )}
-          </div>
+                );
+              })}
+            </motion.div>
+          ) : (
+            <p className="text-gray-500 bg-gray-50 p-6 rounded-lg text-center">
+              No backend folders found
+            </p>
+          )}
         </motion.div>
       </div>
     </motion.div>

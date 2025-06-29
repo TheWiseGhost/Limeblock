@@ -128,7 +128,7 @@ const Backend = () => {
     <div className="bg-white w-full overflow-y-auto pb-12 pt-8 pr-12 pl-10 border-l border-gray-300 rounded-tl-[12px]">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-aeonik font-medium">
-          {user?.business_name} - Backend
+          {user?.business_name} - Endpoints
         </h1>
         <div className="flex flex-row w-fit items-center space-x-5">
           <button

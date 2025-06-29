@@ -29,14 +29,7 @@ export default function SidebarDemo({ params }) {
       ),
     },
     {
-      label: "Frontend",
-      href: "/frontend",
-      icon: (
-        <IconUserScreen className="text-neutral-800 size-5 flex-shrink-0" />
-      ),
-    },
-    {
-      label: "Backend",
+      label: "Endpoints",
       href: "/backend",
       icon: (
         <IconBinaryTree2 className="text-neutral-800 size-5 flex-shrink-0" />

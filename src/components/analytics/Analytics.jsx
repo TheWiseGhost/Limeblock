@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import MAU from "./MAU";
 import EndpointStats from "./EndpointStats";
 import { ChatWidget } from "@limeblock/react";
 import {
@@ -10,6 +9,7 @@ import {
   IconCrown,
   IconFileText,
 } from "@tabler/icons-react";
+import TokenStats from "./TokenStats";
 
 const Analytics = () => {
   const [user, setUser] = useState(null);
@@ -22,7 +22,7 @@ const Analytics = () => {
     user_id: user?.id,
   };
 
-  const [mauStats, setMauStats] = useState(null);
+  const [tokenStats, setTokenStats] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -92,9 +92,9 @@ const Analytics = () => {
             setError("Failed to load backend settings");
           }
 
-          // Fetch MAU stats
-          const mauResponse = await fetch(
-            "https://limeblockbackend.onrender.com/api/get_mau_stats/",
+          // Fetch Token stats
+          const tokenResponse = await fetch(
+            "https://limeblockbackend.onrender.com/api/get_token_stats/",
             {
               method: "POST",
               headers: {
@@ -104,12 +104,12 @@ const Analytics = () => {
             }
           );
 
-          const mauData = await mauResponse.json();
+          const tokenData = await tokenResponse.json();
 
-          if (!mauData.error) {
-            setMauStats(mauData.mau_stats);
+          if (!tokenData.error) {
+            setTokenStats(tokenData);
           } else {
-            console.error("MAU stats error:", mauData.error);
+            console.error("Token stats error:", tokenData.error);
           }
         } else {
           setError("Failed to load user information");
@@ -202,12 +202,11 @@ const Analytics = () => {
       </div>
 
       <div className="flex flex-col space-y-8">
-        <MAU mauStats={mauStats} userPlan={user?.plan} />
-        <EndpointStats
-          frontend_folders={frontend?.folders}
-          backend_folders={backend?.folders}
-          user_plan={user?.plan}
+        <TokenStats
+          tokenStats={tokenStats.usage_stats}
+          remainingTokens={tokenStats.remaining}
         />
+        <EndpointStats backend_folders={backend?.folders} />
       </div>
       <ChatWidget
         apiKey={"lime_2JDnwGpM7OOfEcfj3kJ9bwVrGULxh1sL"}

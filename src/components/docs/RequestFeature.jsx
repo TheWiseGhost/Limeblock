@@ -28,18 +28,7 @@ const RequestFeature = () => {
             Thank you for being an active user of Limeblock!
           </p>
         </div>
-        <div className="bg-green-50 border-l-4 text-sm border-green-400 p-4 mb-6">
-          <p className="text-green-700">
-            <strong>Tip:</strong> If your idea is a new framework, visit{" "}
-            <a
-              href="/docs/vote/"
-              className="underline text-gray-800 hover:text-black"
-            >
-              here
-            </a>{" "}
-            to vote.
-          </p>
-        </div>
+
         <a
           href="/dashboard"
           className="text-sm mt-4 w-fit rounded-lg px-4 py-3 font-inter text-white bg-gray-900 hover:bg-gray-800 transition duration-200"

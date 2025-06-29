@@ -110,14 +110,54 @@ app.use(cors({
 // Your routes and other middleware`;
 
   const contextParamsExample = `{
-  "path": "/api/dashboard/stats",
-  "method": "GET",
-  "description": "Retrieves personalized dashboard statistics for the specified user, including recent activity, pending tasks, and performance metrics for the given time period.",
-  "schema": {
     "user_id": "{user_id}",
-    "time_period": "string",
-    "include_archived": "boolean"
+    "time_period": "30 days",
+    "include_archived": true
+}`;
+
+  const schemaInstructionsExample = `// Example of well-defined schema with actual values
+{
+  "userId": "{userId}",          // Context parameter in correct casing
+  "orderDetails": {
+    "orderId": "ORD-78945",      // Actual string value
+    "totalAmount": 149.99,       // Actual number value
+    "isCompleted": true,         // Actual boolean value
+    "items": [                   // Array with actual values
+      {
+        "productId": "PROD-123",
+        "quantity": 2,
+        "unitPrice": 59.99
+      },
+      {
+        "productId": "PROD-456",
+        "quantity": 1,
+        "unitPrice": 29.99
+      }
+    ],
+    "shippingAddress": {         // Nested object with actual values
+      "street": "123 Elm Street",
+      "city": "San Francisco",
+      "zipCode": "94105"
+    }
+  },
+  "preferences": {
+    "notificationOptIn": true,
+    "preferredTheme": "dark"
   }
+}`;
+
+  const contextImplementationExample = `// When making API requests from your app
+const context = {
+  userId: "user_12345",  // Must match casing exactly
+  timePeriod: "30 days", // Must match casing
+  includeArchived: true  // Must match casing
+};
+
+// This will be sent to the endpoint as:
+{
+  "userId": "user_12345",
+  "timePeriod": "30 days",
+  "includeArchived": true
 }`;
 
   return (
@@ -138,9 +178,10 @@ app.use(cors({
           <div className="text-sm max-w-none">
             <p className="mb-4">
               This guide will walk you through the process of configuring your
-              backend to work seamlessly with your Limeblock widget. Proper
-              backend integration enables your widget to access data, perform
-              actions, and provide a more personalized experience to your users.
+              backend to work seamlessly with Limeblock. Proper backend
+              integration enables your Limeblock AI endpoints to access data,
+              perform actions, and provide a more personalized experience to
+              your users.
             </p>
 
             <h2 className="text-2xl font-aeonik font-medium mt-8 mb-4">
@@ -163,8 +204,8 @@ app.use(cors({
               API Endpoint Configuration
             </h2>
             <p className="mb-4">
-              Your Limeblock widget can interact with your backend through
-              defined API endpoints. Follow these guidelines to configure them
+              Limeblock can interact with your backend through the API endpoints
+              you defined in app. Follow these guidelines to configure them
               effectively:
             </p>
             <ul className="list-disc pl-6 mb-6 space-y-2">
@@ -245,178 +286,169 @@ app.use(cors({
               className="mb-4"
             />
 
-            <h3 className="text-3xl font-aeonik font-medium mt-10 mb-4">
-              Best Practices for Example Prompts
+            {/* NEW SECTION: Schema Instructions */}
+            <h3 className="text-3xl font-aeonik font-medium mt-12 mb-4">
+              Schema Instructions
             </h3>
-            <p className="mb-4">Effective prompts should:</p>
-            <ul className="list-disc pl-6 mb-6 space-y-2">
-              <li>Have a clear objective or task</li>
-              <li>Have clear purpose</li>
-              <li>Expected output format</li>
-              <li>Encompass the idea a user would want</li>
-              <li>Include key words that indicate this endpoint is best</li>
-            </ul>
-
-            <h4 className="text-lg font-aeonik font-medium mt-4 mb-2">
-              Example of a Good Prompt:
-            </h4>
-            <Code
-              code={`Create a page called community (This is an example For Limeblock's add frontend pages)`}
-              language="text"
-              showLineNumbers={false}
-              copyButton={true}
-              className="mb-4"
-            />
-
-            <h2 className="text-3xl font-aeonik font-medium mt-12 mb-4">
-              Context Parameters
-            </h2>
             <p className="mb-4">
-              Context parameters allow your widget to dynamically pass
-              information to API calls, making interactions more relevant and
-              personalized.
+              Proper schema definition is crucial for successful AI integration.
+              Follow these guidelines to ensure your schemas are correctly
+              formatted:
             </p>
 
-            <h3 className="text-xl font-aeonik font-medium mt-6 mb-4">
-              How Context Parameters Work
-            </h3>
-            <ol className="list-decimal pl-6 mb-6 space-y-2">
+            <h4 className="text-xl font-aeonik font-medium mt-6 mb-4">
+              Context Parameters Formatting
+            </h4>
+            <ul className="list-disc pl-6 mb-6 space-y-2">
               <li>
-                Define parameters in your endpoint schemas using curly braces:{" "}
-                <code>{`{parameter_name}`}</code>
+                <strong>Wrap in curly braces</strong>: Context parameters must
+                be wrapped in curly braces (e.g., <code>{`"{userId}"`}</code>)
               </li>
               <li>
-                When implementing the widget, pass these values dynamically
+                <strong>Exact casing</strong>: Use the exact casing your backend
+                expects (camelCase, snake_case, etc.)
               </li>
               <li>
-                The AI will automatically substitute these placeholders with
-                actual values during interactions
+                <strong>Consistency</strong>: Maintain the same casing
+                throughout your schema and implementation
               </li>
-            </ol>
+              <li>
+                <strong>No spaces</strong>: Avoid spaces in parameter names (use{" "}
+                <code>timePeriod</code> instead of <code>time period</code>)
+              </li>
+            </ul>
 
-            <h3 className="text-xl font-aeonik font-medium mt-6 mb-4">
-              Common Context Parameters
-            </h3>
-            <table className="w-full border-collapse mb-6">
-              <thead>
-                <tr className="bg-gray-100">
-                  <th className="p-2 border border-gray-300">Parameter</th>
-                  <th className="p-2 border border-gray-300">Description</th>
-                  <th className="p-2 border border-gray-300">Usage Example</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="p-2 border border-gray-300">
-                    <code>{`{user_id}`}</code>
-                  </td>
-                  <td className="p-2 border border-gray-300">
-                    Current authenticated user's ID
-                  </td>
-                  <td className="p-2 border border-gray-300">
-                    Personalizing responses, fetching user-specific data
-                  </td>
-                </tr>
-                <tr>
-                  <td className="p-2 border border-gray-300">
-                    <code>{`{session_id}`}</code>
-                  </td>
-                  <td className="p-2 border border-gray-300">
-                    Current session identifier
-                  </td>
-                  <td className="p-2 border border-gray-300">
-                    Tracking conversation context across interactions
-                  </td>
-                </tr>
-                <tr>
-                  <td className="p-2 border border-gray-300">
-                    <code>{`{product_id}`}</code>
-                  </td>
-                  <td className="p-2 border border-gray-300">
-                    Product being discussed
-                  </td>
-                  <td className="p-2 border border-gray-300">
-                    Fetching specific product details during a conversation
-                  </td>
-                </tr>
-                <tr>
-                  <td className="p-2 border border-gray-300">
-                    <code>{`{order_id}`}</code>
-                  </td>
-                  <td className="p-2 border border-gray-300">
-                    Order being discussed
-                  </td>
-                  <td className="p-2 border border-gray-300">
-                    Retrieving or updating order information
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <h4 className="text-xl font-aeonik font-medium mt-6 mb-4">
+              Data Format Guidelines
+            </h4>
+            <p className="mb-4">
+              Use actual values in your schema examples to demonstrate expected
+              formats:
+            </p>
+            <div className="border border-gray-200 rounded-lg overflow-hidden mb-6">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Data Type
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Format Example
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Notes
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  <tr>
+                    <td className="px-4 py-4 whitespace-nowrap text-sm">
+                      String
+                    </td>
+                    <td className="px-4 py-4 whitespace-nowrap text-sm">
+                      <code>"ORD-78945"</code>
+                    </td>
+                    <td className="px-4 py-4 text-sm">
+                      Use quotes for all string values
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-4 whitespace-nowrap text-sm">
+                      Number
+                    </td>
+                    <td className="px-4 py-4 whitespace-nowrap text-sm">
+                      <code>149.99</code>
+                    </td>
+                    <td className="px-4 py-4 text-sm">No quotes for numbers</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-4 whitespace-nowrap text-sm">
+                      Boolean
+                    </td>
+                    <td className="px-4 py-4 whitespace-nowrap text-sm">
+                      <code>true</code> or <code>false</code>
+                    </td>
+                    <td className="px-4 py-4 text-sm">No quotes, lowercase</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-4 whitespace-nowrap text-sm">
+                      Array
+                    </td>
+                    <td className="px-4 py-4 whitespace-nowrap text-sm">
+                      <code>[{"{...}"}]</code>
+                    </td>
+                    <td className="px-4 py-4 text-sm">
+                      Contains actual objects with values
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-4 whitespace-nowrap text-sm">
+                      Object
+                    </td>
+                    <td className="px-4 py-4 whitespace-nowrap text-sm">
+                      <code>{"{...}"}</code>
+                    </td>
+                    <td className="px-4 py-4 text-sm">
+                      Nested structures with actual values
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-            <h3 className="text-xl font-aeonik font-medium mt-6 mb-4">
-              Example Schema with Context Parameters
-            </h3>
+            <h4 className="text-xl font-aeonik font-medium mt-6 mb-4">
+              Schema Example with Actual Values
+            </h4>
+            <p className="mb-4">
+              Here's an example schema demonstrating correct casing, context
+              parameters, and actual values:
+            </p>
             <Code
-              code={contextParamsExample}
+              code={schemaInstructionsExample}
               language="json"
               showLineNumbers={true}
               copyButton={true}
               className="mb-4"
             />
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+              <p className="text-yellow-700">
+                <strong>Important:</strong> This example shows the exact
+                structure and value types that would be sent to your endpoint.
+                The AI will generate requests matching this format exactly.
+                Context parameters like <code>{`"{userId}"`}</code> will be
+                replaced with actual values at runtime.
+              </p>
+            </div>
 
-            <h2 className="text-2xl font-aeonik font-medium mt-8 mb-4">
-              Consistent Naming Conventions
-            </h2>
+            <h4 className="text-xl font-aeonik font-medium mt-6 mb-4">
+              Context Implementation Consistency
+            </h4>
             <p className="mb-4">
-              To avoid potential AI errors and ensure smooth operation, maintain
-              consistent naming throughout your API configuration:
+              When providing context in your implementation, the casing must
+              match exactly what you defined in your schema:
             </p>
-            <ul className="list-disc pl-6 mb-6 space-y-2">
-              <li>
-                Use <code>snake_case</code> for all parameter names
-              </li>
-              <li>
-                Keep endpoint paths consistent (e.g., all plural nouns for
-                collections)
-              </li>
-              <li>
-                Use the same parameter names across different endpoints when
-                they represent the same data
-              </li>
-              <li>
-                Prefix IDs with their entity type (e.g., <code>user_id</code>,{" "}
-                <code>product_id</code>)
-              </li>
-            </ul>
-
-            <h3 className="text-xl font-aeonik font-medium mt-6 mb-4">
-              Examples of Consistent Naming
-            </h3>
-            <div className="mb-6">
-              <p className="mb-2">✅ Good:</p>
-              <Code
-                code={`user_id, product_id, order_items, created_at`}
-                language="text"
-                showLineNumbers={false}
-                copyButton={true}
-                className="mb-4"
-              />
-              <p className="mb-2">❌ Avoid Inconsistency:</p>
-              <Code
-                code={`userId, ProductId, orderItems, created-at`}
-                language="text"
-                showLineNumbers={false}
-                copyButton={true}
-                className="mb-4"
-              />
+            <Code
+              code={contextImplementationExample}
+              language="javascript"
+              showLineNumbers={true}
+              copyButton={true}
+              className="mb-4"
+            />
+            <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
+              <p className="text-red-700">
+                <strong>Warning:</strong> Casing mismatches will cause context
+                parameters to not be replaced properly.
+                <code>userId</code> and <code>userid</code> are considered
+                different parameters. This is the most common integration error.
+              </p>
             </div>
 
             <h2 className="text-3xl font-aeonik font-medium mt-12 mb-4">
               Configuring Backend Access
             </h2>
             <p className="mb-4">
-              For your Limeblock widget to communicate with your backend, you
-              need to set up proper access controls:
+              For Limeblock to communicate with your backend, you need to set up
+              proper access controls:
             </p>
 
             <h3 className="text-xl font-aeonik font-medium mt-6 mb-4">

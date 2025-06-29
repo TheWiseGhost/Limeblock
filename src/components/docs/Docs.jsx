@@ -4,7 +4,7 @@ import HowToExport from "./HowToExport";
 import GettingStarted from "./GettingStarted";
 import FrontendDocs from "./FrontendDocs";
 import BackendDocs from "./BackendDocs";
-import ManagingPlans from "./ManagingPlans";
+import ManagingTokens from "./ManagingTokens";
 import VoteForNewFramework from "./VoteForNewFramework";
 import ReportBug from "./ReportBug";
 import RequestFeature from "./RequestFeature";
@@ -24,7 +24,7 @@ const Docs = ({ page }) => {
         {page === "getting_started" && <GettingStarted />}
         {page === "frontend" && <FrontendDocs />}
         {page == "backend" && <BackendDocs />}
-        {page == "managing_plans" && <ManagingPlans />}
+        {page == "managing_tokens" && <ManagingTokens />}
         {page == "vote" && <VoteForNewFramework />}
         {page == "report" && <ReportBug />}
         {page == "request" && <RequestFeature />}

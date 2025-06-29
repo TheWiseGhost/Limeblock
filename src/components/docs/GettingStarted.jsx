@@ -4,34 +4,13 @@ import { Code } from "../global/Code";
 const GettingStarted = () => {
   // Code snippets stored as variables to avoid syntax errors
   const createAccountCode = `// No code needed - just visit limeblock.io and sign up`;
-  const createButtonCode = `// Give the widget the color and size you want in Limeblock - no code needed`;
-  const navigationConfigCode = `// Example of page navigation configuration in the Limeblock app
-{
-  "pages": [
-    {
-      "title": "Home",
-      "path": "/",
-      "description": "Welcome page with introduction"
-    },
-    {
-      "title": "Documentation",
-      "path": "/docs",
-      "description": "Help documentation and guides"
-    },
-    {
-      "title": "Settings",
-      "path": "/settings",
-      "description": "Configure your Limeblock settings"
-    }
-  ]
-}`;
-  const backendEndpointCode = `// Example JSON schema provided Limeblock backend integration
+  const backendEndpointCode = `// Example JSON schema for Limeblock backend integration
 
 // For the API Endpoint - Create Board
-const url = {https://example_endpoint.com/api/create_board/}
+const url = "https://example_endpoint.com/api/create_board/"
 
 // Schema with context params and fully filled in 
-// This an example template for the AI to use
+// This is an example template for the AI to use
 const schema = {
   "settings": {
     "borders": "#FFFFFF",
@@ -60,43 +39,75 @@ const schema = {
 };`;
   const apiKeyUsageCode = `// Using your API key from settings
 const LIMEBLOCK_API_KEY = process.env.NEXT_PUBLIC_LIMEBLOCK_API_KEY || "lime_YOUR_API_KEY";`;
-  const finalImplementationCode = `// For Vue, check out the export docs
-  
-import React from 'react';
-import { ChatWidget } from '@limeblock/react';
+  const endpointImplementationCode = `// Example implementation - style however you want!
+// Just hit our endpoint using this format
 
-const MyApp = () => {
-  // Your API key from Limeblock settings
-  const API_KEY = process.env.NEXT_PUBLIC_LIMEBLOCK_API_KEY;
+const handleAIAction = async (userPrompt) => {
+  const requestData = {
+    prompt: userPrompt,
+    endpoint_id: "endpoint_1745333462205", // From your endpoint tree
+    folder_id: "folder_1741747825504",     // From your endpoint tree
+    api_key: "lime_YOUR_API_KEY",          // From settings
+    formatting_needed: true,               // Optional: get formatted response
+    context: { 
+      user_id: "current_user_id",          // Your user identification
+      // Add any additional context your endpoints need
+    },
+  };
+
+  try {
+    const response = await fetch("https://limeblockbackend.onrender.com/api/ai_action/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    });
+
+    const data = await response.json();
+    
+    if (response.ok) {
+      // Handle successful response
+      console.log("AI Response:", data.response);
+      console.log("Formatted Response:", data.formatted_response);
+      return data;
+    } else {
+      console.error("Error:", data.error || data.message);
+    }
+  } catch (error) {
+    console.error("Network error:", error);
+  }
+};
+
+// Use it in your React component however you want
+const MyCustomAIInterface = () => {
+  const [prompt, setPrompt] = useState("");
+  const [response, setResponse] = useState(null);
   
-  // Context parameters configured in Limeblock dashboard
-  const contextParams = {
-    board_id: "YOUR_BOARD_ID_FROM_DASHBOARD",
-    user_id: "current_user_id", // Dynamic user identification
-    // Additional context parameters as needed
+  const submitToAI = async () => {
+    const result = await handleAIAction(prompt);
+    setResponse(result);
   };
   
   return (
-    <div className="my-app-container">
-      {/* Your application content */}
-      <main>
-        <h1>Welcome to My Application</h1>
-        <p>This is where your content lives</p>
-      </main>
-      
-      {/* Limeblock Chat Widget */}
-      <ChatWidget
-        apiKey={API_KEY}
-        contextParams={contextParams}
-        widgetPosition="bottom-[8px] md:bottom-[24px] right-[8px] md:right-[24px]"
-        chatPosition="bottom-[0px] right-[0px]"
-        // All styling is configured in the Limeblock dashboard - only position is handled here
+    <div className="your-custom-styling">
+      {/* Style this however you want! */}
+      <input 
+        value={prompt} 
+        onChange={(e) => setPrompt(e.target.value)}
+        placeholder="Ask AI anything..."
       />
+      <button onClick={submitToAI}>
+        Get AI Response
+      </button>
+      {response && (
+        <div>
+          <p>{response.formatted_response || response.response}</p>
+        </div>
+      )}
     </div>
   );
-};
-
-export default MyApp;`;
+};`;
 
   return (
     <div className="flex flex-row min-h-screen w-full">
@@ -116,9 +127,9 @@ export default MyApp;`;
           <div className="text-sm max-w-none">
             <p className="mb-4">
               Welcome to Limeblock! This guide will walk you through the process
-              of setting up your Limeblock chat widget from account creation to
-              final implementation. Follow these steps to add an AI-powered chat
-              experience to your application.
+              of setting up your Limeblock AI integration from account creation
+              to final implementation. Follow these steps to add AI-powered
+              functionality to your application using our flexible API endpoint.
             </p>
 
             <h2 className="text-2xl font-aeonik font-medium mt-8 mb-4">
@@ -139,7 +150,7 @@ export default MyApp;`;
               </li>
               <li>Click on "Sign Up" and follow the registration process</li>
               <li>Add your email address + team members</li>
-              <li>Choose a plan or upgrade when ready</li>
+              <li>Buy more tokens when needed</li>
             </ol>
 
             <div className="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
@@ -152,99 +163,26 @@ export default MyApp;`;
             </div>
 
             <h2 className="text-2xl font-aeonik font-medium mt-8 mb-4">
-              Step 2: Create a New Limeblock Widget
+              Step 2: Set Up Backend API Endpoints
             </h2>
             <p className="mb-4">
-              Once your account is set up, you'll need to create a widget. Add a
-              button to your application's admin interface to quickly access the
-              creation page:
-            </p>
-
-            <Code
-              code={createButtonCode}
-              language="info"
-              showLineNumbers={false}
-              copyButton={true}
-              className="mb-4"
-            />
-
-            <p className="mb-4">When creating your widget, you'll need to:</p>
-            <ol className="list-decimal pl-6 mb-6 space-y-2">
-              <li>Give your widget a name (e.g., "Help Assistant")</li>
-              <li>
-                Select the primary function (customer support, documentation,
-                etc.)
-              </li>
-              <li>Choose an initial template or start from scratch</li>
-              <li>Configure the knowledge base sources</li>
-            </ol>
-
-            <h2 className="text-2xl font-aeonik font-medium mt-8 mb-4">
-              Step 3: Style Your Widget in the Frontend Page
-            </h2>
-            <p className="mb-4">
-              Limeblock offers comprehensive styling options directly in the
-              dashboard. You can customize:
-            </p>
-            <ul className="list-disc pl-6 mb-6 space-y-2">
-              <li>Chat bubble colors and positioning</li>
-              <li>Font styles and sizes</li>
-              <li>Widget header and footer appearance</li>
-              <li>Custom CSS overrides for advanced styling</li>
-              <li>Mobile and desktop responsive behaviors</li>
-            </ul>
-
-            <p className="mb-4">
-              All styling is managed through the Limeblock dashboard - no custom
-              code needed! This approach ensures consistent updates and easier
-              maintenance.
-            </p>
-
-            <h2 className="text-2xl font-aeonik font-medium mt-8 mb-4">
-              Step 4: Set Up Page Navigations
-            </h2>
-            <p className="mb-4">
-              Configure how your widget interacts with your application's pages:
-            </p>
-
-            <Code
-              code={navigationConfigCode}
-              language="in-app"
-              showLineNumbers={false}
-              copyButton={true}
-              className="mb-4"
-            />
-
-            <p className="mb-4">In the Limeblock app:</p>
-            <ol className="list-decimal pl-6 mb-6 space-y-2">
-              <li>Navigate to the "Frontend" tab</li>
-              <li>Add each page in your application</li>
-              <li>Configure when and how the widget suggests navigations</li>
-              <li>Set up transition animations between pages</li>
-              <li>Test the navigation flows before publishing</li>
-            </ol>
-
-            <h2 className="text-2xl font-aeonik font-medium mt-8 mb-4">
-              Step 5: Set Up Backend API Endpoints
-            </h2>
-            <p className="mb-4">
-              For full functionality, you'll need to set up backend endpoints:
+              Configure your backend endpoints in the Limeblock dashboard:
             </p>
 
             <Code
               code={backendEndpointCode}
-              language="in-app"
+              language="javascript"
               showLineNumbers={true}
               copyButton={true}
               className="mb-4"
             />
 
             <ol className="list-decimal pl-6 mb-6 space-y-2">
-              <li>Navigate to the "Backend" tab</li>
-              <li>Add API endpoints in your application</li>
-              <li>Configure them</li>
-              <li>Test the navigation flows before publishing</li>
-              <li>Reference Backend Docs for more info</li>
+              <li>Navigate to the "Backend" tab in your dashboard</li>
+              <li>Add API endpoints for your application</li>
+              <li>Configure the endpoint schemas and parameters</li>
+              <li>Test the endpoints before publishing</li>
+              <li>Reference Backend Docs for more detailed information</li>
             </ol>
 
             <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
@@ -258,7 +196,7 @@ export default MyApp;`;
             </div>
 
             <h2 className="text-2xl font-aeonik font-medium mt-8 mb-4">
-              Step 6: Get Your API Key
+              Step 3: Get Your API Key
             </h2>
             <p className="mb-4">
               To connect your application with Limeblock, you'll need your API
@@ -282,36 +220,97 @@ export default MyApp;`;
             />
 
             <h2 className="text-2xl font-aeonik font-medium mt-8 mb-4">
-              Step 7: Export and Implement Your Widget
+              Step 4: Get Your Endpoint and Folder IDs
             </h2>
             <p className="mb-4">
-              Follow the Export documentation to implement the widget in your
-              application:
+              From your Limeblock dashboard, you'll need to get the specific IDs
+              for your endpoints (Click the gray id icon):
+            </p>
+            <ol className="list-decimal pl-6 mb-6 space-y-2">
+              <li>Navigate to the "Endpoint Tree" section in your dashboard</li>
+              <li>Find the endpoint you want to use for AI actions</li>
+              <li>
+                Copy the <strong>endpoint_id</strong> (e.g.,
+                "endpoint_1745333462205")
+              </li>
+              <li>
+                Copy the <strong>folder_id</strong> that contains your endpoint
+                (e.g., "folder_1741747825504")
+              </li>
+              <li>
+                Keep these IDs handy - you'll need them in your implementation
+              </li>
+            </ol>
+
+            <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+              <p className="text-blue-700">
+                <strong>Pro Tip:</strong> You can organize multiple endpoints
+                under different folders and use different endpoint/folder
+                combinations for different features in your application.
+              </p>
+            </div>
+
+            <h2 className="text-2xl font-aeonik font-medium mt-8 mb-4">
+              Step 5: Implement in Your Application
+            </h2>
+            <p className="mb-4">
+              Now you can integrate Limeblock into your application however you
+              want! Style your interface any way you like - just hit our
+              endpoint using this format:
             </p>
 
             <Code
-              code={finalImplementationCode}
-              language="jsx"
+              code={endpointImplementationCode}
+              language="javascript"
               showLineNumbers={true}
               copyButton={true}
               className="mb-4"
             />
 
-            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
-              <p className="text-yellow-700">
-                <strong>Important Note:</strong> If you are using NextJS please
-                add "use client"; to the top of the page
+            <div className="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+              <p className="text-green-700">
+                <strong>Complete Freedom:</strong> Unlike traditional AI chat
+                plugins, you have complete control over the UI/UX. Create
+                buttons, forms, modals, or any interface that fits your
+                application's design. Just send the prompt to our endpoint and
+                handle the response however works best for your users.
               </p>
             </div>
+            <a
+              href="/docs/export/"
+              className="text-sm mt-4 w-fit rounded-lg px-4 py-3 font-inter text-white bg-gray-900 hover:bg-gray-800 transition duration-200"
+            >
+              More detail in Export Docs
+            </a>
 
+            <h2 className="text-3xl font-aeonik font-medium mt-16 mb-4">
+              Implementation Examples
+            </h2>
             <p className="mb-4">
-              For more detailed implementation instructions, please refer to our
-              <a href="/docs/export" className="text-blue-600 hover:underline">
-                {" "}
-                Export Documentation
-              </a>
-              .
+              Here are some ways you can integrate Limeblock:
             </p>
+            <ul className="list-disc pl-6 mb-6 space-y-2">
+              <li>
+                <strong>Smart Help Button:</strong> Add a "Get AI Help" button
+                that sends the current page context
+              </li>
+              <li>
+                <strong>Form Assistant:</strong> Help users fill out complex
+                forms with AI suggestions
+              </li>
+              <li>
+                <strong>Search Enhancement:</strong> Process search queries
+                through AI for better results
+              </li>
+              <li>
+                <strong>Custom Dashboard:</strong> Create AI-powered insights
+                for your data
+              </li>
+              <li>
+                <strong>Content Generation:</strong> Let users generate content
+                with AI assistance
+              </li>
+            </ul>
 
             <h2 className="text-2xl font-aeonik font-medium mt-8 mb-4">
               Troubleshooting
@@ -319,33 +318,32 @@ export default MyApp;`;
             <div className="space-y-4 mb-6">
               <div className="border border-gray-200 rounded-lg p-4">
                 <h3 className="font-inter font-medium text-base">
-                  Widget not appearing
+                  API Connection Issues
                 </h3>
                 <p>
-                  Check your API key and ensure the widget is fully built with
-                  right colors in the dashboard. Delete the position params and
-                  check if it works now - This means you are incorrectly setting
-                  location or not using proper tailwind styling.
+                  Check your API key, endpoint_id, and folder_id. Ensure they
+                  match exactly what's shown in your Limeblock dashboard.
                 </p>
               </div>
 
               <div className="border border-gray-200 rounded-lg p-4">
                 <h3 className="font-inter text-base font-medium">
-                  Backend connection issues
+                  Backend Endpoint Not Found
                 </h3>
                 <p>
-                  Verify your webhook endpoints are configured correctly and
-                  accessible to Limeblock's servers.
+                  Verify your backend endpoints are configured correctly in the
+                  dashboard and accessible to Limeblock's servers.
                 </p>
               </div>
 
               <div className="border border-gray-200 rounded-lg p-4">
                 <h3 className="font-inter font-medium text-base">
-                  Navigation not working
+                  Context Not Working
                 </h3>
                 <p>
-                  Ensure your page paths in the Limeblock dashboard exactly
-                  match your application's routing structure.
+                  Make sure your context parameters match what your backend
+                  endpoints expect. Check the endpoint configuration in your
+                  dashboard.
                 </p>
               </div>
             </div>
