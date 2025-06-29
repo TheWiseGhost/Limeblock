@@ -221,7 +221,7 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
       } else {
         toast({
           title: "AI Action Error",
-          description: "Sorry, please manually do this",
+          description: "Sorry, please manually do this or be more specific",
         });
       }
     } catch (err) {

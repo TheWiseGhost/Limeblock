@@ -12,8 +12,8 @@ const AIActionPage = () => {
   const config = {
     endpoint_id: "endpoint_1745333462205",
     folder_id: "folder_1741747825504",
-    api_key: "",
-    formatting_needed: true,
+    api_key: process.env.NEXT_PUBLIC_LIMEBLOCK_API_KEY,
+    formatting_needed: false,
     context: { user_id: "67c2322d207e9b2e1c17fd27" },
   };
 
