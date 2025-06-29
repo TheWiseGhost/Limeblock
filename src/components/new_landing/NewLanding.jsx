@@ -5,7 +5,6 @@ import Lenis from "lenis";
 
 import Navbar from "./Navbar";
 import Hero from "./Hero";
-import ChatWidget from "../implementation/ChatWidget";
 import Demo from "./Demo";
 import Info from "./Info";
 import FounderNote from "./FounderNote";
@@ -54,11 +53,6 @@ const NewLanding = () => {
       <div className="w-full bg-white pb-6">
         <Footer />
       </div>
-
-      <ChatWidget
-        apiKey={"lime_2JDnwGpM7OOfEcfj3kJ9bwVrGULxh1sL"}
-        contextParams={{}}
-      />
     </div>
   );
 };

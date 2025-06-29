@@ -12,7 +12,7 @@ const AIActionPage = () => {
   const config = {
     endpoint_id: "endpoint_1745333462205",
     folder_id: "folder_1741747825504",
-    api_key: "lime_2JDnwGpM7OOfEcfj3kJ9bwVrGULxh1sL",
+    api_key: "",
     formatting_needed: true,
     context: { user_id: "67c2322d207e9b2e1c17fd27" },
   };

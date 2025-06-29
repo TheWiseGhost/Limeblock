@@ -9,7 +9,7 @@ import {
 } from "@tabler/icons-react";
 import React, { useState, useEffect } from "react";
 import { useToast } from "../global/Use-Toast";
-import { ChatWidget } from "@limeblock/react";
+
 import { IconBug, IconBulb, IconFileText } from "@tabler/icons-react";
 
 export default function Settings() {
@@ -24,11 +24,6 @@ export default function Settings() {
   const [newEmail, setNewEmail] = useState("");
   const [savingChanges, setSavingChanges] = useState(false);
   const [hasEmailChanges, setHasEmailChanges] = useState(false);
-
-  const contextParams = {
-    user_id: user?.id,
-    emails: emails,
-  };
 
   const { toast } = useToast();
 
@@ -422,10 +417,6 @@ export default function Settings() {
           </button>
         </div>
       </div>
-      <ChatWidget
-        apiKey={"lime_2JDnwGpM7OOfEcfj3kJ9bwVrGULxh1sL"}
-        contextParams={contextParams}
-      />
     </div>
   );
 }

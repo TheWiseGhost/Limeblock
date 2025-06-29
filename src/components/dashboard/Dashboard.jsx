@@ -1,6 +1,5 @@
 "use client";
 
-import { ChatWidget } from "@limeblock/react";
 import {
   IconBug,
   IconBulb,
@@ -23,10 +22,6 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [tokenStats, setTokenStats] = useState({});
-
-  const contextParams = {
-    user_id: user?.id,
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -450,10 +445,6 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <ChatWidget
-        apiKey={"lime_2JDnwGpM7OOfEcfj3kJ9bwVrGULxh1sL"}
-        contextParams={contextParams}
-      />
     </div>
   );
 }

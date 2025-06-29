@@ -9,6 +9,7 @@ import {
   IconEdit,
   IconCheck,
   IconId,
+  IconAi,
 } from "@tabler/icons-react";
 import React, { useState, useEffect } from "react";
 import { useToast } from "../global/Use-Toast";
@@ -33,7 +34,11 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
   const [schemaErrors, setSchemaErrors] = useState({});
   const [deleteFolderMode, setDeleteFolderMode] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [AILoading, setAILoading] = useState(false);
   const [testingEndpoint, setTestingEndpoint] = useState(null);
+  const [showAIAssistant, setShowAIAssistant] = useState(false);
+  const [aiAssistantTab, setAiAssistantTab] = useState("addFolderEndpoint");
+  const [aiInstruction, setAiInstruction] = useState("");
 
   const { toast } = useToast();
 
@@ -171,6 +176,58 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
       });
     } finally {
       setTestingEndpoint(null);
+    }
+  };
+
+  const handleAIAssistant = async (endpoint, prompt) => {
+    if (!prompt.trim()) {
+      return;
+    }
+
+    setAILoading(true);
+
+    try {
+      const endpointMap = {
+        addFolderEndpoint: "endpoint_1744990471179",
+        addEndpoint: "endpoint_1744990676587",
+        editEndpoint: "endpoint_1744990874110",
+      };
+
+      const requestData = {
+        prompt: prompt,
+        endpoint_id: endpointMap[endpoint],
+        folder_id: "folder_1743694702681",
+        api_key: process.env.NEXT_PUBLIC_LIMEBLOCK_API_KEY,
+        formatting_needed: false,
+        context: { user_id: user_id, url: url, folders: newFolders },
+      };
+
+      const res = await fetch(
+        "https://limeblockbackend.onrender.com/api/ai_action/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestData),
+        }
+      );
+
+      if (res.ok) {
+        toast({
+          title: "AI Action Successful",
+          description: "Reload to see changes",
+        });
+      } else {
+        toast({
+          title: "AI Action Error",
+          description: "Sorry, please manually do this",
+        });
+      }
+    } catch (err) {
+      return;
+    } finally {
+      setAILoading(false);
     }
   };
 
@@ -408,82 +465,6 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
     updateEditingEndpoint("schema", formattedSchema, endpointId);
   };
 
-  const handlePromptChange = (index, value) => {
-    const newPrompts = [...(newEndpoint.examplePrompts || [])];
-    newPrompts[index] = value;
-    setNewEndpoint({ ...newEndpoint, examplePrompts: newPrompts });
-  };
-
-  const handleDeletePrompt = (index) => {
-    const newPrompts = [...(newEndpoint.examplePrompts || [])].filter(
-      (_, i) => i !== index
-    );
-    setNewEndpoint({ ...newEndpoint, examplePrompts: newPrompts });
-  };
-
-  // For the edit endpoint version:
-  const handleEditPromptChange = (index, value) => {
-    if (!editingEndpoint) return;
-
-    const newPrompts = [...(editingEndpoint.data.examplePrompts || [])];
-    newPrompts[index] = value;
-    updateEditingEndpoint(
-      "examplePrompts",
-      newPrompts,
-      editingEndpoint.data.id
-    );
-  };
-
-  const handleEditDeletePrompt = (index) => {
-    if (!editingEndpoint) return;
-
-    const newPrompts = [...(editingEndpoint.data.examplePrompts || [])].filter(
-      (_, i) => i !== index
-    );
-    updateEditingEndpoint(
-      "examplePrompts",
-      newPrompts,
-      editingEndpoint.data.id
-    );
-  };
-
-  const handleContextParamChange = (index, value) => {
-    const newParams = [...(newEndpoint.requiredContextParams || [])];
-    newParams[index] = value;
-    setNewEndpoint({ ...newEndpoint, requiredContextParams: newParams });
-  };
-
-  const handleDeleteContextParam = (index) => {
-    const newParams = [...(newEndpoint.requiredContextParams || [])].filter(
-      (_, i) => i !== index
-    );
-    setNewEndpoint({ ...newEndpoint, requiredContextParams: newParams });
-  };
-
-  // For edit endpoint
-  const handleEditContextParamChange = (index, value) => {
-    if (!editingEndpoint) return;
-    const newParams = [...(editingEndpoint.data.requiredContextParams || [])];
-    newParams[index] = value;
-    updateEditingEndpoint(
-      "requiredContextParams",
-      newParams,
-      editingEndpoint.data.id
-    );
-  };
-
-  const handleEditDeleteContextParam = (index) => {
-    if (!editingEndpoint) return;
-    const newParams = [
-      ...(editingEndpoint.data.requiredContextParams || []),
-    ].filter((_, i) => i !== index);
-    updateEditingEndpoint(
-      "requiredContextParams",
-      newParams,
-      editingEndpoint.data.id
-    );
-  };
-
   return (
     <div className="border border-gray-300 rounded-md p-6 h-full w-full">
       <div className="flex items-center justify-between mb-6">
@@ -506,6 +487,12 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
                 <IconFolderX />
               </div>
             )}
+            <div
+              className="size-8 px-[2px] flex items-center justify-center border border-gray-400 rounded hover:bg-gray-50 hover:cursor-pointer"
+              onClick={() => setShowAIAssistant(true)}
+            >
+              <IconAi />
+            </div>
           </div>
         </div>
 
@@ -542,6 +529,101 @@ const ApiEndpointTree = ({ folders, url, user_id, api_key }) => {
           )}
         </button>
       </div>
+
+      {/* AI Assistant Panel */}
+      {showAIAssistant && (
+        <div className="mb-4 p-4 border border-gray-200 rounded-md bg-white font-inter">
+          {/* Tab Navigation */}
+          <div className="flex border-b border-gray-200 mb-4">
+            {["addFolderEndpoint", "addEndpoint", "editEndpoint"].map((tab) => (
+              <button
+                key={tab}
+                className={`px-4 py-2 text-sm ${
+                  aiAssistantTab === tab
+                    ? "border-b-2 border-gray-900 text-gray-900"
+                    : "text-gray-500"
+                }`}
+                onClick={() => setAiAssistantTab(tab)}
+              >
+                {tab === "addFolderEndpoint" && "Add Folder + Endpoint"}
+                {tab === "addEndpoint" && "Add Endpoint"}
+                {tab === "editEndpoint" && "Edit Endpoint"}
+              </button>
+            ))}
+          </div>
+
+          {/* Description */}
+          <div className="mb-4 text-sm text-gray-600">
+            {aiAssistantTab === "addFolderEndpoint" && (
+              <p>
+                Create a new folder and an endpoint inside it. Describe the
+                folder name and the endpoint details.
+              </p>
+            )}
+            {aiAssistantTab === "addEndpoint" && (
+              <p>
+                Add a new endpoint to an existing folder. Specify the folder and
+                describe the endpoint details.
+              </p>
+            )}
+            {aiAssistantTab === "editEndpoint" && (
+              <p>
+                Edit an existing endpoint. Provide the endpoint and describe the
+                changes you want.
+              </p>
+            )}
+          </div>
+
+          {/* Text Area */}
+          <textarea
+            placeholder="Describe what you want to create or modify..."
+            className="border border-gray-300 rounded-md p-3 w-full text-sm min-h-[120px]"
+            value={aiInstruction}
+            onChange={(e) => setAiInstruction(e.target.value)}
+          />
+
+          {/* Action Buttons */}
+          <div className="flex justify-end space-x-2 mt-4">
+            <button
+              className="border border-gray-300 rounded-md px-3 py-1 text-sm hover:bg-gray-50"
+              onClick={() => setShowAIAssistant(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="bg-gray-900 text-white rounded-md px-3 py-1 text-sm flex items-center hover:bg-gray-800 disabled:bg-gray-400"
+              onClick={() => handleAIAssistant(aiAssistantTab, aiInstruction)}
+              disabled={AILoading}
+            >
+              {AILoading ? (
+                <svg
+                  className="animate-spin mr-2 h-4 w-4 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+              ) : (
+                <IconAi size={16} className="mr-1" />
+              )}
+              {AILoading ? "Processing..." : "Send to AI"}
+            </button>
+          </div>
+        </div>
+      )}
 
       {showAddFolder && (
         <div className="mb-4 p-4 border border-gray-200 rounded-md bg-white font-inter">
