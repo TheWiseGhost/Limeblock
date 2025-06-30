@@ -54,7 +54,7 @@ export default function ThreeStepProcess() {
 
   return (
     <motion.div
-      className="w-full bg-white min-h-screen flex flex-col items-center justify-center p-4 font-inter rounded-t-[3rem] pt-12 overflow-hidden"
+      className="w-full bg-white min-h-screen flex flex-col items-center justify-center p-4 font-inter rounded-t-[3rem] pt-20 md:pt-12 overflow-hidden"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -74,13 +74,13 @@ export default function ThreeStepProcess() {
           <span className="text-xs md:text-sm font-medium">Meet Limeblock</span>
         </motion.div>
         <motion.h1
-          className="text-5xl font-medium font-aeonik text-gray-900 mt-8"
+          className="text-4xl md:text-5xl font-medium font-aeonik text-gray-900 mt-8"
           variants={headerVariants}
         >
           AI infrastructure in minutes
         </motion.h1>
         <motion.p
-          className="text-gray-600 mt-4 max-w-2xl mx-auto"
+          className="text-gray-600 mt-4 max-w-2xl mx-auto text-sm md:text-base"
           variants={headerVariants}
         >
           Build production-grade AI capabilities with Limeblock's intuitive

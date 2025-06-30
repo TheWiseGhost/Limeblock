@@ -18,7 +18,7 @@ const FounderNote = () => {
   }, [controls, inView]);
 
   return (
-    <div className="flex flex-col rounded-2xl items-center justify-center min-h-screen bg-white px-16 pb-24 pt-10 md:pt-0 md:pb-5 font-inter">
+    <div className="flex flex-col rounded-2xl items-center justify-center min-h-screen bg-white px-16 pb-16 pt-10 md:pt-0 md:pb-5 font-inter">
       <div className="max-w-2xl w-full">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
@@ -99,7 +99,7 @@ const FounderNote = () => {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"
-              className="w-4 h-4 ml-1.5 transition-transform group-hover:translate-x-1"
+              className="w-4 h-4 ml-1.5 transition-transform group-hover:tranindigo-x-1"
             >
               <path
                 fillRule="evenodd"

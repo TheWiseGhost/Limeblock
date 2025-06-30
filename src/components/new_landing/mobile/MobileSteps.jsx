@@ -44,7 +44,7 @@ export default function MobileSteps() {
   ];
 
   return (
-    <div className="w-full bg-white justify-center items-center flex flex-col pb-8 pt-8 px-4 font-inter">
+    <div className="w-full bg-white justify-center items-center flex flex-col pb-8 pt-16 px-4 font-inter">
       <div className="text-center mb-6 sm:mb-16">
         <div className="flex w-fit mx-auto items-center justify-center mb-2 bg-gray-100 py-2 px-4 rounded-xl">
           <img
@@ -71,7 +71,7 @@ export default function MobileSteps() {
               onClick={() => setActiveTab(tab.id)}
               className={`py-3 flex flex-col items-center justify-center rounded-xl text-xs font-medium transition-colors relative z-10 sm:flex-row sm:rounded-t-lg sm:py-3 sm:px-4 sm:min-w-[140px] ${
                 activeTab === tab.id
-                  ? "bg-white border border-black shadow-sm sm:border-b-white"
+                  ? "bg-white border border-gray-500 shadow-sm sm:border-b-white"
                   : "bg-gray-100 hover:bg-gray-200"
               }`}
             >
@@ -91,7 +91,7 @@ export default function MobileSteps() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="w-full px-4 py-6 bg-white border border-black rounded-xl sm:rounded-tl-none mt-5"
+            className="w-full px-4 py-6 bg-white border border-gray-600 rounded-xl sm:rounded-tl-none mt-5"
           >
             <h2 className="text-xl font-medium text-gray-900 mb-3 font-aeonik sm:text-3xl sm:mb-4">
               {tabContent[activeTab].title}

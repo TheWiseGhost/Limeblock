@@ -53,7 +53,7 @@ export default function MobileHowItWorks() {
   };
 
   return (
-    <div className="w-full bg-white flex flex-col items-center justify-center py-12 px-4 min-h-fit overflow-x-hidden">
+    <div className="w-full bg-white flex flex-col items-center justify-center pb-12 pt-16 px-4 min-h-fit overflow-x-hidden">
       <div className="w-full font-inter min-h-fit">
         {/* Enhanced Toggle with Animation */}
         <motion.div

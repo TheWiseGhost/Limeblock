@@ -47,7 +47,6 @@ const MobileNewLanding = () => {
       <TwoSideExp />
       <MobileHowItWorks />
       <MobileMCP />
-      <Process />
       <MobileSteps />
       <MobileInfo />
       <FounderNote />
