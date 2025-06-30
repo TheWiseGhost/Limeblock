@@ -3,7 +3,7 @@
 import {
   IconBinaryTree2,
   IconBulb,
-  IconFileText,
+  IconChartBar,
   IconLayoutSidebar,
 } from "@tabler/icons-react";
 import { useState, useRef, useEffect } from "react";
@@ -18,14 +18,6 @@ const Info = () => {
 
   const tabs = [
     {
-      title: "Page Navigation",
-      description: "Add page navigation to your project",
-      icon: <IconFileText className="size-5 mr-2" />,
-      video: {
-        src: "/CroppedAddPageEndpoint.mp4",
-      },
-    },
-    {
       title: "API Endpoints",
       description: "Add API endpoints to your project",
       icon: <IconBinaryTree2 className="size-5 mr-2" />,
@@ -34,11 +26,19 @@ const Info = () => {
       },
     },
     {
+      title: "Analytics",
+      description: "Easily view your token usage and stats",
+      icon: <IconChartBar className="size-5 mr-2" />,
+      video: {
+        src: "/analytics_demo.mp4",
+      },
+    },
+    {
       title: "Example Use",
       description: "How we used Limeblock ourselves",
       icon: <IconBulb className="size-5 mr-2" />,
       video: {
-        src: "/UpdateWidgetColor.mp4",
+        src: "/limeblockexamplecase.mp4",
       },
     },
     {
@@ -46,7 +46,7 @@ const Info = () => {
       description: "What you'll see in Limeblock's dev app",
       icon: <IconLayoutSidebar className="size-5 mr-2" />,
       video: {
-        src: "/LimeblockDemo.mp4",
+        src: "/limeblockrunthrough.mp4",
       },
     },
   ];

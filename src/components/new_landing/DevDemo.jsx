@@ -23,11 +23,10 @@ export default function DevDemo() {
       {/* Logo and heading */}
       <div className="text-center mb-8">
         <h1 className="text-5xl font-medium font-aeonik text-gray-900 mt-8">
-          Dev Demo
+          Limeblock Demo
         </h1>
         <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
-          Walkthrough of what you will see when first getting started with
-          Limeblock
+          Walkthrough of what you will see when using Limeblock
         </p>
       </div>
       {/* Demo video with loading indicator */}
@@ -42,8 +41,8 @@ export default function DevDemo() {
           controls
           autoPlay
           loop
-          className="h-[440px] w-[1000px] mx-auto object-cover rounded-xl"
-          src="/LimeblockDemo.mp4"
+          className="h-fit w-[1000px] mx-auto object-cover rounded-xl"
+          src="/limeblockrunthrough.mp4"
           onLoadedData={() => setIsLoading(false)}
           onCanPlay={() => setIsLoading(false)}
           onError={() => setIsLoading(false)} // Fallback in case of errors

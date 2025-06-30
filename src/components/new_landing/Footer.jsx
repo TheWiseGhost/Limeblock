@@ -65,23 +65,34 @@ const Footer = () => {
   const productLinks = [
     { text: "Overview", url: "/" },
     { text: "Demo", url: "/demo" },
-    { text: "Features", url: "/docs/getting_started/" },
+    { text: "Docs", url: "/docs/" },
+    { text: "Get Started", url: "/docs/getting_started/" },
+    { text: "Pricing", url: "/checkout/" },
+    {
+      text: "Schedule Demo",
+      url: "https://cal.com/adityabyju",
+    },
   ];
 
-  const demoLinks = [
-    { text: "Dev Side", url: "/demo/dev/" },
-    { text: "Client Side", url: "/demo/client/" },
-    { text: "Founder Demo", url: "/demo/founder/" },
+  const socialLinks = [
+    { text: "Aditya's X", url: "https://x.com/theadityabyju" },
     {
-      text: "Schedule",
-      url: "https://cal.com/adityabyju",
-      alert: "Contact us at byjuaditya@gmail.com",
+      text: "Aditya's LinkedIn",
+      url: "https://www.linkedin.com/in/aditya-byju/",
+    },
+    {
+      text: "Crunchbase",
+      url: "https://www.crunchbase.com/organization/limeblock",
+    },
+    {
+      text: "LinkedIn",
+      url: "https://www.linkedin.com/company/limeblock/?viewAsMember=true",
     },
   ];
 
   const docsLinks = [
     { text: "Overview", url: "/docs" },
-    { text: "Backend", url: "/docs/backend" },
+    { text: "Endpoints", url: "/docs/backend" },
     { text: "Export", url: "/docs/export" },
     { text: "Report", url: "/docs/report" },
   ];
@@ -149,7 +160,7 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-x-12 gap-y-8 md:w-2/3 md:justify-end">
           <LinkSection title="Product" links={productLinks} />
 
-          <LinkSection title="Demo" links={demoLinks} />
+          <LinkSection title="Social" links={socialLinks} />
 
           <LinkSection title="Docs" links={docsLinks} />
 

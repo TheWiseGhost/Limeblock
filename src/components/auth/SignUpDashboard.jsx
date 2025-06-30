@@ -9,7 +9,7 @@ const SignUpDashboard = () => {
       {/* Background Image with Blur Effect */}
       <div className="absolute inset-0">
         <img
-          src="/DashboardExample.png"
+          src="/dashboard.png"
           className="h-full w-full object-left object-cover"
           alt="Dashboard Background"
         />
