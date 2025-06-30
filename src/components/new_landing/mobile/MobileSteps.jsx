@@ -57,7 +57,7 @@ export default function MobileSteps() {
         <h1 className="text-2xl font-medium font-aeonik text-gray-900 mt-6 sm:text-5xl sm:mt-8">
           Setup to Production in minutes
         </h1>
-        <p className="text-gray-600 mt-3 max-w-2xl mx-auto sm:mt-4 sm:text-base">
+        <p className="text-gray-600 mt-3 max-w-2xl mx-auto text-sm">
           You could have your AI running on your app today
         </p>
       </div>

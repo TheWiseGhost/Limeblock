@@ -126,7 +126,7 @@ export default function HowItWorks() {
                     variants={itemVariants}
                     className="text-4xl font-aeonik font-medium mb-4 leading-tight"
                   >
-                    Integrating AI is a nightmare for every software
+                    Integrating AI is a nightmare for <br /> every software
                   </motion.h2>
                   <motion.p
                     variants={itemVariants}
