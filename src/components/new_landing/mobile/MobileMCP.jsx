@@ -101,7 +101,7 @@ const MobileMCP = () => {
   }, [isAnimating]);
 
   return (
-    <div className="w-full bg-white flex flex-col items-center justify-center px-4 pt-32 pb-16">
+    <div className="w-full bg-white flex flex-col items-center justify-center px-4 pt-0 pb-8">
       <div className="w-full max-w-md mx-auto font-inter">
         {/* Mobile Header */}
         <motion.div

@@ -11,10 +11,10 @@ const Process = () => {
             />
             <span className="text-sm font-medium">How Limeblock Works</span>
           </div>
-          <h1 className="text-5xl font-medium font-aeonik text-gray-900 mt-8">
-            A Simple but Powerful Flow
+          <h1 className="text-4xl md:text-5xl font-medium font-aeonik text-gray-900 mt-8">
+            A Simple but <br className="block md:hidden" /> Powerful Flow
           </h1>
-          <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
+          <p className="text-gray-600 mt-4 text-sm md:text-base max-w-2xl mx-auto">
             Easy to use, easy to understand, and easy to implement.
           </p>
         </div>

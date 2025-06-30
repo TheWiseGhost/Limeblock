@@ -44,7 +44,7 @@ const Pricing = () => {
 
   return (
     <div className="min-h-screen w-full bg-white">
-      <div className="min-h-screen px-4 pb-20 w-5/6 mx-auto font-inter">
+      <div className="min-h-screen px-4 pb-20 w-full md:w-5/6 mx-auto font-inter">
         <div className="flex justify-center">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 font-inter w-full">
             {/* Free Plan */}
