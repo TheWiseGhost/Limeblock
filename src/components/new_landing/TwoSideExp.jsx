@@ -67,11 +67,11 @@ export default function ThreeStepProcess() {
           whileTap={{ scale: 0.98 }}
         >
           <img
-            className="size-5 mr-2"
+            className="size-4 md:size-5 mr-2"
             src="/LimeblockLogo.png"
             alt="Limeblock Logo"
           />
-          <span className="text-sm font-medium">Meet Limeblock</span>
+          <span className="text-xs md:text-sm font-medium">Meet Limeblock</span>
         </motion.div>
         <motion.h1
           className="text-5xl font-medium font-aeonik text-gray-900 mt-8"

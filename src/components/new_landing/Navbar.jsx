@@ -92,7 +92,7 @@ export default function Navbar() {
 
       <a
         href="/auth_prompt/"
-        className={`relative inline-flex overflow-hidden rounded-2xl p-[3px] font-inter font-medium transition-all duration-300 bg-none ${
+        className={`relative inline-flex overflow-hidden rounded-2xl p-[3px] ml-auto font-inter font-medium transition-all duration-300 bg-none ${
           isScrolled ? "h-10" : "h-11"
         }`}
       >

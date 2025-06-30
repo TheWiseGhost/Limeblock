@@ -1,7 +1,7 @@
 const Process = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen w-full font-inter rounded-[3rem]">
-      <div className="w-11/12 mx-auto flex flex-col items-center justify-center bg-[#f7f7f9] font-inter pt-16 pb-12 rounded-[3rem]">
+      <div className="w-full md:w-11/12 flex flex-col items-center justify-center bg-[#f7f7f9] font-inter pt-16 pb-12 rounded-[3rem] px-4 md:px-0 mx-2 md:mx-auto">
         <div className="text-center mb-10">
           <div className="flex w-fit mx-auto items-center justify-center mb-2 bg-white py-2 px-4 rounded-xl">
             <img
@@ -19,7 +19,7 @@ const Process = () => {
           </p>
         </div>
         <img
-          className="w-4/5 h-full pl-8"
+          className="w-full md:w-4/5 h-full pl-0 md:pl-8"
           src="/LimeblockProcess.png"
           alt="Process"
         />

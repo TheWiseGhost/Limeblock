@@ -11,11 +11,12 @@ import ProductSnippets from "@/components/landing/ProductSnippets";
 import DIY from "@/components/landing/DIY";
 import ConversionFunnel from "@/components/landing/ConversionFunnel";
 import NewLanding from "@/components/new_landing/NewLanding";
+import MobileNewLanding from "@/components/new_landing/mobile/MobileNewLanding";
 
 export default function Home() {
   return (
     <>
-      <div className="overflow-x-hidden block md:hidden">
+      {/* <div className="overflow-x-hidden block md:hidden">
         <Navbar />
         <Hero />
         <ProductSnippets />
@@ -28,9 +29,12 @@ export default function Home() {
         <Pricing />
         <div className="h-10" />
         <Footer />
-      </div>
+      </div> */}
       <div className="hidden md:flex">
         <NewLanding />
+      </div>
+      <div className="flex md:hidden">
+        <MobileNewLanding />
       </div>
     </>
   );

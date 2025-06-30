@@ -1,6 +1,5 @@
 "use client";
 
-import FounderDemo from "@/components/new_landing/FounderDemo";
 import Navbar from "@/components/new_landing/Navbar";
 import Footer from "@/components/new_landing/Footer";
 import DevDemo from "@/components/new_landing/DevDemo";
