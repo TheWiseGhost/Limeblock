@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function ProblemSolution() {
+export default function HowItWorks() {
   const [showSolution, setShowSolution] = useState(false);
 
   // Animation variants
@@ -88,7 +88,7 @@ export default function ProblemSolution() {
               }`}
               onClick={() => setShowSolution(true)}
             >
-              The Solution
+              Limeblock AI
               {showSolution && (
                 <motion.div
                   className="absolute bottom-0 left-0 right-0 h-0.5 bg-black"
@@ -126,15 +126,15 @@ export default function ProblemSolution() {
                     variants={itemVariants}
                     className="text-4xl font-aeonik font-medium mb-4 leading-tight"
                   >
-                    User activation is a nightmare for every software
+                    Integrating AI is a nightmare for every software
                   </motion.h2>
                   <motion.p
                     variants={itemVariants}
                     className="text-gray-600 text-sm pb-6"
                   >
-                    With attention spans getting smaller, converting curious
-                    sign ups into meaningful potential paying users is harder
-                    than ever
+                    But Limeblock make it easy by letting you build an
+                    infrastructure (wihout writing any code) in minutes that
+                    allows you to use AI actions in your app
                   </motion.p>
                   <motion.div
                     variants={itemVariants}
@@ -178,7 +178,7 @@ export default function ProblemSolution() {
                       whileHover="hover"
                       className="bg-white border border-gray-400 rounded-lg w-96 p-3 text-center text-lg"
                     >
-                      10,000 Visitors
+                      Your Backend's API Endpoints
                     </motion.div>
                     <motion.div
                       initial={{ height: 0 }}
@@ -191,7 +191,7 @@ export default function ProblemSolution() {
                       whileHover="hover"
                       className="bg-white border border-gray-400 rounded-lg w-64 p-3 text-center text-lg"
                     >
-                      1,000 Sign Ups
+                      Schemas for them
                     </motion.div>
                     <motion.div
                       className="flex items-center"
@@ -201,9 +201,9 @@ export default function ProblemSolution() {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.7, duration: 0.5 }}
-                        className="ml-3 font-dm text-sm my-3 font-semibold text-red-500"
+                        className="ml-3 font-dm text-sm my-3 font-semibold text-green-500"
                       >
-                        Massive Drop
+                        Limeblock AI
                       </motion.div>
                     </motion.div>
                     <motion.div
@@ -211,7 +211,7 @@ export default function ProblemSolution() {
                       whileHover="hover"
                       className="bg-white border border-gray-400 rounded-lg w-40 p-3 text-center text-lg"
                     >
-                      50 MAUs
+                      Client Side
                     </motion.div>
                     <motion.div
                       initial={{ height: 0 }}
@@ -223,7 +223,7 @@ export default function ProblemSolution() {
                       variants={itemVariants}
                       className="text-sm font-dm text-gray-500 mt-1"
                     >
-                      Only 10 Paying Customers
+                      Users using AI to interact with your app
                     </motion.div>
                   </div>
                 </div>
@@ -249,13 +249,14 @@ export default function ProblemSolution() {
                     variants={itemVariants}
                     className="text-4xl font-aeonik font-medium mb-4 leading-tight"
                   >
-                    Make AI improve UX through Limeblock
+                    Use Limeblock to add AI
                   </motion.h2>
                   <motion.p
                     variants={itemVariants}
                     className="text-gray-600 text-sm mb-6"
                   >
-                    AI is capable of doing anything if harnessed properly
+                    Adding an AI layer to your app is now takes minutes with
+                    Limeblock.
                   </motion.p>
                   <motion.div
                     variants={itemVariants}

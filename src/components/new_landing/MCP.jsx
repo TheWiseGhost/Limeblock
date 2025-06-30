@@ -233,7 +233,7 @@ const MCP = () => {
                       className="bg-white border-2 border-green-500 rounded-xl p-5 w-64 text-center shadow-lg"
                     >
                       <div className="text-lg font-semibold text-gray-800">
-                        Your MCP
+                        AI Actions
                       </div>
                       <motion.div
                         className="text-xs text-gray-500 mt-1"
@@ -326,7 +326,7 @@ const MCP = () => {
                 {
                   icon: Clock,
                   title: "Build in seconds, not weeks",
-                  desc: "Create a production-ready MCP server instantly",
+                  desc: "Use our endpoint tree to get started in seconds",
                 },
                 {
                   icon: MousePointer,
@@ -336,7 +336,7 @@ const MCP = () => {
                 {
                   icon: Package,
                   title: "Everything included",
-                  desc: "Descriptions, example prompts, and more just like MCP",
+                  desc: "No AI tooling or external services needed",
                 },
               ].map((item, index) => {
                 const IconComponent = item.icon;

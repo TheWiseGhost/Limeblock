@@ -6,7 +6,7 @@ const Demo = () => {
       <div className="p-3 pb-0 rounded-[1.4rem] bg-[#EAECED]">
         <img
           className="h-fit w-full object-contain rounded-t-2xl"
-          src="/FrontendImg.png"
+          src="/endpointtree.png"
         ></img>
       </div>
     </div>

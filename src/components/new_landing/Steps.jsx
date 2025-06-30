@@ -1,51 +1,45 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  FileText,
-  Plug,
-  Package,
-  MessageCircle,
-  ArrowRight,
-} from "lucide-react";
+import { FileText, Plug, ArrowRight, Bolt, Eye } from "lucide-react";
 
 export default function LimeblockSteps() {
   const [activeTab, setActiveTab] = useState(0);
 
   const tabs = [
-    { id: 0, label: "Add Pages", icon: <FileText size={18} /> },
-    { id: 1, label: "Add Endpoints", icon: <Plug size={18} /> },
-    { id: 2, label: "Import Widget", icon: <Package size={18} /> },
-    { id: 3, label: "Use Widget", icon: <MessageCircle size={18} /> },
+    { id: 0, label: "Add Endpoints", icon: <FileText size={18} /> },
+    { id: 1, label: "Give Access", icon: <Plug size={18} /> },
+    { id: 2, label: "Integrate AI", icon: <Bolt size={18} /> },
+    { id: 3, label: "Monitor Usage", icon: <Eye size={18} /> },
   ];
 
   const tabContent = [
     {
-      title: "Add your app pages",
+      title: "Add Endpoints",
       description:
-        "Set up pages, including contact and documentation pages, to provide quick links that help users without needed a customer support agent.",
-      linkText: "Learn more about page setup",
-      linkUrl: "/docs/frontend/",
-    },
-    {
-      title: "Add API endpoints hooked to your backend",
-      description:
-        "Set up the required API endpoints to handle any in app action by just adding an example schema to send and the url to send it to. Limeblock will take care of the rest.",
-      linkText: "Explore API documentation",
+        "Create your own AI Actions by defining custom endpoints for AI to trigger. Limeblock's endpoint tree allows you to easily manage and visualize your API structure.",
+      linkText: "Learn how to add endpoints",
       linkUrl: "/docs/backend/",
     },
     {
-      title: "Add the Limeblock widget to your application",
+      title: "Give Access to your Backend",
       description:
-        "Import our lightweight widget into your React or Vue app using npm. With just a few lines of code, you'll have a fully functional AI chat interface ready to customize.",
-      linkText: "Installation guide",
+        "Give access to our 2 links so your AI Actions can be triggered. Don't worry, we handle authentication and security extremely well.",
+      linkText: "Explore documentation",
+      linkUrl: "/docs/backend/",
+    },
+    {
+      title: "Integrate AI",
+      description:
+        "All you have to do to trigger your newly made AI Actions and connect to Limeblock is simply hit our endpoint with your api key (along with other a few other things). Freely code however you want your UI and UX to feel.",
+      linkText: "Installation guide with specifics",
       linkUrl: "/docs/export/",
     },
     {
-      title: "Customize and deploy your AI chat experience",
+      title: "Montior Usage of your AI Actions",
       description:
-        "Configure your widget's appearance, behavior, and AI capabilities to match your brand. Then deploy and start collecting valuable user insights and providing assistance.",
-      linkText: "Deployment documentation",
-      linkUrl: "/docs/",
+        "Track monthly and lifetime stats on token usage and number of hits on each endpoint. Everything is easily viewable on our analytics dashboard.",
+      linkText: "Try Limeblock",
+      linkUrl: "/sign_up/",
     },
   ];
 
@@ -64,7 +58,7 @@ export default function LimeblockSteps() {
           Setup to Production in minutes
         </h1>
         <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
-          You could have your AI chat widget up and running on your app today
+          You could have your AI running on your app today
         </p>
       </div>
       <div className="w-fit mx-auto bg-white justify-center items-start flex flex-col">

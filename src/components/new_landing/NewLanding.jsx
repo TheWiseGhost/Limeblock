@@ -18,6 +18,7 @@ import Pricing from "./Pricing";
 import Process from "./Process";
 import InAppActions from "../landing/InAppActions";
 import MCP from "./MCP";
+import HowItWorks from "./HowItWorks";
 
 const NewLanding = () => {
   const container = useRef();
@@ -42,10 +43,9 @@ const NewLanding = () => {
       <Navbar />
       <Hero />
       <FirstTransition />
-      <ProblemSolution />
+      <HowItWorks />
       <MCP />
       <Process />
-      <InAppActions />
       <Steps />
       <Info />
       <Transition />

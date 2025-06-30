@@ -1,4 +1,4 @@
-import { Database, Layout, Code, FileJson } from "lucide-react";
+import { Cpu, FileJson, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function ThreeStepProcess() {
@@ -54,7 +54,7 @@ export default function ThreeStepProcess() {
 
   return (
     <motion.div
-      className="w-full bg-white min-h-screen flex flex-col items-center justify-center p-4 font-inter rounded-t-[3rem] pt-12"
+      className="w-full bg-white min-h-screen flex flex-col items-center justify-center p-4 font-inter rounded-t-[3rem] pt-12 overflow-hidden"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -77,157 +77,77 @@ export default function ThreeStepProcess() {
           className="text-5xl font-medium font-aeonik text-gray-900 mt-8"
           variants={headerVariants}
         >
-          Just add pages, endpoints, schemas.
+          AI infrastructure in minutes
         </motion.h1>
         <motion.p
           className="text-gray-600 mt-4 max-w-2xl mx-auto"
           variants={headerVariants}
         >
-          Build a chat widget that does the same thing production-grade ai tools
-          and MCP <br /> for your app in minutes with Limeblock's intuitive
+          Build production-grade AI capabilities with Limeblock's intuitive
           three-step process
         </motion.p>
       </motion.div>
 
       {/* Three step process */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
-        {/* Step 1: Add Pages */}
+        {/* Step 1: Add Endpoints */}
         <motion.div
           className="bg-[#F3F3F5] p-8 rounded-xl shadow-sm"
           variants={cardVariants}
-          whileHover={{
-            y: -8,
-          }}
-          transition={{
-            type: "spring",
-            stiffness: 400,
-            damping: 17,
-          }}
+          whileHover={{ y: -5 }}
+          transition={{ type: "spring", stiffness: 400, damping: 17 }}
         >
           <div className="flex items-center mb-4">
             <motion.div variants={iconVariants}>
-              <Layout className="text-lime-600 mr-3" size={24} />
+              <Cpu className="text-lime-600 mr-3" size={24} />
             </motion.div>
-            <h2 className="text-xl font-semibold">Step 1: Add Pages</h2>
+            <h2 className="text-xl font-dm font-medium">1. Add Endpoints</h2>
           </div>
-          <p className="text-gray-600 mb-6">
-            Add your app pages into Limeblock and let users quickly find any
-            page they need
+          <p className="text-gray-600 mb-6 text-sm">
+            Define your backend APIs in the Limeblock app for the AI to use.
           </p>
 
           <motion.div
-            className="border border-gray-200 bg-white rounded-lg p-4"
+            className="border border-gray-200 bg-white rounded-lg p-4 overflow-x-auto"
             variants={codeBlockVariants}
             whileHover={{
               boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
               borderColor: "#e2e8f0",
             }}
           >
-            <code className="text-sm text-gray-700 block">
-              <span className="text-purple-600">const</span>{" "}
-              <span className="text-blue-600">DashboardPage</span> = () =&gt;{" "}
-              {"{"}
-              <br />
-              &nbsp;&nbsp;<span className="text-purple-600">return</span> (
-              <br />
-              &nbsp;&nbsp;&nbsp;&nbsp;&lt;
-              <span className="text-green-600">Dashboard</span>
-              <br />
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <span className="text-orange-600">title</span>=
-              <span className="text-green-600">"User Analytics"</span>
-              <br />
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <span className="text-orange-600">layout</span>=
-              <span className="text-green-600">"grid"</span>
-              <br />
-              &nbsp;&nbsp;&nbsp;&nbsp;/&gt;
-              <br />
-              &nbsp;&nbsp;);
-              <br />
-              {"}"};
-            </code>
+            <pre className="text-sm text-gray-700">
+              <span className="text-purple-600">POST</span> /api/add_question
+            </pre>
+            <pre className="text-sm text-gray-700">
+              <span className="text-purple-600">POST</span> /api/edit_form
+            </pre>
+            <pre className="text-sm text-gray-700">
+              <span className="text-purple-600">POST</span> /api/update_settings
+            </pre>
+            <pre className="text-sm text-gray-700">
+              <span className="text-purple-600">GET</span> /api/analytics_stats
+            </pre>
+            <pre className="text-sm text-gray-700">
+              <span className="text-purple-600">GET</span> /api/monthly_summary
+            </pre>
           </motion.div>
         </motion.div>
 
-        {/* Step 2: Add Endpoints */}
+        {/* Step 2: Define Schemas */}
         <motion.div
           className="bg-[#F3F3F5] p-8 rounded-xl shadow-sm"
           variants={cardVariants}
-          whileHover={{
-            y: -8,
-          }}
-          transition={{
-            type: "spring",
-            stiffness: 400,
-            damping: 17,
-          }}
-        >
-          <div className="flex items-center mb-4">
-            <motion.div variants={iconVariants}>
-              <Code className="text-lime-600 mr-3" size={24} />
-            </motion.div>
-            <h2 className="text-xl font-semibold">Step 2: Add Endpoints</h2>
-          </div>
-          <p className="text-gray-600 mb-6">
-            Connect your backend through API endpoints. Limeblock will send
-            requests and create the in app magic.
-          </p>
-
-          <motion.div
-            className="border border-gray-200 bg-white rounded-lg p-4"
-            variants={codeBlockVariants}
-            whileHover={{
-              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
-              borderColor: "#e2e8f0",
-            }}
-          >
-            <code className="text-sm text-gray-700 block">
-              <span className="text-purple-600">export async function</span>{" "}
-              <span className="text-blue-600">getUsers</span>() {"{"}
-              <br />
-              &nbsp;&nbsp;<span className="text-purple-600">const</span>{" "}
-              <span className="text-blue-600">users</span> ={" "}
-              <span className="text-purple-600">await</span> db.users.findMany(
-              {"{"}
-              <br />
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <span className="text-orange-600">where</span>: {"{"}{" "}
-              <span className="text-orange-600">active</span>:{" "}
-              <span className="text-purple-600">true</span> {"}"}
-              <br />
-              &nbsp;&nbsp;{"}"});
-              <br />
-              &nbsp;&nbsp;<span className="text-purple-600">return</span> {"{"}{" "}
-              <span className="text-orange-600">users</span> {"}"};
-              <br />
-              {"}"}
-            </code>
-          </motion.div>
-        </motion.div>
-
-        {/* Step 3: Add Schema */}
-        <motion.div
-          className="bg-[#F3F3F5] p-8 rounded-xl shadow-sm"
-          variants={cardVariants}
-          whileHover={{
-            y: -8,
-          }}
-          transition={{
-            type: "spring",
-            stiffness: 400,
-            damping: 17,
-          }}
+          whileHover={{ y: -5 }}
+          transition={{ type: "spring", stiffness: 400, damping: 17 }}
         >
           <div className="flex items-center mb-4">
             <motion.div variants={iconVariants}>
               <FileJson className="text-lime-600 mr-3" size={24} />
             </motion.div>
-            <h2 className="text-xl font-semibold">Step 3: Add Schema</h2>
+            <h2 className="text-xl font-medium font-dm">2. Define Schemas</h2>
           </div>
-          <p className="text-gray-600 mb-6">
-            Define an example schema for each endpoint, and AI will smartly fill
-            it to commit actions.
+          <p className="text-gray-600 mb-6 text-sm">
+            Define what your endpoints accept so AI knows what and how to send.
           </p>
 
           <motion.div
@@ -238,34 +158,84 @@ export default function ThreeStepProcess() {
               borderColor: "#e2e8f0",
             }}
           >
-            <code className="text-sm text-gray-700 block">
-              <span className="text-purple-600">const</span>{" "}
-              <span className="text-blue-600">UserSchema</span> = {"{"}
-              <br />
-              &nbsp;&nbsp;<span className="text-orange-600">id</span>:{" "}
-              <span className="text-green-600">"string"</span>,
-              <br />
-              &nbsp;&nbsp;<span className="text-orange-600">name</span>:{" "}
-              <span className="text-green-600">"string"</span>,
-              <br />
-              &nbsp;&nbsp;<span className="text-orange-600">email</span>:{" "}
-              <span className="text-green-600">"string"</span>,
-              <br />
-              &nbsp;&nbsp;<span className="text-orange-600">role</span>: {"{"}
-              <br />
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <span className="text-orange-600">type</span>:{" "}
-              <span className="text-green-600">"enum"</span>,
-              <br />
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <span className="text-orange-600">values</span>: [
-              <span className="text-green-600">"admin"</span>,{" "}
-              <span className="text-green-600">"user"</span>]
-              <br />
-              &nbsp;&nbsp;{"}"}
-              <br />
-              {"}"};
-            </code>
+            <pre className="text-sm text-gray-700">
+              <span className="text-purple-600">Edit Form</span> {"{"}
+            </pre>
+            <pre className="text-sm text-gray-700">
+              &nbsp;&nbsp;user_id:{" "}
+              <span className="text-green-600">string</span>
+            </pre>
+            <pre className="text-sm text-gray-700">
+              &nbsp;&nbsp;form_id:{" "}
+              <span className="text-green-600">string</span>
+            </pre>
+            <pre className="text-sm text-gray-700">
+              &nbsp;&nbsp;title: <span className="text-green-600">string</span>
+            </pre>
+            <pre className="text-sm text-gray-700">
+              &nbsp;&nbsp;type: <span className="text-green-600">string</span>
+            </pre>
+            <pre className="text-sm text-gray-700">{"}"}</pre>
+          </motion.div>
+        </motion.div>
+
+        {/* Step 3: Trigger AI Actions */}
+        <motion.div
+          className="bg-[#F3F3F5] p-8 rounded-xl shadow-sm"
+          variants={cardVariants}
+          whileHover={{ y: -5 }}
+          transition={{ type: "spring", stiffness: 400, damping: 17 }}
+        >
+          <div className="flex items-center mb-4">
+            <motion.div variants={iconVariants}>
+              <Zap className="text-lime-600 mr-3" size={24} />
+            </motion.div>
+            <h2 className="text-xl font-medium font-dm">
+              3. Trigger AI Actions
+            </h2>
+          </div>
+          <p className="text-gray-600 mb-6 text-sm">
+            Trigger AI action by sending a request to our endpoint with your
+            payload.
+          </p>
+
+          <motion.div
+            className="border border-gray-200 bg-white rounded-lg p-4"
+            variants={codeBlockVariants}
+            whileHover={{
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
+              borderColor: "#e2e8f0",
+            }}
+          >
+            <pre className="text-sm text-gray-700">
+              <span className="text-purple-600">const</span> payload = {"{"}
+            </pre>
+            <pre className="text-sm text-gray-700">
+              &nbsp;&nbsp;prompt:{" "}
+              <span className="text-green-600">"Add a question box"</span>,
+            </pre>
+            <pre className="text-sm text-gray-700">
+              &nbsp;&nbsp;endpoint_id:{" "}
+              <span className="text-green-600">"ep_123"</span>,
+            </pre>
+            <pre className="text-sm text-gray-700">
+              &nbsp;&nbsp;api_key:{" "}
+              <span className="text-green-600">"lime_..."</span>
+            </pre>
+            <pre className="text-sm text-gray-700">{"}"}</pre>
+
+            <pre className="text-sm text-gray-700 mt-2">
+              <span className="text-purple-600">fetch</span>(
+            </pre>
+            <pre className="text-sm text-gray-700">
+              &nbsp;&nbsp;
+              <span className="text-green-600">"/api/ai_action/"</span>,
+            </pre>
+            <pre className="text-sm text-gray-700">
+              &nbsp;&nbsp;{"{"} method:{" "}
+              <span className="text-green-600">"POST"</span>, body: payload
+            </pre>
+            <pre className="text-sm text-gray-700">);</pre>
           </motion.div>
         </motion.div>
       </div>

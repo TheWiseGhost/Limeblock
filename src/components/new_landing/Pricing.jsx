@@ -58,7 +58,7 @@ const Pricing = () => {
                   <li>Full API access</li>
                   <li>Basic analytics</li>
                   <li>Community support</li>
-                  <li>Perfect for testing</li>
+                  <li>Perfect for trying Limeblock</li>
                 </ul>
               </div>
               <div className="mb-4">
@@ -107,7 +107,7 @@ const Pricing = () => {
         </div>
 
         {/* Bottom section */}
-        <div className="px-4 md:px-0 flex flex-col md:flex-row w-fit mx-auto justify-between mt-2">
+        <div className="px-4 md:px-0 flex flex-col md:flex-row w-full justify-between mt-2">
           <div className="flex flex-col space-y-2">
             <h1 className="font-inter pt-6 text-gray-700 text-sm">
               Tokens are consumed based on the length and complexity of your API

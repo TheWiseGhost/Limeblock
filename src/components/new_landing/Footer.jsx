@@ -81,10 +81,8 @@ const Footer = () => {
 
   const docsLinks = [
     { text: "Overview", url: "/docs" },
-    { text: "Frontend", url: "/docs/frontend" },
     { text: "Backend", url: "/docs/backend" },
     { text: "Export", url: "/docs/export" },
-    { text: "Request", url: "/docs/request" },
     { text: "Report", url: "/docs/report" },
   ];
 

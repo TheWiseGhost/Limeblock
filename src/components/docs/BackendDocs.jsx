@@ -172,7 +172,7 @@ const context = {
             </p>
           </div>
           <h1 className="text-4xl font-aeonik font-medium mb-8">
-            Backend Docs
+            Endpoint Tree Docs
           </h1>
 
           <div className="text-sm max-w-none">

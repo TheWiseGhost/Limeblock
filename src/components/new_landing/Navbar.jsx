@@ -76,10 +76,14 @@ export default function Navbar() {
         }`}
       >
         <NavButton text="Docs" href="/docs/" isScrolled={isScrolled} />
-        <NavButton text="Features" href="/docs/" isScrolled={isScrolled} />
+        <NavButton
+          text="Contact"
+          href="/https://cal.com/adityabyju/"
+          isScrolled={isScrolled}
+        />
         <NavButton
           text="Internals"
-          href="/docs/getting_started/"
+          href="/docs/backend/"
           isScrolled={isScrolled}
         />
         <NavButton text="Demo" href="/demo" isScrolled={isScrolled} />

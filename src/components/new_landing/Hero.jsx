@@ -228,8 +228,7 @@ export default function Hero() {
           <span>web app made easy</span>
         </h1>
         <div className="mb-8 text-lg mt-8">
-          <p>Page Navigation, API fetchs, In-App Actions done by AI widget</p>
-          <p>No coding or MCP server required</p>
+          <p>Let any API Endpoint become AI accessible in minutes</p>
         </div>
         <button
           className="inline-flex items-center bg-white z-20 w-fit text-black px-6 py-4 rounded-xl font-medium transition-colors"
@@ -251,6 +250,9 @@ export default function Hero() {
           </motion.div>
           <span className="ml-3 text-[0.9rem]">Get early access</span>
         </button>
+        <p className="mt-3 text-xs text-gray-700">
+          Get 250k free tokens when you sign up today
+        </p>
       </div>
     </div>
   );
