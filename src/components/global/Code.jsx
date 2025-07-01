@@ -9,6 +9,7 @@ export const Code = ({
   showLineNumbers = false,
   copyButton = true,
   className = "",
+  codeSize = "text-sm", // New prop with default value
 }) => {
   const [copied, setCopied] = useState(false);
 
@@ -41,14 +42,16 @@ export const Code = ({
       <div className="flex">
         {/* Line numbers */}
         {showLineNumbers && (
-          <div className="bg-gray-100 text-gray-500 text-xs p-4 text-right pr-3 select-none border-r border-gray-200">
+          <div
+            className={`bg-gray-100 text-gray-500 p-4 text-right pr-3 select-none border-r border-gray-200 ${codeSize}`}
+          >
             <pre>{lineNumbers}</pre>
           </div>
         )}
 
         {/* Code content */}
         <div className="bg-gray-50 w-full p-4 overflow-x-auto">
-          <pre className="text-sm text-gray-800">{code}</pre>
+          <pre className={`${codeSize} text-gray-800`}>{code}</pre>
         </div>
       </div>
 

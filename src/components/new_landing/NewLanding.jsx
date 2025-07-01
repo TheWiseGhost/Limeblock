@@ -20,6 +20,7 @@ import InAppActions from "../landing/InAppActions";
 import MCP from "./MCP";
 import HowItWorks from "./HowItWorks";
 import WhyAI from "./WhyAI";
+import CodeExport from "./CodeExport";
 
 const NewLanding = () => {
   const container = useRef();
@@ -44,6 +45,7 @@ const NewLanding = () => {
       <Navbar />
       <Hero />
       <FirstTransition />
+      <CodeExport />
       <HowItWorks />
       <MCP />
       <Process />

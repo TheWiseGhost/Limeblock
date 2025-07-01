@@ -22,6 +22,7 @@ import MobileMCP from "./MobileMCP";
 import MobileHowItWorks from "./MobileHowItWorks";
 import MobileInfo from "./MobileInfo";
 import MobileWhyAI from "./MobileWhyAI";
+import CodeExport from "../CodeExport";
 
 const MobileNewLanding = () => {
   const container = useRef();
@@ -46,6 +47,7 @@ const MobileNewLanding = () => {
       <Navbar />
       <MobileHero />
       <TwoSideExp />
+      <CodeExport />
       <MobileHowItWorks />
       <MobileMCP />
       <MobileSteps />
