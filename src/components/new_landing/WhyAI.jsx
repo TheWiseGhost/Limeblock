@@ -102,9 +102,9 @@ const WhyAI = () => {
                           variants={itemVariants}
                           className={`h-20 rounded-lg ${
                             i === 0
-                              ? "bg-blue-200 col-span-2"
+                              ? "bg-green-200 col-span-2"
                               : i === 3
-                              ? "bg-cyan-200 col-span-3"
+                              ? "bg-green-200 col-span-3"
                               : "bg-green-200"
                           }`}
                         />
@@ -156,9 +156,9 @@ const WhyAI = () => {
                           transition={{ delay: i * 0.1, type: "spring" }}
                           className={`h-20 rounded-lg relative overflow-hidden ${
                             i === 0
-                              ? "bg-blue-100 col-span-2 border-2 border-blue-300"
+                              ? "bg-green-100 col-span-2 border-2 border-green-100"
                               : i === 3
-                              ? "bg-cyan-100 col-span-3 border-2 border-cyan-300"
+                              ? "bg-green-200 col-span-3 border-2 border-green-500"
                               : "bg-green-100 border-2 border-green-300"
                           }`}
                         >
