@@ -251,8 +251,16 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-5 gap-6">
         <div className="col-span-2 border border-gray-300 rounded-md p-6">
-          <div className="flex justify-start items-center mb-4">
+          <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-aeonik">API Endpoints</h2>
+            <button
+              onClick={() => {
+                window.open("/docs/export/");
+              }}
+              className="px-6 border border-gray-400 rounded-lg py-2 text-sm font-inter hover:bg-gray-50 transition-colors"
+            >
+              Export
+            </button>
           </div>
 
           <div className="max-h-[300px] overflow-y-auto font-inter">
@@ -276,7 +284,7 @@ export default function Dashboard() {
               </div>
             )}
           </div>
-          <div className="mt-12">
+          <div className="mt-10">
             <div className="flex items-center gap-2">
               <span className="text-sm font-inter text-gray-800">API Key:</span>
               <input
