@@ -110,6 +110,20 @@ const AIAssistant = () => {
               display formatted responses anywhere in your application.
             </p>
 
+            <div className="bg-gray-50 border-l-4 border-gray-400 p-4 mb-6">
+              <div className="text-gray-700">
+                <strong>Summary:</strong> <br />
+                Limeblock uses headless implementation for AI endpoints. This
+                means you control the entire UI and UX of your AI interface,
+                including how user prompts are collected. <br /> <br />
+                All you do is send a request to our API endpoint -
+                <pre>https://limeblockbackend.onrender.com/api/ai_action/</pre>
+                <br /> with the necessary parameters, and we handle the AI
+                processing. You can use any frontend framework or even plain
+                JavaScript to implement this.
+              </div>
+            </div>
+
             <h2 className="text-2xl font-aeonik font-medium mt-8 mb-4">
               Core Integration Workflow
             </h2>
@@ -296,7 +310,7 @@ const AIAssistant = () => {
                 <span className="bg-cyan-50 text-cyan-700 px-1 mx-1 rounded">
                   Only when formatting_needed: true
                 </span>
-                Formatted string response (typically Markdown or plain text)
+                Formatted string response
               </li>
               <li>
                 <strong>context</strong>: Echoes back the context you sent
@@ -314,6 +328,23 @@ const AIAssistant = () => {
                 <code>&lt;pre&gt;</code> with <code>whitespace-pre-wrap</code>{" "}
                 for proper formatting, or convert Markdown to HTML using
                 libraries like <code>react-markdown</code>.
+              </p>
+            </div>
+
+            <div className="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+              <p className="text-green-700">
+                <strong>Another Tip:</strong> The{" "}
+                <code>formatted_response</code> is not needed at all if you
+                don't do anything with AI response and use just to commit an AI
+                action. Fomratted responses are useful for GET requests when AI
+                used as a search or summarizer tool.
+              </p>
+            </div>
+
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+              <p className="text-yellow-700">
+                <strong>Note:</strong> The <code>formatted_response</code> costs
+                tokens. Getting back a large response from AI will cost you.
               </p>
             </div>
 
