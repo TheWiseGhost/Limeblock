@@ -34,12 +34,13 @@ export default function TokenStats({ tokenStats, remainingTokens }) {
   };
 
   const formatTokens = (tokens) => {
-    if (tokens >= 1000000) {
-      return `${(tokens / 1000000).toFixed(1)}M`;
-    } else if (tokens >= 1000) {
-      return `${(tokens / 1000).toFixed(1)}K`;
+    const absTokens = Math.abs(tokens); // Handle negative values
+    if (absTokens >= 1000000) {
+      return `${(absTokens / 1000000).toFixed(1)}M${tokens < 0 ? "" : ""}`;
+    } else if (absTokens >= 1000) {
+      return `${(absTokens / 1000).toFixed(1)}K${tokens < 0 ? "" : ""}`;
     }
-    return tokens.toString();
+    return tokens.toString(); // Returns negative string if needed
   };
 
   // Sort and get last 6 months
@@ -210,7 +211,7 @@ export default function TokenStats({ tokenStats, remainingTokens }) {
               <p className="text-sm text-gray-700 mb-1">Monthly Growth</p>
               <div className="flex items-center">
                 <p className="text-2xl font-aeonik mr-2">
-                  {tokenIncrease > 0 ? "+" : ""}
+                  {tokenIncrease > 0 ? "+" : "-"}
                   {formatTokens(tokenIncrease)}
                 </p>
                 <span

@@ -129,12 +129,13 @@ export default function Dashboard() {
   };
 
   const formatTokens = (tokens) => {
-    if (tokens >= 1000000) {
-      return `${(tokens / 1000000).toFixed(1)}M`;
-    } else if (tokens >= 1000) {
-      return `${(tokens / 1000).toFixed(1)}K`;
+    const absTokens = Math.abs(tokens); // Handle negative values
+    if (absTokens >= 1000000) {
+      return `${(absTokens / 1000000).toFixed(1)}M${tokens < 0 ? "" : ""}`;
+    } else if (absTokens >= 1000) {
+      return `${(absTokens / 1000).toFixed(1)}K${tokens < 0 ? "" : ""}`;
     }
-    return tokens.toString();
+    return tokens.toString(); // Returns negative string if needed
   };
 
   const maxTokenValue =
@@ -329,7 +330,7 @@ export default function Dashboard() {
               </h4>
               <div className="flex items-center mt-1">
                 <p className="text-2xl font-aeonik">
-                  {tokenIncrease > 0 ? "+" : ""}
+                  {tokenIncrease > 0 ? "+" : "-"}
                   {formatTokens(tokenIncrease)}
                 </p>
                 <span
