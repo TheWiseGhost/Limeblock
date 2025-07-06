@@ -62,7 +62,7 @@ export default function Hero() {
     setCurrentStepIndex(0);
     setCurrentStatus(statusSteps[0].message);
 
-    await fetch("http://127.0.0.1:8000/api/new_idea", {
+    await fetch("https://limeblockbackend.onrender.com/api/new_idea", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
