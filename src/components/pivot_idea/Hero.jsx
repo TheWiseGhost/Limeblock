@@ -127,7 +127,7 @@ export default function Hero() {
               <h2 className="text-4xl md:text-5xl font-aeonik mb-2 bg-gradient-to-r from-black via-gray-800 to-black bg-clip-text pb-3 text-transparent font-medium">
                 Prompt to Physical Marketing
               </h2>
-              <div className="text-base font-inter flex flex-col justify-center items-center text-gray-600 animate-fadeIn">
+              <div className="text-sm md:text-base font-inter flex flex-col justify-center items-center text-gray-600 animate-fadeIn">
                 <div className="flex flex-row items-center">
                   Use our
                   <img
