@@ -117,7 +117,7 @@ export default function Hero() {
   const CurrentIcon = statusSteps[currentStepIndex]?.icon || Search;
 
   return (
-    <div className="min-h-screen bg-white text-black font-inter overflow-hidden">
+    <div className="min-h-screen bg-white text-black font-inter overflow-hidden pb-10">
       <section className="px-8 pt-12 relative z-10">
         <div className="max-w-4xl mx-auto">
           <div className="max-w-4xl mx-auto">
