@@ -286,7 +286,7 @@ export default function Hero() {
                     className="w-full bg-black text-white py-4 px-8 text-sm font-medium hover:bg-lime transition-all duration-300 border-2 border-black hover:text-black transform hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] group"
                   >
                     <span className="inline-flex items-center justify-center space-x-2">
-                      <span>Let's do it!</span>
+                      <span>Generate Plan!</span>
                       <span className="transform transition-transform duration-300 group-hover:translate-x-1">
                         →
                       </span>
